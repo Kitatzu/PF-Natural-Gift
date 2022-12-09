@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const clientSchema = new mongoose.Schema({
   client: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
   ],

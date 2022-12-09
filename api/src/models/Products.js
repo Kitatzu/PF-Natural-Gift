@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
 
   price: Number,
 
-  description: Text,
+  description: String,
 
   inStock: {
     type: Boolean,
@@ -19,11 +19,11 @@ const productSchema = new mongoose.Schema({
   rating: Number,
   categories: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "categories",
     },
   ],
 });
 
-const Products = mongoose.Model("products", productSchema);
+const Products = mongoose.model("products", productSchema);
 module.exports = Products;
