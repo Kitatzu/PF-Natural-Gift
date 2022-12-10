@@ -1,0 +1,63 @@
+.padd{
+    position:absolute;
+    width: 100%;
+    height: 112px;
+    left: 0px;
+    top: 0px;
+    background-color: rgb(36, 36, 36);
+}
+.imagenLogo{
+    position:absolute;
+    width: 243px;
+    height: 72px;
+    left: 24px;
+    top: 16px;
+}
+.button{
+    width: 212px;
+    height: 56px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    border-radius: 30px;
+    background-color: #4daf62;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.button1{
+    width: 212px;
+    height: 56px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    border-radius: 30px;
+    background-color: #4daf62;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    
+}
+
+.orde{
+    display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 24px;
+
+position: absolute;
+width: 448px;
+height: 56px;
+left: 750px;
+top: 28px;
+}
+
+.imgUser{
+    position: absolute;
+left: 90%;
+right: 2.29%;
+top: 9%;
+bottom: 94.75%;
+}

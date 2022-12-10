@@ -16,9 +16,11 @@ export const productSlice = createSlice({
         (product) => product.id !== action.payload
       );
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { getProducts, getProductInfo } = productSlice.actions;
-
+export const { getProducts, getProductInfo, setLoading } = productSlice.actions;
 export default productSlice.reducer;
