@@ -1,4 +1,5 @@
 export const productState = {
-  products: [],
+  products: {},
   productInfo: {},
+  isLoading: false,
 };
