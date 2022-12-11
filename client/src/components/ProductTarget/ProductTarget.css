@@ -1,12 +1,13 @@
 .targetCard{
     position: relative;
-    width: 280px !important;
-    height: 367px !important;
+    width: 234px !important;
+    height: 370px !important;
     background-size: cover !important;
     background-repeat: no-repeat;
     background-position: center !important;
     border-radius: 20px;
     overflow: hidden;
+    margin: 20px;
     transition: 0.6s;
 }
 .targetCard:hover{

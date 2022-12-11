@@ -8,7 +8,7 @@ const ProductTarget = ({ id, contents, name, price, vegan, image }) => {
       className="targetCard"
       id={id}
       style={{
-        background: `url(https://thebeeminelab.com/wp-content/uploads/2022/11/Aceite-3-2.jpg)`,
+        background: `url(${image})`,
       }}
     >
       <span className="targetPrice">{price}$</span>

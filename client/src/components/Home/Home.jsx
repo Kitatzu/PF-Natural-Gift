@@ -1,21 +1,16 @@
 import "./Home.css";
-import { useEffect, React } from "react";
-import { useDispatch } from "react-redux";
-import { getProductsThunk } from "../../containers/redux/thunks";
+import { React } from "react";
+
 import Filter from "../Filters/Filters";
+import Products from "../Products/Products";
 
 const Home = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductsThunk());
-  }, [dispatch]);
-
   return (
     <div className="Home">
       <Filter />
       <div className="Home-content">
-        <h1 className="Home-title">Products</h1>
+        <h2 className="Home-title">Categories: all</h2>
+        <Products />
       </div>
     </div>
   );
