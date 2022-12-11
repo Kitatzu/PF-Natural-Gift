@@ -17,7 +17,10 @@ export const productSlice = createSlice({
       );
     },
     setLoading: (state, action) => {
-      state.isLoading = action.payload;
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
     },
   },
 });
