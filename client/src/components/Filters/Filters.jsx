@@ -5,8 +5,10 @@ export default function Filter() {
   return (
     <div className="Filters">
       <div>
-        <span className="Icon"><i className="fa-solid fa-magnifying-glass fa-lg"></i></span>
-        <input className="Input__Text" type="text" placeholder="Search"/>
+        <span className="Icon">
+          <i className="fa-solid fa-magnifying-glass fa-lg"></i>
+        </span>
+        <input className="Input__Text" type="text" placeholder="Search" />
       </div>
       <div className="Input">
         <select className="Input__Select">
@@ -25,5 +27,5 @@ export default function Filter() {
         </select>
       </div>
     </div>
-  )
+  );
 }
