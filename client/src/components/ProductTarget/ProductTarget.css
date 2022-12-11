@@ -1,0 +1,79 @@
+.targetCard{
+    position: relative;
+    width: 280px !important;
+    height: 367px !important;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    background-position: center !important;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: 0.6s;
+}
+.targetCard:hover{
+    transform: translateY(-20px);
+}
+.targetCard:before{
+    position: absolute;
+    content: "";
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+    transition: 0.3s;
+}
+.targetCard:hover:before{
+    left: 100%;
+}
+.targetCardInfo{
+    position: absolute;
+    bottom: -60px;
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    background: rgba(0,0,0,.6);
+    backdrop-filter: blur(20px);
+    color: #f2f2f2;
+    transition: 0.3s;
+}
+.targetCardInfo>p{
+    margin-left: 10px;
+}
+.targetCardInfo:hover{
+    bottom: 0;
+}
+.targetPrice{
+    padding: 15px 10px;
+    color: #f2f2f2f2;
+    margin: 25px;
+    background: #20232A;
+    border-radius: 15px;
+    filter: drop-shadow(0px 127px 50px rgba(0, 0, 0, 0.07)) drop-shadow(0px 53.0576px 20.8888px rgba(0, 0, 0, 0.0503198)) drop-shadow(0px 28.3671px 11.1682px rgba(0, 0, 0, 0.0417275)) drop-shadow(0px 15.9024px 6.26078px rgba(0, 0, 0, 0.035)) drop-shadow(0px 8.44563px 3.32505px rgba(0, 0, 0, 0.0282725)) drop-shadow(0px 3.51442px 1.38363px rgba(0, 0, 0, 0.0196802));
+    display: inline-block;
+}
+.targetButton{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+.productInfoButton{
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffff;
+    text-decoration: none;
+    background: linear-gradient(135.13deg, #DBA535 10.46%, #944A71 127.81%);
+    border-radius: 25px;
+    transition: 0.5s;
+
+}
+.productInfoButton:hover{
+    background: linear-gradient(135.13deg, #FF7DC1 10.46%, #4244FF 127.81%);
+    box-shadow: 0 0 10px 5px #FF7DC1;
+}
+.productInfoButton>span{
+    margin-left: 10px;
+   
+}

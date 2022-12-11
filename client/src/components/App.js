@@ -1,15 +1,13 @@
 import "./App.css";
+import { Route } from "react-router-dom";
 import Home from "./Home/Home";
-import NavBar from "./NavBar/NavBar.jsx";
-import Filters from "./Filters/Filters.jsx";
 
 function App() {
   return (
-    <div>
-      <NavBar />
-      <Filters />
-      <Home />
-    </div>
+    <>
+      <Route exact path={"/"} component={Home} />
+      <Route exact path={"/Home"} component={Home} />
+    </>
   );
 }
 

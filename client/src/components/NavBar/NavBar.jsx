@@ -3,10 +3,10 @@ import logo from "../../img/LogoLogo.png";
 import "./NavBar.css";
 
 export default function NavBar() {
-  return(
+  return (
     <div className="Nav">
       <div className="Nav__Logo">
-        <img className="Logo__Imagen" src={logo} alt="Logo"/>
+        <img className="Logo__Imagen" src={logo} alt="Logo" />
       </div>
       <div className="Nav__Buttons">
         <div className="button">
@@ -22,5 +22,5 @@ export default function NavBar() {
         <i className="fa-solid fa-user fa-2xl"></i>
       </div>
     </div>
-  )  
+  );
 }
