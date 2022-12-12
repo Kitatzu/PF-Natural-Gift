@@ -4,6 +4,7 @@ import ProductTarget from "../ProductTarget/ProductTarget";
 import { useEffect } from "react";
 import { getProductsThunk } from "../../containers/redux/thunks";
 import Loading from "../Loading/Loading";
+import Errors from "../Errors/Errors";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ const Products = () => {
 
   const products = useSelector((store) => store.products.products);
   const isLoading = useSelector((store) => store.products.isLoading);
+  const { error, type, msg } = useSelector((store) => store.errors);
+  console.log(error, type, msg);
 
   return (
     <>
@@ -23,7 +26,7 @@ const Products = () => {
         <Loading />
       ) : (
         <div className="Product-content-products">
-          {products !== null &&
+          {!error && products !== null ? (
             Object.entries(products).map(([key, value]) =>
               value.map((p) => (
                 <ProductTarget
@@ -36,7 +39,10 @@ const Products = () => {
                   image={p.image}
                 />
               ))
-            )}
+            )
+          ) : (
+            <Errors type={type} msg={msg} />
+          )}
         </div>
       )}
     </>
