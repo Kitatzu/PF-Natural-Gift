@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
     console.log(databaseProduct);
     return res.status(201).json(databaseProduct);
   } catch (error) {
-    res.status(404).json("Game is not found");
+    res.status(404).json("Product is not found");
   }
 });
 

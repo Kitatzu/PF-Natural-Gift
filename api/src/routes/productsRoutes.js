@@ -56,9 +56,7 @@ router.post("/", async (req, res) => {
     where: { name: categories },
   });
 
-  console.log(allCategories);
-
-  await newProduct.addCategories(allCategories[name]);
+  await newProduct.addCategories(allCategories);
 
   res.status(201).send(newProduct);
 });
