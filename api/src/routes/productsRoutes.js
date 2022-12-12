@@ -52,11 +52,13 @@ router.post("/", async (req, res) => {
     inDatabase,
   });
 
-  const allCategories = await Categories.findAll();
+  const allCategories = await Categories.findAll({
+    where: { name: categories },
+  });
 
   console.log(allCategories);
 
-  await newProduct.addCategories(allCategories, { through: Categories });
+  await newProduct.addCategories(allCategories[name]);
 
   res.status(201).send(newProduct);
 });
