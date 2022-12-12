@@ -1,14 +1,8 @@
 import "./App.css";
-import { Route } from "react-router-dom";
-import Home from "./Home/Home";
+import Router from "./Router/Router";
 
 function App() {
-  return (
-    <>
-      <Route exact path={"/"} component={Home} />
-      <Route exact path={"/Home"} component={Home} />
-    </>
-  );
+  return <Router />;
 }
 
 export default App;

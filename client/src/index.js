@@ -5,16 +5,13 @@ import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./containers/redux/store/index";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 
 ReactDOM.render(
   <React.StrictMode>
     <NavBar />
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
