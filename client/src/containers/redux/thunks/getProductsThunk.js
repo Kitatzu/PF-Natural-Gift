@@ -15,7 +15,7 @@ export const getProductsThunk = () => {
               setError({
                 error: true,
                 type: 400,
-                msg: "No se encontraron datos",
+                msg: "No data found...",
               }),
               dispatch(setLoading(false))
             );
