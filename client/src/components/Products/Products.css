@@ -1,0 +1,10 @@
+.Product-content-products{
+    width: 100%;
+    padding: 20px;
+    height: max-content;
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}

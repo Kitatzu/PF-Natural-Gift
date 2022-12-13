@@ -1,14 +1,8 @@
 import "./App.css";
-import Home from "./Home/Home";
-import NavBar from "./NavBar/NavBar";
+import Router from "./Router/Router";
 
 function App() {
-  return (
-    <div>
-      <NavBar />;
-      <Home />;
-    </div>
-  );
+  return <Router />;
 }
 
 export default App;

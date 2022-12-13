@@ -1,12 +1,35 @@
 import { getProducts, setLoading } from "../slices/products";
-import { productsList } from "./list";
-
+import axios from "axios";
+import { setError } from "../slices/Errors";
+const HOST_API = "http://localhost";
+const PORT_API = 3001;
 export const getProductsThunk = () => {
   return async (dispatch, getState) => {
-    dispatch(setLoading(true));
-    setTimeout(() => {
-      dispatch(getProducts(productsList));
-      dispatch(setLoading(false));
-    }, 5000);
+    await dispatch(setLoading(true));
+    await axios
+      .get(`${HOST_API}:${PORT_API}/products`)
+      .then(async (response) => {
+        response.data.length !== 0
+          ? dispatch(getProducts(response.data))
+          : dispatch(
+              setError({
+                error: true,
+                type: 400,
+                msg: "No data found...",
+              }),
+              dispatch(setLoading(false))
+            );
+      })
+      .catch((error) => {
+        dispatch(
+          setError({
+            error: true,
+            type: 500,
+            msg: error,
+          })
+        );
+        dispatch(setLoading(false));
+      })
+      .then(async () => await dispatch(setLoading(false)));
   };
 };

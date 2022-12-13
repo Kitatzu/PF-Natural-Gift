@@ -1,5 +1,6 @@
 export const productState = {
-  products: {},
+  products: null,
+  categories: null,
   productInfo: {},
   isLoading: false,
 };

@@ -1,12 +1,15 @@
-const mongoose = require("mongoose");
+const { DataTypes, UUIDV4 } = require("sequelize");
 
-const categoriesSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    unique: true,
-  },
-});
-
-const Categories = mongoose.model("categories", categoriesSchema);
-
-module.exports = Categories;
+module.exports = (sequelize) => {
+  sequelize.define("categories", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+  });
+};
