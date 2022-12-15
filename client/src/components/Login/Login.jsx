@@ -6,9 +6,7 @@ const Login = () => {
   return (
     <div className="Login-container">
       <Nav />
-
       <FormLogin />
-
       <Waves />
     </div>
   );
