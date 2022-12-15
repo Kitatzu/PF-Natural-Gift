@@ -1,13 +1,20 @@
 import "./Nav.scss";
-const Nav = () => {
+
+const Nav = ({ setLoginType }) => {
   return (
     <nav className="Login-nav">
       <ul>
         <li>
-          <button>Login</button>
+          <button
+            onClick={() => {
+              setLoginType("login");
+            }}
+          >
+            Login
+          </button>
         </li>
         <li>
-          <button>Register</button>
+          <button onClick={() => setLoginType("register")}>Register</button>
         </li>
       </ul>
       <button className="Login-switch-theme">
