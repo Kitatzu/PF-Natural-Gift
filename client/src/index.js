@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./containers/redux/store/index";
+import { store } from "./Redux/Store/index";
 import Routes from "./Routes";
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -12,7 +13,8 @@ ReactDOM.render(
         <Routes />
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
