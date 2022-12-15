@@ -1,4 +1,5 @@
 import FormLogin from "./FormLogin/FormLogin";
+import FormRegister from "./FormRegister/FormRegister";
 import Nav from "./Nav/Nav";
 import Waves from "../Waves/Waves";
 import "./Login.scss";
@@ -14,7 +15,7 @@ const Login = () => {
         <h1>Gifts</h1>
       </div>
 
-      {loginType === "login" ? <FormLogin /> : <div>Register</div>}
+      {loginType === "login" ? <FormLogin /> : <FormRegister />}
 
       <Waves />
       <div className="Login-presentation">
