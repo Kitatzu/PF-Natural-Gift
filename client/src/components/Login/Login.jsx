@@ -5,6 +5,7 @@ const Login = () => {
   return (
     <div className="Login-container">
       <Nav />
+      <FormLogin />
     </div>
   );
 };
