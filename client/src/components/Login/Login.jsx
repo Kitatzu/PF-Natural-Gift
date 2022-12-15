@@ -13,9 +13,8 @@ const Login = () => {
       <div className="Login-natural-gifts">
         <h1>Natural</h1>
         <h1>Gifts</h1>
+        {loginType === "login" ? <FormLogin /> : <FormRegister />}
       </div>
-
-      {loginType === "login" ? <FormLogin /> : <FormRegister />}
 
       <Waves />
       <div className="Login-presentation">

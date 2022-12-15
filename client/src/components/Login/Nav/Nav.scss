@@ -1,6 +1,8 @@
 @import '../../Assets/Styles/global.scss';
 
 .Login-nav{
+    position: relative;
+    z-index: 1;
     width: 100%;
     padding: 20px;
     background: transparent;
