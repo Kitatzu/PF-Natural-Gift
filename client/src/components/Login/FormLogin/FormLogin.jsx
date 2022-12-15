@@ -7,7 +7,6 @@ function FormLogin() {
     <form className='Form'>
     <div>
         <input className='Login-Form' type="text" id="Email" placeholder='Enter Email' />
-        
     </div>
     <div>
         <input className='Login-Form' type="password" placeholder='Enter Password' />
