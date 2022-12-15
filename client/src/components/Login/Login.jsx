@@ -1,11 +1,11 @@
 import FormLogin from "./FormLogin/FormLogin";
-
-
+import Nav from "./Nav/Nav";
+import "./Login.scss";
 const Login = () => {
-  return(
-     <div>Login
-  <FormLogin />
-  </div> 
-  )
+  return (
+    <div className="Login-container">
+      <Nav />
+    </div>
+  );
 };
 export default Login;
