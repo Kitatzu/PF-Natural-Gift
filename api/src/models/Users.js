@@ -4,7 +4,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "users",
     {
-      
       id: {
         type: DataTypes.UUID,
         defaultValue: UUIDV4,
@@ -35,21 +34,21 @@ module.exports = (sequelize) => {
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       adress: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       country: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      cartId:{
+      cartId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,

@@ -16,9 +16,9 @@ router.get("/", async (req, res) => {
         },
       });
 
-      console.log(productsInDb);
-
-      res.status(201).send(productsInDb);
+      productsInDb.length
+        ? res.status(201).json(productsInDb)
+        : res.status(404).json("product not found");
     } catch (error) {
       res.status(404).json(error);
     }
