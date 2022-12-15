@@ -1,0 +1,47 @@
+@import '../../Assets/Styles/global.scss';
+
+.Login-nav{
+    width: 100%;
+    padding: 20px;
+    background: transparent;
+    display: flex;
+    justify-content: flex-end;
+    ul{
+        list-style: none;
+        display: flex;
+        margin-right: 20px;
+        li{
+            button{
+                background-color: transparent;
+                border: none;
+                color: $color_text_primary;
+                font-size: 18px;
+                margin: 0 10px;
+                transition: 0.3s;
+            }
+            button:hover{
+                color: $color_hover_text;
+                cursor: pointer;
+            }
+        }
+    }
+    .Login-switch-theme{
+        width: 50px;
+        height: 25px;
+        position: relative;
+        border-radius: 50px;
+        border: none;
+        background: $color_button_secondary;
+        span.Login-nav-button-ball{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            z-index: 1;
+        }
+    }
+}
+    
