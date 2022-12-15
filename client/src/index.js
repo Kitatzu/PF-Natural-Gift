@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./Redux/Store/index";
 import Routes from "./Routes";
 import "./index.scss";
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
