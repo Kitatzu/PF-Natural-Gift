@@ -5,6 +5,7 @@ import Waves from "../Waves/Waves";
 import "./Login.scss";
 import Presentation from "../Assets/img/Presentationlogin-presentation.png";
 import { useState } from "react";
+import LogoNatural from "../Assets/img/Rectangle 38text_backdrop.png";
 const Login = () => {
   const [loginType, setLoginType] = useState("login");
   return (
@@ -13,6 +14,7 @@ const Login = () => {
       <div className="Login-natural-gifts">
         <h1>Natural</h1>
         <h1>Gifts</h1>
+        <img src={LogoNatural} alt="logo" />
         {loginType === "login" ? <FormLogin /> : <FormRegister />}
       </div>
 
