@@ -4,21 +4,16 @@
     height: max-content;
     background: #F2F2F2;
     margin-top: 20px;
-    
-   
+    padding: 20px;
+    .Login-Form-container-input{
+        padding: 10px 0;
+    }
     .Login-Form{        
-        display: inline-block; 
-        height: 35px;
+        display: inline-block;      
         width: 100%;
-        left: 0.01%;
-        right: -0.01%;
-        top: 12.22%;
-        bottom: 9.86%;
-        margin-top: 8px;
         border: none;
         background: #EAF0F7;
-        border-radius: 4px;
-        transform: rotate(-0.2deg);
+        border-radius: 10px;
         color: $color_text_primary;
         padding: 20px 10px;
     }
@@ -27,8 +22,7 @@
         outline-offset: unset !important;
     }
     .Buttons-Forms{
-            display: flex;
-           
+            display: flex;         
             margin-top: 18px;
             justify-content: space-between;
             width: 100%;
@@ -39,7 +33,7 @@
                 align-items: center !important;
                 border: none;
                 padding: 5px 10px;
-                border-radius: 6px;
+                border-radius: 10px;
                 background: $color_button_primary;
                 color: white;
                 font-size: 15px;
@@ -54,13 +48,9 @@
                     justify-content: center;
                     align-items: center;
                     gap: 15px;
-                    border-radius: 6px;
-                    height: 30px;
-                    left: 34.91%;
-                    right: -0.16%;
-                    border: none;
-                    top: 77.6%;
-                    bottom: -0.39%;
+                    border-radius: 25px;
+                    padding: 15px 0;
+                    border: none;        
                     background: #FFFFFF;;
                     width: 200px;
                     font-size: 15px;

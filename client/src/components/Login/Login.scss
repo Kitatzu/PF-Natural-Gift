@@ -11,9 +11,23 @@
     top: 0;
     margin: 20px;
   }
+  
   .Login-natural-gifts{
+    position: relative;
     font-family: 'Open Sans',sans-serif;
     padding:20px;
     color: $color_text_primary;
+    width: max-content;
+    overflow: hidden;
+    z-index: 1;
+    h1{
+      font-size: 100px;
+    }
+    img{
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 0;
+    }
   }
 }

@@ -5,7 +5,7 @@ import "./FormLogin.scss";
 function FormLogin() {
   return (
     <form className="Form">
-      <div className="Login-From-container-input">
+      <div className="Login-Form-container-input">
         <input
           className="Login-Form"
           type="email"
