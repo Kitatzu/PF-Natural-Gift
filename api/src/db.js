@@ -65,5 +65,6 @@ Transaction.belongsTo(Users);
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,
-  bcrypt, // para importart la conexión { conn } = require('./db.js');
+  bcrypt,
+  // para importart la conexión { conn } = require('./db.js');
 };

@@ -40,8 +40,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let { name, categories, imageProduct, stock, price, rating, inDatabase } =
-    req.body;
+  let { name, categories, imageProduct, stock, price, rating } = req.body;
 
   const newProduct = await Products.create({
     name,
@@ -49,7 +48,6 @@ router.post("/", async (req, res) => {
     stock,
     price,
     rating,
-    inDatabase,
   });
 
   const allCategories = await Categories.findAll({
