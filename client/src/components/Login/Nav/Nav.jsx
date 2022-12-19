@@ -11,27 +11,24 @@ const Nav = ({ setLoginType }) => {
       ? dispatch(setTheme("dark"))
       : dispatch(setTheme("light"));
   };
-  const theme = useSelector((state) => state.theme.mode);
-  const lightTheme = useSelector((state) => state.theme.light);
-  const darkTheme = useSelector((state) => state.theme.dark);
+  const mode = useSelector((state) => state.theme.mode);
+  const Theme = useSelector((state) => state.theme);
+
   return (
     <nav className="Login-nav">
       <div className="Login-nav-logo">
         <Icon
           icon="ph:flame-fill"
-          color={darkTheme.textSecond}
+          color={Theme[mode].textSecond}
           width="40"
           height="40"
         />
         <div className="Login-nav-logo-text">
-          <span style={{ color: darkTheme.textSecond }}>Natural</span>
+          <span style={{ color: Theme[mode].textSecond }}>Natural</span>
           <span
             style={{
               fontWeight: "400",
-              color:
-                theme === "dark"
-                  ? darkTheme.textPrimary
-                  : lightTheme.textPrimary,
+              color: Theme[mode].textPrimary,
             }}
           >
             Gift
@@ -39,17 +36,14 @@ const Nav = ({ setLoginType }) => {
         </div>
       </div>
       <div className="Login-nav-controllers">
-        <ul>
+        <ul className="Login-nav-links">
           <li>
             <button
               onClick={() => {
                 setLoginType("login");
               }}
               style={{
-                color:
-                  theme === "dark"
-                    ? darkTheme.textPrimary
-                    : lightTheme.textPrimary,
+                color: Theme[mode].textPrimary,
               }}
             >
               Login
@@ -59,10 +53,7 @@ const Nav = ({ setLoginType }) => {
             <button
               onClick={() => setLoginType("register")}
               style={{
-                color:
-                  theme === "dark"
-                    ? darkTheme.textPrimary
-                    : lightTheme.textPrimary,
+                color: Theme[mode].textPrimary,
               }}
             >
               Register

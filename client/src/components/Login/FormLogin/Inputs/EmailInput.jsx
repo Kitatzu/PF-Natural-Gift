@@ -6,14 +6,22 @@ import {
   FormControl,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
+import { useSelector } from "react-redux";
 const EmailInput = ({ handleChange, handleBlur, form }) => {
+  const mode = useSelector((store) => store.theme.mode);
+  const Theme = useSelector((store) => store.theme);
   return (
     <FormControl
       sx={{ m: 1, width: "25ch" }}
       variant="outlined"
       className="Login-form-control"
     >
-      <InputLabel htmlFor="outlined-adornment-email">E-mail</InputLabel>
+      <InputLabel
+        htmlFor="outlined-adornment-email"
+        style={{ color: Theme[mode].textPrimary }}
+      >
+        E-mail
+      </InputLabel>
       <OutlinedInput
         id="outlined-adornment-email"
         name="email"
@@ -22,11 +30,14 @@ const EmailInput = ({ handleChange, handleBlur, form }) => {
         onBlur={handleBlur}
         value={form.email}
         className="Login-input"
+        style={{
+          color: Theme[mode].textPrimary,
+        }}
         required
         endAdornment={
           <InputAdornment position="end">
             <IconButton edge="end">
-              <Icon icon="ic:outline-email" />
+              <Icon icon="ic:outline-email" color={Theme[mode].textPrimary} />
             </IconButton>
           </InputAdornment>
         }

@@ -8,6 +8,7 @@ import LastNameInput from "./Inputs/LastNameInput";
 import AgeInput from "./Inputs/AgeInput";
 import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
 import PasswordVerifyInput from "./Inputs/PasswordVerify";
+import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 
 const FormRegister = ({ handleChange, handleBlur, handleSubmit, form }) => {
   return (
@@ -37,6 +38,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form }) => {
         handleSubmit={handleSubmit}
         form={form}
       />
+      <EmailRegisterInput />
       <PasswordRegisterInput
         handleChange={handleChange}
         handleBlur={handleBlur}

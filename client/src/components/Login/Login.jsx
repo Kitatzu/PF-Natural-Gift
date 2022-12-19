@@ -9,7 +9,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import "@fontsource/roboto/300.css";
 import { useSelector } from "react-redux";
 import { useForm } from "../../utils/useForm";
-
+import { Box, Button } from "@mui/material";
 const Login = () => {
   const initialForm = {};
 
@@ -27,19 +27,13 @@ const Login = () => {
 
   const [loginType, setLoginType] = useState("login");
 
-  const theme = useSelector((state) => state.theme.mode);
-  const lightTheme = useSelector((state) => state.theme.light);
-  const darkTheme = useSelector((state) => state.theme.dark);
+  const mode = useSelector((state) => state.theme.mode);
+  const Theme = useSelector((state) => state.theme);
 
-  console.log(lightTheme);
   return (
     <div
       className="Login-container"
-      style={
-        theme === "dark"
-          ? { background: darkTheme.primary }
-          : { background: lightTheme.primary }
-      }
+      style={{ background: Theme[mode].primary }}
     >
       <Grid2 container spacing={2}>
         <Grid2 xs={12}>
@@ -70,6 +64,29 @@ const Login = () => {
               handleSubmit={handleSubmit}
             />
           )}
+          <Box
+            display="flex"
+            justifyContent="space-around"
+            className="Login-form-links"
+          >
+            {loginType === "login" ? (
+              <Button
+                variant="text"
+                onClick={() => setLoginType("register")}
+                style={{ color: Theme[mode].textPrimary }}
+              >
+                Register
+              </Button>
+            ) : (
+              <Button
+                variant="text"
+                onClick={() => setLoginType("login")}
+                style={{ color: Theme[mode].textPrimary }}
+              >
+                Login
+              </Button>
+            )}
+          </Box>
         </Grid2>
         <Grid2 xs={6} sm={6} xl={6}>
           <img src={Presentation} alt="Natural gift" />

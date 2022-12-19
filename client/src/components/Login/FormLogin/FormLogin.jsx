@@ -9,7 +9,7 @@ import PasswordInput from "./Inputs/PasswordInput";
 function FormLogin({ handleChange, handleBlur, handleSubmit, form }) {
   return (
     <form className="Form">
-      <h2>Login</h2>
+      <h2>LOGIN</h2>
       <EmailInput
         handleChange={handleChange}
         handleBlur={handleBlur}
