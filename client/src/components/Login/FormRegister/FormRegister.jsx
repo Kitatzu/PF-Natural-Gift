@@ -1,45 +1,73 @@
 import React from "react";
 import "./FormRegister.scss";
 import { Icon } from "@iconify/react";
+import { Button, ButtonGroup } from "@mui/material";
+import NameInput from "./Inputs/NameInput";
+import { Box } from "@mui/system";
+import LastNameInput from "./Inputs/LastNameInput";
+import AgeInput from "./Inputs/AgeInput";
+import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
+import PasswordVerifyInput from "./Inputs/PasswordVerify";
 
-function FormRegister() {
+const FormRegister = ({ handleChange, handleBlur, handleSubmit, form }) => {
   return (
-    <form className="Form-Register">
-      <div>
-        <input className="Input-Register" type="text" placeholder="Name" />
-
-        <input
-          className="Input-Register"
-          type="email"
-          placeholder="Enter Email"
+    <form className="Form">
+      <h2>REGISTER</h2>
+      <Box
+        className="Login-form-control"
+        display="flex"
+        justifyContent="center"
+      >
+        <NameInput
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          handleSubmit={handleSubmit}
+          form={form}
         />
-        <input
-          className="Input-Register"
-          type="password"
-          placeholder="Enter Password"
+        <LastNameInput
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          handleSubmit={handleSubmit}
+          form={form}
         />
-        <input
-          className="Input-Register"
-          type="password"
-          placeholder="Repeat your Password"
-        />
-      </div>
-      <div className="Buttons-Forms">
-        <button className="LoginI">
-          <span>
-            <Icon className="IconL" icon="ph:sign-in-light" />
-          </span>
-          <span>Sing Up</span>
-        </button>
-        <button className="Sign">
-          <span>
-            <Icon className="IconG" icon="logos:google-icon" />
-          </span>
-          <span>Continue with Google</span>
-        </button>
-      </div>
+      </Box>
+      <AgeInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+      <PasswordRegisterInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+      <PasswordVerifyInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+      <Box display="flex" justifyContent="space-around" alignItems="center">
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<Icon className="IconL" icon="ph:sign-in-light" />}
+          className="Form-button register-button"
+        >
+          Register
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<Icon className="IconG" icon="logos:google-icon" />}
+          className="Google-button"
+        >
+          Google
+        </Button>
+      </Box>
     </form>
   );
-}
+};
 
 export default FormRegister;
