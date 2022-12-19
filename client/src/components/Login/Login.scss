@@ -31,6 +31,10 @@
 }
 
 @media screen and (max-width:639px) {
+  .Image-display {
+    display: none;
+  }
+
   .Login-container{
     img{
       display: none !important;

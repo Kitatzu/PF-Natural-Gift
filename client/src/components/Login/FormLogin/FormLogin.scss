@@ -6,7 +6,6 @@
     min-width:350px;
     height: max-content;
     background: none;
-    margin-top: 20px;
     padding: 20px;
     h2{
         padding: 10px;
@@ -22,6 +21,10 @@
         width: 100%;
         margin-left: 0px !important;
     }
+    .Login-form-control:last-child {
+        margin: auto 0;
+    }
+
     .Login-input{         
         margin-left: 0 !important;
     }      
