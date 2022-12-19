@@ -1,3 +1,4 @@
+
 import {
   InputLabel,
   OutlinedInput,
@@ -43,7 +44,9 @@ const EmailInput = ({ handleChange, handleBlur, form }) => {
         }
         label="E-mail"
       />
+      
     </FormControl>
+  
   );
 };
 export default EmailInput;
