@@ -1,39 +1,46 @@
-import React from "react";
+import { React } from "react";
 import { Icon } from "@iconify/react";
 import "./FormLogin.scss";
+import { Button } from "@mui/material";
+import EmailInput from "./Inputs/EmailInput";
+import { Box } from "@mui/system";
+import PasswordInput from "./Inputs/PasswordInput";
 
-function FormLogin() {
+function FormLogin({ handleChange, handleBlur, handleSubmit, form }) {
   return (
     <form className="Form">
-      <div className="Login-Form-container-input">
-        <input
-          className="Login-Form"
-          type="email"
-          id="Email"
-          placeholder="Enter Email"
-        />
-      </div>
-      <div className="Login-From-container-input">
-        <input
-          className="Login-Form"
-          type="password"
-          placeholder="Enter Password"
-        />
-      </div>
-      <div className="Buttons-Forms">
-        <button className="LoginI">
-          <span className="LoginI-icon">
-            <Icon className="IconL" icon="ph:sign-in-light" />
-          </span>
-          <span>Login</span>
-        </button>
-        <button className="Sign">
-          <span>
-            <Icon className="IconG" icon="logos:google-icon" />
-          </span>
-          <span>Continue with Google</span>
-        </button>
-      </div>
+      <h2>LOGIN</h2>
+      <EmailInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+
+      <PasswordInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+
+      <Box display="flex" justifyContent="space-around" alignItems="center">
+        <Button
+          variant="contained"
+          color="secondary"
+          className="Form-button login-button"
+          startIcon={<Icon className="IconL" icon="ph:sign-in-light" />}
+        >
+          Login
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<Icon className="IconG" icon="logos:google-icon" />}
+          className="Google-button"
+        >
+          Login Google
+        </Button>
+      </Box>
     </form>
   );
 }

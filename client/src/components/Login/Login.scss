@@ -3,31 +3,50 @@
 .Login-container {
   position: relative;
   height: 100vh;
-  background-color: $color__primary;
   overflow: hidden;
-  .Login-presentation{
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 20px;
+  img{
+   width: 100%;
+   padding: 20px;
   }
-  
-  .Login-natural-gifts{
+  .Form{
     position: relative;
-    font-family: 'Open Sans',sans-serif;
-    padding:20px;
-    color: $color_text_primary;
-    width: max-content;
-    overflow: hidden;
-    z-index: 1;
-    h1{
-      font-size: 100px;
+    z-index: 9999;
+    .Form-button{
+      background: $color_text_secondary !important;
     }
+    h2{
+      font-weight: 600;
+    }
+    .Google-button{
+      background: #f2f2f2;
+    }
+  }
+  .Login-form-links{
+    position: relative;
+    width: 200px;
+
+    display: none;
+    z-index: 99999;
+  }
+}
+
+@media screen and (max-width:639px) {
+  .Login-container{
     img{
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 0;
+      display: none !important;
     }
+  }
+}
+@media screen and (max-height: 576px) {
+  .Wave{
+    bottom: -35px;
+  }
+}
+@media screen and (max-width: 402px) {
+  .Login-form-links{
+    display: flex !important;
+  }
+  .Login-nav-links{
+    display: none !important;
   }
 }
