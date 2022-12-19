@@ -8,12 +8,23 @@ import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import "@fontsource/roboto/300.css";
 import { useSelector } from "react-redux";
-import { useForm } from "../../utils/useForm";
+import { useForm } from "../../Hooks/useForm";
 import { Box, Button } from "@mui/material";
 const Login = () => {
-  const initialForm = {};
+  const initialForm = {
+    email:"",
+    password:"",
+  };
 
-  const validationsForm = (form) => {};
+  const validationsForm = (form) => {
+    let errors = {}
+
+    if(!form.email.trim()){
+      errors.email = "The email field is require";
+    }
+
+    return errors
+  };
 
   const {
     form,
@@ -55,7 +66,9 @@ const Login = () => {
               handleChange={handleChange}
               handleBlur={handleBlur}
               handleSubmit={handleSubmit}
+              
             />
+            
           ) : (
             <FormRegister
               form={form}
