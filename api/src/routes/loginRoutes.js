@@ -1,13 +1,15 @@
 const { Router } = require("express");
-const { json } = require("sequelize");
-const { Users, Roles, bcrypt } = require("../db.js");
+const { Users, bcrypt, Roles } = require("../db.js");
 const router = Router();
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   let { email, password } = req.body;
 
-  const validEmail = await Users.findOne({ where: { email } });
+  const validEmail = await Users.findOne(
+    { where: { email } },
+    { include: Roles }
+  );
   if (!validEmail)
     return res.status(400).json({ error: "email is not registered" });
 
@@ -15,22 +17,17 @@ router.post("/", async (req, res) => {
   if (!validPassword)
     return res.status(400).json({ error: "password incorrect" });
 
-  // const newToken = jwt.sign(
-  //   {
-  //     name: validEmail.userName,
-  //     id: validEmail.id,
-  //   },
-  //   process.env.TOKEN_SECRET
-  // );
-
-  // res.header("auth-token", newToken).json({
-  //   error: null,
-  //   data: { newToken },
-  //   message: "Welcome",
-  // });
-  res.json({
-    error: null,
-    message: "Welcome",
-  });
+  const newToken = jwt.sign(
+    {
+      id: validEmail.id,
+      name: validEmail.userName,
+      role: roleName,
+    },
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: 86400,
+    }
+  );
+  res.status(200).json({ newToken });
 });
 module.exports = router;
