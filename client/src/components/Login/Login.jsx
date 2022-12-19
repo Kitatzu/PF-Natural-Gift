@@ -92,7 +92,6 @@ const Login = () => {
           <Grid2 xs={6} sm={6} xl={6} className="Image-display">
             <img src={Presentation} alt="Natural gift" />
           </Grid2>
-        
       </Grid2>
       <Waves />
     </div>
