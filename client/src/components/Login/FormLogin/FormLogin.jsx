@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import EmailInput from "./Inputs/EmailInput";
 import { Box } from "@mui/system";
 import PasswordInput from "./Inputs/PasswordInput";
+import { Alert } from "@mui/material";
 
 function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
   return (
@@ -16,7 +17,9 @@ function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
         handleSubmit={handleSubmit}
         form={form}
       />
-      {errors.email !== "" ? <div>{errors.email}</div> : null}
+      {errors.email !== undefined ? (
+        <Alert severity="error">{errors.email}</Alert>
+      ) : null}
       <PasswordInput
         handleChange={handleChange}
         handleBlur={handleBlur}

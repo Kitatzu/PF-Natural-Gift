@@ -8,10 +8,9 @@ import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import "@fontsource/roboto/300.css";
 import { useSelector } from "react-redux";
-import { useForm } from "../../utils/useForm";
+import { useForm } from "../../Hooks/useForm";
 import { Box, Button } from "@mui/material";
 const Login = () => {
-
   const initialForm = {
     email: "",
     password: "",
@@ -51,15 +50,22 @@ const Login = () => {
         <Grid2 xs={12}>
           <Nav setLoginType={setLoginType} />
         </Grid2>
-          <Grid2
-            xs={12}
-            sm={6}
-            xl={6}
+        <Grid2
+          xs={12}
+          sm={6}
+          xl={6}
+          display="flex"
+          flexDirection="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          style={{ background: "none" }}
+        >
+          <Box
             display="flex"
             flexDirection="column"
             justifyContent="flex-start"
             alignItems="center"
-            style={{ background: "none"}}
+            style={{ background: "none" }}
             className="Form-aligned"
           >
             {loginType === "login" ? (
@@ -68,6 +74,7 @@ const Login = () => {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 handleSubmit={handleSubmit}
+                errors={errors}
               />
             ) : (
               <FormRegister
@@ -75,6 +82,7 @@ const Login = () => {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 handleSubmit={handleSubmit}
+                errors={errors}
               />
             )}
             <Box
@@ -100,10 +108,11 @@ const Login = () => {
                 </Button>
               )}
             </Box>
-          </Grid2>
-          <Grid2 xs={6} sm={6} xl={6} className="Image-display">
-            <img src={Presentation} alt="Natural gift" />
-          </Grid2>
+          </Box>
+        </Grid2>
+        <Grid2 xs={6} sm={6} xl={6} className="Image-display">
+          <img src={Presentation} alt="Natural gift" />
+        </Grid2>
       </Grid2>
       <Waves />
     </div>
