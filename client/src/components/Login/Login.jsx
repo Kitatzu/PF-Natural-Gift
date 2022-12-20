@@ -8,23 +8,12 @@ import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import "@fontsource/roboto/300.css";
 import { useSelector } from "react-redux";
-import { useForm } from "../../Hooks/useForm";
+import { useForm } from "../../utils/useForm";
 import { Box, Button } from "@mui/material";
 const Login = () => {
-  const initialForm = {
-    email:"",
-    password:"",
-  };
+  const initialForm = {};
 
-  const validationsForm = (form) => {
-    let errors = {}
-
-    if(!form.email.trim()){
-      errors.email = "The email field is require";
-    }
-
-    return errors
-  };
+  const validationsForm = (form) => {};
 
   const {
     form,
@@ -50,60 +39,59 @@ const Login = () => {
         <Grid2 xs={12}>
           <Nav setLoginType={setLoginType} />
         </Grid2>
-        <Grid2
-          xs={12}
-          sm={6}
-          xl={6}
-          display="flex"
-          flexDirection="column"
-          justifyContent="flex-start"
-          alignItems="center"
-          style={{ background: "none" }}
-        >
-          {loginType === "login" ? (
-            <FormLogin
-              form={form}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              handleSubmit={handleSubmit}
-              
-            />
-            
-          ) : (
-            <FormRegister
-              form={form}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              handleSubmit={handleSubmit}
-            />
-          )}
-          <Box
+          <Grid2
+            xs={12}
+            sm={6}
+            xl={6}
             display="flex"
-            justifyContent="space-around"
-            className="Login-form-links"
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            style={{ background: "none"}}
+            className="Form-aligned"
           >
             {loginType === "login" ? (
-              <Button
-                variant="text"
-                onClick={() => setLoginType("register")}
-                style={{ color: Theme[mode].textPrimary }}
-              >
-                Register
-              </Button>
+              <FormLogin
+                form={form}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleSubmit={handleSubmit}
+              />
             ) : (
-              <Button
-                variant="text"
-                onClick={() => setLoginType("login")}
-                style={{ color: Theme[mode].textPrimary }}
-              >
-                Login
-              </Button>
+              <FormRegister
+                form={form}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleSubmit={handleSubmit}
+              />
             )}
-          </Box>
-        </Grid2>
-        <Grid2 xs={6} sm={6} xl={6}>
-          <img src={Presentation} alt="Natural gift" />
-        </Grid2>
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              className="Login-form-links"
+            >
+              {loginType === "login" ? (
+                <Button
+                  variant="text"
+                  onClick={() => setLoginType("register")}
+                  style={{ color: Theme[mode].textPrimary }}
+                >
+                  Register
+                </Button>
+              ) : (
+                <Button
+                  variant="text"
+                  onClick={() => setLoginType("login")}
+                  style={{ color: Theme[mode].textPrimary }}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
+          </Grid2>
+          <Grid2 xs={6} sm={6} xl={6} className="Image-display">
+            <img src={Presentation} alt="Natural gift" />
+          </Grid2>
       </Grid2>
       <Waves />
     </div>
