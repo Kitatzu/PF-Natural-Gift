@@ -37,6 +37,7 @@ const PasswordInput = ({ handleChange, handleBlur, form }) => {
         className="Login-input"
         onChange={handleChange}
         onBlur={handleBlur}
+        name="password"
         value={form.password}
         style={{ color: Theme[mode].textPrimary }}
         endAdornment={

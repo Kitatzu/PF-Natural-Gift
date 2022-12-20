@@ -12,18 +12,18 @@ import { useForm } from "../../Hooks/useForm";
 import { Box, Button } from "@mui/material";
 const Login = () => {
   const initialForm = {
-    email:"",
-    password:"",
+    email: "",
+    password: "",
   };
 
   const validationsForm = (form) => {
-    let errors = {}
+    let errors = {};
 
-    if(!form.email.trim()){
+    if (!form.email.trim()) {
       errors.email = "The email field is require";
     }
 
-    return errors
+    return errors;
   };
 
   const {
@@ -40,7 +40,7 @@ const Login = () => {
 
   const mode = useSelector((state) => state.theme.mode);
   const Theme = useSelector((state) => state.theme);
-
+  console.log(form, errors);
   return (
     <div
       className="Login-container"
@@ -66,15 +66,15 @@ const Login = () => {
               handleChange={handleChange}
               handleBlur={handleBlur}
               handleSubmit={handleSubmit}
-              
+              errors={errors}
             />
-            
           ) : (
             <FormRegister
               form={form}
               handleChange={handleChange}
               handleBlur={handleBlur}
               handleSubmit={handleSubmit}
+              errors={errors}
             />
           )}
           <Box

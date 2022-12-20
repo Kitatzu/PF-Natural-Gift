@@ -6,7 +6,7 @@ import EmailInput from "./Inputs/EmailInput";
 import { Box } from "@mui/system";
 import PasswordInput from "./Inputs/PasswordInput";
 
-function FormLogin({ handleChange, handleBlur, handleSubmit, form }) {
+function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
   return (
     <form className="Form">
       <h2>LOGIN</h2>
@@ -16,7 +16,7 @@ function FormLogin({ handleChange, handleBlur, handleSubmit, form }) {
         handleSubmit={handleSubmit}
         form={form}
       />
-      
+      {errors.email !== "" ? <div>{errors.email}</div> : null}
       <PasswordInput
         handleChange={handleChange}
         handleBlur={handleBlur}
