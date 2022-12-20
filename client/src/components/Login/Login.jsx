@@ -79,29 +79,53 @@ const Login = () => {
           )}
           <Box
             display="flex"
-            justifyContent="space-around"
-            className="Login-form-links"
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            style={{ background: "none" }}
+            className="Form-aligned"
           >
             {loginType === "login" ? (
-              <Button
-                variant="text"
-                onClick={() => setLoginType("register")}
-                style={{ color: Theme[mode].textPrimary }}
-              >
-                Register
-              </Button>
+              <FormLogin
+                form={form}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleSubmit={handleSubmit}
+              />
             ) : (
-              <Button
-                variant="text"
-                onClick={() => setLoginType("login")}
-                style={{ color: Theme[mode].textPrimary }}
-              >
-                Login
-              </Button>
+              <FormRegister
+                form={form}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleSubmit={handleSubmit}
+              />
             )}
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              className="Login-form-links"
+            >
+              {loginType === "login" ? (
+                <Button
+                  variant="text"
+                  onClick={() => setLoginType("register")}
+                  style={{ color: Theme[mode].textPrimary }}
+                >
+                  Register
+                </Button>
+              ) : (
+                <Button
+                  variant="text"
+                  onClick={() => setLoginType("login")}
+                  style={{ color: Theme[mode].textPrimary }}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
           </Box>
         </Grid2>
-        <Grid2 xs={6} sm={6} xl={6}>
+        <Grid2 xs={6} sm={6} xl={6} className="Image-display">
           <img src={Presentation} alt="Natural gift" />
         </Grid2>
       </Grid2>
