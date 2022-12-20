@@ -37,8 +37,16 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let { userName, password, email, firstName, lastName, country, roleName } =
-    req.body;
+  let {
+    userName,
+    password,
+    email,
+    firstName,
+    lastName,
+    country,
+    roleName,
+    avatar,
+  } = req.body;
 
   try {
     let findUser = await Users.findOne({ where: { userName } });
@@ -51,6 +59,7 @@ router.post("/", async (req, res) => {
       const salt = await bcrypt.genSalt(10);
 
       const newUser = await Users.create({
+        avatar,
         userName,
         password: await bcrypt.hash(password, salt),
         email,
