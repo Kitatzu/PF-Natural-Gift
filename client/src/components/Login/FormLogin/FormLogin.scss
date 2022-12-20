@@ -1,0 +1,40 @@
+@import '../../Assets/Styles/global.scss';
+.Form{
+    position: relative;
+    top: 0;
+    width: 350px;
+    min-width:350px;
+    height: max-content;
+    background: none;
+    padding: 20px;
+    h2{
+        padding: 10px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: $color_text_primary;
+        letter-spacing: 1.5px;
+        font-size: 26px;
+        font-weight: lighter;
+        text-align: center;
+
+    }
+    .Login-form-control{
+        width: 100%;
+        margin-left: 0px !important;
+    }
+    .Login-form-control:last-child {
+        margin: auto 0;
+    }
+
+    .Login-input{         
+        margin-left: 0 !important;
+    }      
+}
+
+
+
+
+
+
+
+
+

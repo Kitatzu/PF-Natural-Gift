@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { Users, Roles, bcrypt } = require("../db");
 const router = Router();
+const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
   let { userName } = req.query;
@@ -9,11 +10,7 @@ router.get("/", async (req, res) => {
     try {
       let usersInDb = await Users.findAll({
         where: { userName },
-        include: {
-          model: Roles,
-          attributes: ["roleName"],
-          through: { attributes: [] },
-        },
+        include: { Roles },
       });
 
       usersInDb.length
@@ -40,7 +37,8 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let { userName, password, email, firstName, lastName, country } = req.body;
+  let { userName, password, email, firstName, lastName, country, roleName } =
+    req.body;
 
   try {
     let findUser = await Users.findOne({ where: { userName } });
@@ -60,7 +58,30 @@ router.post("/", async (req, res) => {
         lastName,
         country,
       });
-      return res.status(201).json(newUser);
+
+      if (roleName) {
+        const findRoles = await Roles.findAll({
+          where: { roleName: roleName },
+        });
+        newUser.addRoles(findRoles);
+      } else {
+        const findOrCreate = await Roles.findOne({
+          where: { roleName: "User" },
+        });
+        newUser.addRoles(findOrCreate);
+      }
+      const newToken = jwt.sign(
+        {
+          id: newUser.id,
+          name: userName,
+          role: roleName,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400,
+        }
+      );
+      res.status(200).json({ newToken });
     }
   } catch (error) {
     return res.status(404).json({ error });

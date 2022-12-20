@@ -44,10 +44,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isAdmin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
       cartId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,

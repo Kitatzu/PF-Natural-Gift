@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, TOKEN_SECRET } = process.env;
 const bcrypt = require("bcrypt");
 
 const sequelize = new Sequelize(
@@ -65,5 +65,7 @@ Transaction.belongsTo(Users);
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,
-  bcrypt, // para importart la conexión { conn } = require('./db.js');
+  bcrypt,
+  TOKEN_SECRET,
+  // para importart la conexión { conn } = require('./db.js');
 };

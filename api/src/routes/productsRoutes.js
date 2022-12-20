@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const { Products, Categories } = require("../db.js");
 const router = Router();
+const verifyToken = require("../middlewares/authenticationJwt.js").verifyToken;
+const isAdmin = require("../middlewares/authenticationJwt.js").isAdmin;
 
 router.get("/", async (req, res) => {
   let { name } = req.query;
@@ -40,8 +42,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let { name, categories, imageProduct, stock, price, rating, inDatabase } =
-    req.body;
+  let { name, categories, imageProduct, stock, price, rating } = req.body;
 
   const newProduct = await Products.create({
     name,
@@ -49,7 +50,6 @@ router.post("/", async (req, res) => {
     stock,
     price,
     rating,
-    inDatabase,
   });
 
   const allCategories = await Categories.findAll({
