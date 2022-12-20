@@ -1,4 +1,3 @@
-
 import {
   InputLabel,
   OutlinedInput,
@@ -8,7 +7,9 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
+
 const EmailInput = ({ handleChange, handleBlur, form }) => {
+  console.log(form);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   return (
@@ -29,8 +30,8 @@ const EmailInput = ({ handleChange, handleBlur, form }) => {
         type={"email"}
         onChange={handleChange}
         onBlur={handleBlur}
-        value={form.email}
         className="Login-input"
+        value={form.email}
         style={{
           color: Theme[mode].textPrimary,
         }}
@@ -44,9 +45,7 @@ const EmailInput = ({ handleChange, handleBlur, form }) => {
         }
         label="E-mail"
       />
-      
     </FormControl>
-  
   );
 };
 export default EmailInput;

@@ -60,23 +60,6 @@ const Login = () => {
           alignItems="center"
           style={{ background: "none" }}
         >
-          {loginType === "login" ? (
-            <FormLogin
-              form={form}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              handleSubmit={handleSubmit}
-              errors={errors}
-            />
-          ) : (
-            <FormRegister
-              form={form}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              handleSubmit={handleSubmit}
-              errors={errors}
-            />
-          )}
           <Box
             display="flex"
             flexDirection="column"
@@ -91,6 +74,7 @@ const Login = () => {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 handleSubmit={handleSubmit}
+                errors={errors}
               />
             ) : (
               <FormRegister
@@ -98,6 +82,7 @@ const Login = () => {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 handleSubmit={handleSubmit}
+                errors={errors}
               />
             )}
             <Box
