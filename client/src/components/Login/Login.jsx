@@ -11,9 +11,21 @@ import { useSelector } from "react-redux";
 import { useForm } from "../../utils/useForm";
 import { Box, Button } from "@mui/material";
 const Login = () => {
-  const initialForm = {};
 
-  const validationsForm = (form) => {};
+  const initialForm = {
+    email: "",
+    password: "",
+  };
+
+  const validationsForm = (form) => {
+    let errors = {};
+
+    if (!form.email.trim()) {
+      errors.email = "The email field is require";
+    }
+
+    return errors;
+  };
 
   const {
     form,
@@ -29,7 +41,7 @@ const Login = () => {
 
   const mode = useSelector((state) => state.theme.mode);
   const Theme = useSelector((state) => state.theme);
-
+  console.log(form, errors);
   return (
     <div
       className="Login-container"
