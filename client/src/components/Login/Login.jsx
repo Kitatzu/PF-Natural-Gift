@@ -14,13 +14,72 @@ const Login = () => {
   const initialForm = {
     email: "",
     password: "",
+    name:"",
+    age:"",
+    lastName:"",
+    registerpassword:"",
+    verifypassword:"",
+    registerEmail:"",
   };
 
   const validationsForm = (form) => {
     let errors = {};
+    let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+    let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+    let regexPass = /(?=.*[0-9])/;
+    let regexPass1 = /(?=.*[!@#$%^&*])/
+    let regexPass2 = /(?=.{8,})/
+    let regexPass3 = /(?=.*[A-Z])/
 
     if (!form.email.trim()) {
-      errors.email = "The email field is require";
+      errors.email = "The Email field is require";
+    } else if (!regexEmail.test(form.email.trim())){
+      errors.email = "Este campo es incorrecto"
+    } 
+    if (!form.password.trim()) {
+      errors.password = "The password field is require";
+    } else if (!regexPass.test(form.password.trim())){
+      errors.password = "Este campo requiere al menos 1 caracter numerico"
+    } else if (!regexPass1.test(form.password.trim())){
+      errors.password = "Debe contener un caracter especial"
+    } else if (!regexPass2.test(form.password.trim())){
+      errors.password = "Debe contener al menos 8 caracteres"
+    } else if (!regexPass3.test(form.password.trim())){
+      errors.password = "Debe tener al menos 1 mayùs"
+    }
+    if (!form.name.trim()) {
+      errors.name = "The name field is require";
+    } else if (!regexName.test(form.name.trim())){
+      errors.name = "Solo acepta letras y espacios blancos"
+    }
+    if (!form.age.trim()) {
+      errors.age = "The age field is require";
+    }
+    if (!form.lastName.trim()) {
+      errors.lastName = "The last name field is require";
+    }else if (!regexName.test(form.lastName.trim())){
+      errors.lastName = "Solo acepta letras y espacios blancos"
+    }
+    if (!form.registerpassword.trim()) {
+      errors.registerpassword = "The password field is require";
+    }else if (!regexPass.test(form.registerpassword.trim())){
+      errors.registerpassword = "Este campo requiere al menos 1 caracter numerico"
+    } else if (!regexPass1.test(form.registerpassword.trim())){
+      errors.registerpassword = "Debe contener un caracter especial"
+    } else if (!regexPass2.test(form.registerpassword.trim())){
+      errors.registerpassword = "Debe contener al menos 8 caracteres"
+    }else if (!regexPass3.test(form.password.trim())){
+      errors.password = "Debe tener al menos 1 mayùs"
+    } else if (!form.registerpassword.include("")){
+      errors.registerpassword = "No se permiten estos caracteres"
+    }
+    if (!form.verifypassword.trim()) {
+      errors.verifypassword = "The password field is require";
+    } 
+    if (!form.registerEmail.trim()) {
+      errors.registerEmail = "The Email field is require";
+    }else if (!regexEmail.test(form.registerEmail.trim())){
+      errors.registerEmail = "Este campo es incorrecto"
     }
 
     return errors;

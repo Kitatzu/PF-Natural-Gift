@@ -26,6 +26,9 @@ function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
         handleSubmit={handleSubmit}
         form={form}
       />
+      {errors.password !== undefined ? (
+        <Alert severity="error">{errors.password}</Alert>
+      ) : null}
 
       <Box display="flex" justifyContent="space-around" alignItems="center">
         <Button
