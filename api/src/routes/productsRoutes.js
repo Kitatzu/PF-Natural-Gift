@@ -1,63 +1,18 @@
 const { Router } = require("express");
-const { Products, Categories } = require("../db.js");
+const {
+  allProducts,
+  createProduct,
+  findProduct,
+  deleteProduct,
+  updateProduct,
+} = require("../controller/productsController.js");
+
 const router = Router();
-const verifyToken = require("../middlewares/authenticationJwt.js").verifyToken;
-const isAdmin = require("../middlewares/authenticationJwt.js").isAdmin;
 
-router.get("/", async (req, res) => {
-  let { name } = req.query;
+router.get("/", allProducts);
+router.post("/", createProduct);
+router.get("/:id", findProduct);
+router.delete("/:id", deleteProduct);
+router.put("/:id", updateProduct);
 
-  if (name) {
-    try {
-      let productsInDb = await Products.findAll({
-        where: { name },
-        include: {
-          model: Categories,
-          attributes: ["name"],
-          through: { attributes: [] },
-        },
-      });
-
-      productsInDb.length
-        ? res.status(201).json(productsInDb)
-        : res.status(404).json("product not found");
-    } catch (error) {
-      res.status(404).json(error);
-    }
-  } else {
-    try {
-      let productsInDb = await Products.findAll({
-        include: {
-          model: Categories,
-          attributes: ["name"],
-          through: { attributes: [] },
-        },
-      });
-
-      res.status(201).json(productsInDb);
-    } catch (error) {
-      res.status(404).json(error);
-    }
-  }
-});
-
-router.post("/", async (req, res) => {
-  let { name, categories, imageProduct, stock, price, rating } = req.body;
-
-  const newProduct = await Products.create({
-    name,
-    imageProduct,
-    stock,
-    price,
-    rating,
-  });
-
-  const allCategories = await Categories.findAll({
-    where: { name: categories },
-  });
-
-  await newProduct.addCategories(allCategories);
-
-  res.status(201).send(newProduct);
-});
 module.exports = router;

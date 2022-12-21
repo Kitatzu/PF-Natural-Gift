@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
 
+      avatar: {
+        type: DataTypes.STRING,
+      },
+
       userName: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -32,11 +32,12 @@ const PasswordRegisterInput = ({ handleChange, handleBlur, form }) => {
       </InputLabel>
       <OutlinedInput
         id="outlined-adornment-password"
+        name="registerpassword"
         type={showPassword ? "text" : "password"}
         className="Login-input"
         onChange={handleChange}
         onBlur={handleBlur}
-        value={form.password}
+        value={form.registerpassword}
         style={{ color: Theme[mode].textPrimary }}
         endAdornment={
           <InputAdornment position="end">

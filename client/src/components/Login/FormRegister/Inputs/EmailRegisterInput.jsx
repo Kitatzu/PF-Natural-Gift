@@ -8,6 +8,7 @@ import {
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
 const EmailRegisterInput = ({ handleChange, handleBlur, form }) => {
+  console.log(form)
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   return (
@@ -24,10 +25,11 @@ const EmailRegisterInput = ({ handleChange, handleBlur, form }) => {
       </InputLabel>
       <OutlinedInput
         id="outlined-adornment-email"
-        name="email"
+        name="registerEmail"
         type={"email"}
         onChange={handleChange}
         onBlur={handleBlur}
+        value={form.registerEmail}
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
         required

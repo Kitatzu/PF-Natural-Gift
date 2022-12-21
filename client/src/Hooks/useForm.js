@@ -2,10 +2,15 @@ import { useState } from "react";
 export const useForm = (initialForm, validateForm) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [loading, setloading] = useState(false);
-  const [response, setresponse] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState(null);
 
   const handleChange = (e) => {
+    if (e.target.name === "verifypassword") {
+      if (e.target.value !== form.registerpassword) {
+        setErrors({ ...errors, verifypassword: "The passwords not match" });
+      }
+    }
     const { name, value } = e.target;
     setForm({
       ...form,
