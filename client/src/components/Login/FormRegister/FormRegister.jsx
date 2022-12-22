@@ -1,7 +1,7 @@
 import React from "react";
 import "./FormRegister.scss";
 import { Icon } from "@iconify/react";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button} from "@mui/material";
 import NameInput from "./Inputs/NameInput";
 import { Box } from "@mui/system";
 import LastNameInput from "./Inputs/LastNameInput";
@@ -10,17 +10,8 @@ import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
 import PasswordVerifyInput from "./Inputs/PasswordVerify";
 import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
-import axios from "axios"
 const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
-  const onSubmit = () => {
-    axios.post("http://localhost:3001/api/routes/registerRoutes", form)
-    .then(({data}) => {
-      console.log(data)
-    })
-    .catch(({response}) => {
-      console.log(response)
-    })
-  };
+
   return (
     <form className="Form">
       <h2>REGISTER</h2>
@@ -95,7 +86,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           color="secondary"
           startIcon={<Icon className="IconL" icon="ph:sign-in-light" />}
           className="Form-button register-button"
-          onClick={onSubmit}
+          onClick={handleSubmit}
         >
           Register
         </Button>
