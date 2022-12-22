@@ -1,7 +1,7 @@
 import FormLogin from "./FormLogin/FormLogin";
 import FormRegister from "./FormRegister/FormRegister";
 import Nav from "./Nav/Nav";
-import Waves from "../Waves/Waves";
+import WavesLogin from "../Waves/WavesLogin/WavesLogin";
 import "./Login.scss";
 import Presentation from "../Assets/img/Presentationlogin-presentation.png";
 import { useState } from "react";
@@ -173,7 +173,7 @@ const Login = () => {
           <img src={Presentation} alt="Natural gift" />
         </Grid2>
       </Grid2>
-      <Waves />
+      <WavesLogin/>
     </div>
   );
 };
