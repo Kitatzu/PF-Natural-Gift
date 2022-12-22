@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { Users, Roles } = require("../db.js");
+const { transporter } = require("../middlewares/mails.js");
+const { Email } = process.env;
 
 module.exports.verifyToken = async (req, res, next) => {
   const token = req.headers["auth"];
