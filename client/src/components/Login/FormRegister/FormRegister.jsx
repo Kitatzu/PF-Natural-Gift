@@ -10,8 +10,17 @@ import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
 import PasswordVerifyInput from "./Inputs/PasswordVerify";
 import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
-
+import axios from "axios"
 const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
+  const onSubmit = () => {
+    axios.post("http://localhost:3001/api/routes/registerRoutes", form)
+    .then(({data}) => {
+      console.log(data)
+    })
+    .catch(({response}) => {
+      console.log(response)
+    })
+  };
   return (
     <form className="Form">
       <h2>REGISTER</h2>
@@ -25,6 +34,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
+          
         />
         {errors.name !== undefined ? (
         <Alert severity="error">{errors.name}</Alert>
@@ -34,6 +44,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
+          
         />
         {errors.lastName !== undefined ? (
         <Alert severity="error">{errors.lastName}</Alert>
@@ -44,6 +55,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         form={form}
+        
       />
       {errors.age !== undefined ? (
         <Alert severity="error">{errors.age}</Alert>
@@ -53,6 +65,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       handleBlur={handleBlur}
       handleSubmit={handleSubmit}
       form={form}
+      
       />
       {errors.registerEmail !== undefined ? (
         <Alert severity="error">{errors.registerEmail}</Alert>
@@ -62,6 +75,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         form={form}
+        
       />
       {errors.registerpassword !== undefined ? (
         <Alert severity="error">{errors.registerpassword}</Alert>
@@ -81,6 +95,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           color="secondary"
           startIcon={<Icon className="IconL" icon="ph:sign-in-light" />}
           className="Form-button register-button"
+          onClick={onSubmit}
         >
           Register
         </Button>
