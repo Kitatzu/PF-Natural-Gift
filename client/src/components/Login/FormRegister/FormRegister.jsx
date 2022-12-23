@@ -10,7 +10,9 @@ import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
 import PasswordVerifyInput from "./Inputs/PasswordVerify";
 import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
+
 const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
+
 
   return (
     <form className="Form">
@@ -25,38 +27,34 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
-          
         />
         {errors.name !== undefined ? (
-        <Alert severity="error">{errors.name}</Alert>
-      ) : null}
+          <Alert severity="error">{errors.name}</Alert>
+        ) : null}
         <LastNameInput
           handleChange={handleChange}
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
-          
         />
         {errors.lastName !== undefined ? (
-        <Alert severity="error">{errors.lastName}</Alert>
-      ) : null}
+          <Alert severity="error">{errors.lastName}</Alert>
+        ) : null}
       </Box>
       <AgeInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         form={form}
-        
       />
       {errors.age !== undefined ? (
         <Alert severity="error">{errors.age}</Alert>
       ) : null}
-      <EmailRegisterInput 
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleSubmit={handleSubmit}
-      form={form}
-      
+      <EmailRegisterInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
       />
       {errors.registerEmail !== undefined ? (
         <Alert severity="error">{errors.registerEmail}</Alert>
@@ -66,7 +64,6 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         form={form}
-        
       />
       {errors.registerpassword !== undefined ? (
         <Alert severity="error">{errors.registerpassword}</Alert>
