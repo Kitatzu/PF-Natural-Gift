@@ -10,6 +10,7 @@ import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
 import PasswordVerifyInput from "./Inputs/PasswordVerify";
 import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
+import CountriesInput from "./Inputs/CountriesInput";
 
 const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
 
@@ -58,6 +59,15 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       />
       {errors.registerEmail !== undefined ? (
         <Alert severity="error">{errors.registerEmail}</Alert>
+      ) : null}
+      <CountriesInput
+      handleChange={handleChange}
+      handleBlur={handleBlur}
+      handleSubmit={handleSubmit}
+      form={form}
+       />
+        {errors.Country !== undefined ? (
+        <Alert severity="error">{errors.Country}</Alert>
       ) : null}
       <PasswordRegisterInput
         handleChange={handleChange}

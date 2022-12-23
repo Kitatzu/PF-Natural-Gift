@@ -20,6 +20,7 @@ const Login = () => {
     registerpassword:"",
     verifypassword:"",
     registerEmail:"",
+    Country:"",
   };
 
   const validationsForm = (form) => {
@@ -80,6 +81,11 @@ const Login = () => {
       errors.registerEmail = "The Email field is require";
     }else if (!regexEmail.test(form.registerEmail.trim())){
       errors.registerEmail = "Este campo es incorrecto"
+    }
+    if(!form.Country.trim()) {
+      errors.Country="The Country field is require"
+    } else if(!regexEmail.test(form.Country.trim())){
+      errors.Country = "Solo acepta letras y espacios blancos"
     }
 
     return errors;
