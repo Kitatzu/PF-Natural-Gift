@@ -1,29 +1,42 @@
-const mongoose = require("mongoose");
+const { DataTypes, UUIDV4 } = require("sequelize");
 
-const productSchema = new mongoose.Schema({
-  name: String,
-
-  imageProduct: String,
-
-  stock: Number,
-
-  price: Number,
-
-  description: String,
-
-  inStock: {
-    type: Boolean,
-    default: true,
-  },
-
-  rating: Number,
-  categories: [
+module.exports = (sequelize) => {
+  sequelize.define(
+    "products",
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "categories",
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      imageProduct: {
+        type: DataTypes.STRING,
+      },
+      stock: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.DECIMAL(10,2),
+        allowNull: false,
+      },
+      rating: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+      },
+      inDatabase: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     },
-  ],
-});
-
-const Products = mongoose.model("products", productSchema);
-module.exports = Products;
+    {
+      paranoid: true,
+      timestamp: true,
+    }
+  );
+};

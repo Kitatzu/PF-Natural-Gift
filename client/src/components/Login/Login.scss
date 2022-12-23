@@ -1,0 +1,61 @@
+@import "../Assets/Styles/global.scss";
+@import "../Assets/Styles/fonts.scss";
+.Login-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  img{
+   width: 100%;
+   padding: 20px;
+  }
+  .Form{
+    position: relative;
+    z-index: 9999;
+    .Form-button{
+      background: $color_text_secondary !important;
+    }
+    h2{
+      font-weight: 600;
+    }
+    .Google-button{
+      background: #f2f2f2;
+    }
+  }
+  .Login-form-links{
+    position: relative;
+    width: 200px;
+
+    display: none;
+    z-index: 99999;
+  }
+
+  .Waves-login {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width:639px) {
+  .Image-display {
+    display: none;
+  }
+
+  .Login-container{
+    img{
+      display: none !important;
+    }
+  }
+}
+@media screen and (max-height: 576px) {
+  .Wave{
+    bottom: -35px;
+  }
+}
+@media screen and (max-width: 402px) {
+  .Login-form-links{
+    display: flex !important;
+  }
+  .Login-nav-links{
+    display: none !important;
+  }
+}

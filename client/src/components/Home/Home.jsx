@@ -1,22 +1,18 @@
-import "./Home.css";
-import { useEffect, React } from "react";
-import { useDispatch } from "react-redux";
-import { getProductsThunk } from "../../containers/redux/thunks";
+import React from "react";
+import Banner from "./Banner/Banner.jsx"
+import InfoSection from "./InfoSection/InfoSection.jsx";
+import ProductsHome from "./ProductsHome/ProductsHome.jsx";
+import Waves from "../Waves/Waves";
+import "./Home.scss";
 
 const Home = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductsThunk());
-  }, [dispatch]);
-
   return (
     <div className="Home">
-      <div className="Home-content">
-        <h1 className="Home-title">Products</h1>
-      </div>
+      <Banner/>
+      <InfoSection/>
+      <ProductsHome/>
+      <Waves/>
     </div>
-  );
+  )
 };
-
 export default Home;

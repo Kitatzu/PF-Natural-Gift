@@ -1,0 +1,14 @@
+.ProductsHome-title {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.Products-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  margin: 2rem 3rem;
+}
