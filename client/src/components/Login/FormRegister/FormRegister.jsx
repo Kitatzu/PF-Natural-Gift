@@ -20,7 +20,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       <h2>REGISTER</h2>
       <Box
         className="Login-form-control"
-        display="flex"
+        display="flex-column"
         justifyContent="center"
       >
         <NameInput
@@ -29,19 +29,22 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           handleSubmit={handleSubmit}
           form={form}
         />
-        {errors.name !== undefined ? (
+         {errors.name !== undefined ? (
           <Alert severity="error">{errors.name}</Alert>
         ) : null}
+        
         <LastNameInput
           handleChange={handleChange}
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
         />
+        </Box>
+        
         {errors.lastName !== undefined ? (
           <Alert severity="error">{errors.lastName}</Alert>
         ) : null}
-      </Box>
+      
       <AgeInput
         handleChange={handleChange}
         handleBlur={handleBlur}
@@ -87,6 +90,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       {errors.verifypassword !== undefined ? (
         <Alert severity="error">{errors.verifypassword}</Alert>
       ) : null}
+      
       <Box display="flex" justifyContent="space-around" alignItems="center">
         <Button
           variant="contained"
