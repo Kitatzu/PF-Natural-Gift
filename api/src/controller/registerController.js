@@ -1,5 +1,7 @@
 const { Users, Roles, bcrypt } = require("../db");
 const jwt = require("jsonwebtoken");
+const { transporter } = require("../middlewares/mails.js");
+const { Email } = process.env;
 
 async function registerUser(req, res) {
   let {
@@ -55,7 +57,14 @@ async function registerUser(req, res) {
           expiresIn: 86400,
         }
       );
-      res.status(200).json({ newToken });
+
+      const send = await transporter.sendMail({
+        from: `"Te has registrado exitosamente" <${Email}>`, // sender address
+        to: "exe922@gmail.com", // list of receivers
+        subject: "No entendiste? te registraste bien", // Subject line
+        html: "<b> Que miras? Andá pa'allá, bobo, andá pa'allá</b>", // html body
+      });
+      res.status(200).json({ newToken, send });
     }
   } catch (error) {
     return res.status(404).json({ error });

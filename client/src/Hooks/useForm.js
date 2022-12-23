@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { RegisterUser } from "../Redux/Thunks/RegisterUser";
 export const useForm = (initialForm, validateForm) => {
+  const dispatch = useDispatch();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -23,7 +26,17 @@ export const useForm = (initialForm, validateForm) => {
     setErrors(validateForm(form));
   };
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    const formSend = {};
+
+    formSend.firstName = form.name;
+    formSend.userName = form.firstName + form.lastName + form.age;
+    formSend.email = form.registerEmail;
+    formSend.password = form.registerpassword;
+    (async () => {
+      dispatch(RegisterUser(formSend));
+    })();
+  };
 
   return {
     form,
