@@ -20,6 +20,7 @@ const Login = () => {
     registerpassword:"",
     verifypassword:"",
     registerEmail:"",
+    Country:"",
   };
 
   const validationsForm = (form) => {
@@ -52,14 +53,14 @@ const Login = () => {
     } else if (!regexName.test(form.name.trim())){
       errors.name = "Solo acepta letras y espacios blancos"
     }
+    if (!regexName.test(form.lastName.trim())) {
+      errors.lastName = "Solo acepta letras y espacios blancos"
+    }
+
     if (!form.age.trim()) {
       errors.age = "The age field is require";
     }
-    if (!form.lastName.trim()) {
-      errors.lastName = "The last name field is require";
-    }else if (!regexName.test(form.lastName.trim())){
-      errors.lastName = "Solo acepta letras y espacios blancos"
-    }
+
     if (!form.registerpassword.trim()) {
       errors.registerpassword = "The password field is require";
     }else if (!regexPass.test(form.registerpassword.trim())){
@@ -80,6 +81,11 @@ const Login = () => {
       errors.registerEmail = "The Email field is require";
     }else if (!regexEmail.test(form.registerEmail.trim())){
       errors.registerEmail = "Este campo es incorrecto"
+    }
+    if(!form.Country.trim()) {
+      errors.Country="The Country field is require"
+    } else if(!regexName.test(form.Country.trim())){
+      errors.Country = "Solo acepta letras y espacios blancos"
     }
 
     return errors;
