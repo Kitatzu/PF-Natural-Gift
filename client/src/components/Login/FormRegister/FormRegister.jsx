@@ -1,7 +1,7 @@
 import React from "react";
 import "./FormRegister.scss";
 import { Icon } from "@iconify/react";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 import NameInput from "./Inputs/NameInput";
 import { Box } from "@mui/system";
 import LastNameInput from "./Inputs/LastNameInput";
@@ -12,9 +12,13 @@ import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
 import CountriesInput from "./Inputs/CountriesInput";
 
-const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
-
-
+const FormRegister = ({
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  form,
+  errors,
+}) => {
   return (
     <form className="Form">
       <h2>REGISTER</h2>
@@ -54,6 +58,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       {errors.age !== undefined ? (
         <Alert severity="error">{errors.age}</Alert>
       ) : null}
+
       <EmailRegisterInput
         handleChange={handleChange}
         handleBlur={handleBlur}
