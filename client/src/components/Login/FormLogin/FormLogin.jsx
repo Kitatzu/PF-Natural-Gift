@@ -7,14 +7,16 @@ import { Box } from "@mui/system";
 import PasswordInput from "./Inputs/PasswordInput";
 import { Alert } from "@mui/material";
 
-function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
+
+function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
+  console.log(handleSubmits)
   return (
     <form className="Form">
       <h2>LOGIN</h2>
       <EmailInput
         handleChange={handleChange}
         handleBlur={handleBlur}
-        handleSubmit={handleSubmit}
+        handleSubmits={handleSubmits}
         form={form}
       />
       {errors.email !== undefined ? (
@@ -23,7 +25,7 @@ function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
       <PasswordInput
         handleChange={handleChange}
         handleBlur={handleBlur}
-        handleSubmit={handleSubmit}
+        handleSubmits={handleSubmits}
         form={form}
       />
       {errors.password !== undefined ? (
@@ -36,6 +38,7 @@ function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
           color="secondary"
           className="Form-button login-button"
           startIcon={<Icon className="IconL" icon="ph:sign-in-light" />}
+          onClick={handleSubmits}
         >
           Login
         </Button>
@@ -43,6 +46,7 @@ function FormLogin({ handleChange, handleBlur, handleSubmit, form, errors }) {
           variant="outlined"
           startIcon={<Icon className="IconG" icon="logos:google-icon" />}
           className="Google-button"
+          
         >
           Login Google
         </Button>

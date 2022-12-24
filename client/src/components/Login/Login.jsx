@@ -16,11 +16,11 @@ const Login = () => {
     password: "",
     name: "",
     age: "",
-    lastName: "",
+    lastname: "",
     registerpassword: "",
     verifypassword: "",
     registerEmail: "",
-    Country: "",
+    country: "",
   };
 
   const validationsForm = (form) => {
@@ -53,7 +53,9 @@ const Login = () => {
     } else if (!regexName.test(form.name.trim())) {
       errors.name = "Solo acepta letras y espacios blancos";
     }
-    if (!regexName.test(form.lastname.trim())) {
+    if (!form.lastname.trim()) {
+      errors.name = "The name field is require";
+    } else if (!regexName.test(form.lastname.trim())) {
       errors.lastname = "Solo acepta letras y espacios blancos";
     }
 
@@ -86,7 +88,7 @@ const Login = () => {
     if (!form.country.trim()) {
       errors.Country = "The Country field is require";
     } else if (!regexName.test(form.country.trim())) {
-      errors.Country = "Solo acepta letras y espacios blancos";
+      errors.country = "Solo acepta letras y espacios blancos";
     }
 
     return errors;
@@ -100,6 +102,7 @@ const Login = () => {
     handleChange,
     handleBlur,
     handleSubmit,
+    handleSubmits,
   } = useForm(initialForm, validationsForm);
 
   const [loginType, setLoginType] = useState("login");
@@ -139,7 +142,7 @@ const Login = () => {
                 form={form}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-                handleSubmit={handleSubmit}
+                handleSubmits={handleSubmits}
                 errors={errors}
               />
             ) : (

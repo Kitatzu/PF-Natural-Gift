@@ -20,7 +20,9 @@ import { Icon } from "@iconify/react";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Search = styled("div")(({ theme }) => ({
+
+const Search = styled("div")(({ theme }) => (
+  {
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),

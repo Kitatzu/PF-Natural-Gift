@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { loginUser } from "../Redux/Thunks/LoginUser";
 import { RegisterUser } from "../Redux/Thunks/RegisterUser";
 export const useForm = (initialForm, validateForm) => {
   const dispatch = useDispatch();
@@ -44,6 +45,16 @@ export const useForm = (initialForm, validateForm) => {
     })();
   };
 
+  const handleSubmits = (e) => {
+    const formLogin = {};
+    formLogin.email = form.email;
+    formLogin.password = form.password;
+    console.log(form);
+    (async () => {
+      await dispatch(loginUser(form));
+    })();
+  };
+
   return {
     form,
     errors,
@@ -52,5 +63,6 @@ export const useForm = (initialForm, validateForm) => {
     handleChange,
     handleBlur,
     handleSubmit,
+    handleSubmits,
   };
 };

@@ -1,3 +1,3 @@
 export * from "./setProducts";
-export * from "../Thunks";
+export * from "../Thunks/index";
 export * from "./theme";
