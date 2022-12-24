@@ -17,12 +17,15 @@ module.exports = (sequelize) => {
       imageProduct: {
         type: DataTypes.STRING,
       },
+      description: {
+        type: DataTypes.STRING,
+      },
       stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       price: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.DECIMAL,
         allowNull: false,
       },
       rating: {

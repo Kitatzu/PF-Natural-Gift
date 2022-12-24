@@ -40,11 +40,13 @@ async function allProducts(req, res) {
 }
 
 async function createProduct(req, res) {
-  let { name, categories, imageProduct, stock, price, rating } = req.body;
+  let { name, categories, description, imageProduct, stock, price, rating } =
+    req.body;
 
   const newProduct = await Products.create({
     name,
     imageProduct,
+    description,
     stock,
     price,
     rating,
@@ -91,7 +93,8 @@ async function deleteProduct(req, res) {
 
 async function updateProduct(req, res) {
   const { id } = req.params;
-  const { name, imageProduct, stock, price, rating, categories } = req.body;
+  const { name, imageProduct, description, stock, price, rating, categories } =
+    req.body;
 
   let product = await Products.findByPk(id, {
     include: [
@@ -107,6 +110,7 @@ async function updateProduct(req, res) {
 
   product.name = name;
   product.imageProduct = imageProduct;
+  product.description = description;
   product.stock = stock;
   product.price = price;
   product.rating = rating;
