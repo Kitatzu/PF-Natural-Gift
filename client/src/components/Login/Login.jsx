@@ -14,13 +14,13 @@ const Login = () => {
   const initialForm = {
     email: "",
     password: "",
-    name:"",
-    age:"",
-    lastName:"",
-    registerpassword:"",
-    verifypassword:"",
-    registerEmail:"",
-    Country:"",
+    name: "",
+    age: "",
+    lastName: "",
+    registerpassword: "",
+    verifypassword: "",
+    registerEmail: "",
+    Country: "",
   };
 
   const validationsForm = (form) => {
@@ -28,33 +28,33 @@ const Login = () => {
     let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
     let regexPass = /(?=.*[0-9])/;
-    let regexPass1 = /(?=.*[!@#$%^&*])/
-    let regexPass2 = /(?=.{8,})/
-    let regexPass3 = /(?=.*[A-Z])/
+    let regexPass1 = /(?=.*[!@#$%^&*])/;
+    let regexPass2 = /(?=.{8,})/;
+    let regexPass3 = /(?=.*[A-Z])/;
 
     if (!form.email.trim()) {
       errors.email = "The Email field is require";
-    } else if (!regexEmail.test(form.email.trim())){
-      errors.email = "Este campo es incorrecto"
-    } 
+    } else if (!regexEmail.test(form.email.trim())) {
+      errors.email = "Este campo es incorrecto";
+    }
     if (!form.password.trim()) {
       errors.password = "The password field is require";
-    } else if (!regexPass.test(form.password.trim())){
-      errors.password = "Este campo requiere al menos 1 caracter numerico"
-    } else if (!regexPass1.test(form.password.trim())){
-      errors.password = "Debe contener un caracter especial"
-    } else if (!regexPass2.test(form.password.trim())){
-      errors.password = "Debe contener al menos 8 caracteres"
-    } else if (!regexPass3.test(form.password.trim())){
-      errors.password = "Debe tener al menos 1 mayùs"
+    } else if (!regexPass.test(form.password.trim())) {
+      errors.password = "Este campo requiere al menos 1 caracter numerico";
+    } else if (!regexPass1.test(form.password.trim())) {
+      errors.password = "Debe contener un caracter especial";
+    } else if (!regexPass2.test(form.password.trim())) {
+      errors.password = "Debe contener al menos 8 caracteres";
+    } else if (!regexPass3.test(form.password.trim())) {
+      errors.password = "Debe tener al menos 1 mayùs";
     }
     if (!form.name.trim()) {
       errors.name = "The name field is require";
-    } else if (!regexName.test(form.name.trim())){
-      errors.name = "Solo acepta letras y espacios blancos"
+    } else if (!regexName.test(form.name.trim())) {
+      errors.name = "Solo acepta letras y espacios blancos";
     }
-    if (!regexName.test(form.lastName.trim())) {
-      errors.lastName = "Solo acepta letras y espacios blancos"
+    if (!regexName.test(form.lastname.trim())) {
+      errors.lastname = "Solo acepta letras y espacios blancos";
     }
 
     if (!form.age.trim()) {
@@ -63,29 +63,30 @@ const Login = () => {
 
     if (!form.registerpassword.trim()) {
       errors.registerpassword = "The password field is require";
-    }else if (!regexPass.test(form.registerpassword.trim())){
-      errors.registerpassword = "Este campo requiere al menos 1 caracter numerico"
-    } else if (!regexPass1.test(form.registerpassword.trim())){
-      errors.registerpassword = "Debe contener un caracter especial"
-    } else if (!regexPass2.test(form.registerpassword.trim())){
-      errors.registerpassword = "Debe contener al menos 8 caracteres"
-    }else if (!regexPass3.test(form.password.trim())){
-      errors.password = "Debe tener al menos 1 mayùs"
-    } else if (!form.registerpassword.include("")){
-      errors.registerpassword = "No se permiten estos caracteres"
+    } else if (!regexPass.test(form.registerpassword.trim())) {
+      errors.registerpassword =
+        "Este campo requiere al menos 1 caracter numerico";
+    } else if (!regexPass1.test(form.registerpassword.trim())) {
+      errors.registerpassword = "Debe contener un caracter especial";
+    } else if (!regexPass2.test(form.registerpassword.trim())) {
+      errors.registerpassword = "Debe contener al menos 8 caracteres";
+    } else if (!regexPass3.test(form.password.trim())) {
+      errors.password = "Debe tener al menos 1 mayùs";
+    } else if (!form.registerpassword.include("")) {
+      errors.registerpassword = "No se permiten estos caracteres";
     }
     if (!form.verifypassword.trim()) {
       errors.verifypassword = "The password field is require";
-    } 
+    }
     if (!form.registerEmail.trim()) {
       errors.registerEmail = "The Email field is require";
-    }else if (!regexEmail.test(form.registerEmail.trim())){
-      errors.registerEmail = "Este campo es incorrecto"
+    } else if (!regexEmail.test(form.registerEmail.trim())) {
+      errors.registerEmail = "Este campo es incorrecto";
     }
-    if(!form.Country.trim()) {
-      errors.Country="The Country field is require"
-    } else if(!regexName.test(form.Country.trim())){
-      errors.Country = "Solo acepta letras y espacios blancos"
+    if (!form.country.trim()) {
+      errors.Country = "The Country field is require";
+    } else if (!regexName.test(form.country.trim())) {
+      errors.Country = "Solo acepta letras y espacios blancos";
     }
 
     return errors;
@@ -179,7 +180,7 @@ const Login = () => {
           <img src={Presentation} alt="Natural gift" />
         </Grid2>
       </Grid2>
-      <WavesLogin/>
+      <WavesLogin />
     </div>
   );
 };

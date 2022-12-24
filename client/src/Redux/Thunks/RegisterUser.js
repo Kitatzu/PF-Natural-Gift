@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const RegisterUser = (form) => {
   return async () =>
@@ -10,10 +11,19 @@ export const RegisterUser = (form) => {
           email: form.email,
           token: data.data.newToken,
         };
-        alert("Usuario registrado correctamente!");
-        console.log(UserInfo);
+
+        Swal.fire({
+          icon: "success",
+          title: "Register OK!",
+          text: "Usuario registrado correctamente!",
+        });
       })
       .catch((response) => {
-        console.log(JSON.parse(response));
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Error no se registro el usuario!",
+        });
+        console.log(response);
       });
 };

@@ -33,22 +33,22 @@ const FormRegister = ({
           handleSubmit={handleSubmit}
           form={form}
         />
-         {errors.name !== undefined ? (
+        {errors.name !== undefined ? (
           <Alert severity="error">{errors.name}</Alert>
         ) : null}
-        
+
         <LastNameInput
           handleChange={handleChange}
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
         />
-        </Box>
-        
-        {errors.lastName !== undefined ? (
-          <Alert severity="error">{errors.lastName}</Alert>
-        ) : null}
-      
+      </Box>
+
+      {errors.lastName !== undefined ? (
+        <Alert severity="error">{errors.lastName}</Alert>
+      ) : null}
+
       <AgeInput
         handleChange={handleChange}
         handleBlur={handleBlur}
@@ -69,12 +69,12 @@ const FormRegister = ({
         <Alert severity="error">{errors.registerEmail}</Alert>
       ) : null}
       <CountriesInput
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleSubmit={handleSubmit}
-      form={form}
-       />
-        {errors.Country !== undefined ? (
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+      {errors.Country !== undefined ? (
         <Alert severity="error">{errors.Country}</Alert>
       ) : null}
       <PasswordRegisterInput
@@ -95,7 +95,7 @@ const FormRegister = ({
       {errors.verifypassword !== undefined ? (
         <Alert severity="error">{errors.verifypassword}</Alert>
       ) : null}
-      
+
       <Box display="flex" justifyContent="space-around" alignItems="center">
         <Button
           variant="contained"
