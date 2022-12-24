@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  products: null,
-  tmpProducts: null,
+  products: [],
+  page: 0,
   isLoading: false,
 };
 
@@ -10,14 +10,15 @@ export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setProducts: (state, action) => {
-      state.products = action.payload;
-      state.tmpProducts = action.payload;
+    startLoadingProducts: (state) => {
+      state.isLoading = true;
     },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
+    setProducts: (state, action) => {
+      state.isLoading = false;
+      state.page = action.payload.page;
+      state.products = action.payload.products;
     },
   },
 });
 
-export const { setProducts } = productSlice.actions;
+export const { startLoadingProducts, setProducts } = productSlice.actions;
