@@ -1,7 +1,7 @@
 const sequelize = require("../db");
 const { Router } = require("express");
 const router = Router();
-const { Users, Products, ProductInCart, Cart } = sequelize.models;
+const { Users, Products, ProductInCart, Cart } = sequelize;
 const {
   getCart,
   createProductInCart,
@@ -9,6 +9,7 @@ const {
   updateCart,
   updateProductsInCart,
 } = require("../controller/cartController");
+console.log(sequelize);
 let statusCode = 500;
 
 router.post("/:productId", async (req, res) => {

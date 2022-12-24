@@ -1,5 +1,5 @@
 const sequelize = require("../db");
-const { Cart, ProductInCart, Users, Products } = sequelize.models;
+const { Cart, ProductInCart, Users, Products } = sequelize;
 
 const getCart = async (cartId) => {
   return await Cart.findOne({

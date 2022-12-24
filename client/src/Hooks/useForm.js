@@ -30,11 +30,14 @@ export const useForm = (initialForm, validateForm) => {
     const formSend = {};
 
     formSend.firstName = form.name;
-    formSend.userName = form.firstName + form.lastName + form.age;
+    formSend.lastName = form.lastname;
+    formSend.userName = form.name + form.lastname + form.age;
     formSend.email = form.registerEmail;
     formSend.password = form.registerpassword;
+    formSend.country = "Ecuador";
+    console.log(formSend);
     (async () => {
-      dispatch(RegisterUser(formSend));
+      await dispatch(RegisterUser(formSend));
     })();
   };
 
