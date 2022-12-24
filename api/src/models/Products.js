@@ -17,6 +17,9 @@ module.exports = (sequelize) => {
       imageProduct: {
         type: DataTypes.STRING,
       },
+      description: {
+        type.DataTypes.STRING,
+      },
       stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
