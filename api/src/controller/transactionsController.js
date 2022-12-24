@@ -1,5 +1,5 @@
 const sequelize = require("../db");
-const { Transaction, Users } = sequelize.models;
+const { Transaction, Users } = sequelize;
 
 const createTransaction = async (state, cart, country, city, address) => {
   return await Transaction.create({

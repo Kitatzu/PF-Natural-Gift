@@ -1,7 +1,7 @@
 import React from "react";
 import "./FormRegister.scss";
 import { Icon } from "@iconify/react";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 import NameInput from "./Inputs/NameInput";
 import { Box } from "@mui/system";
 import LastNameInput from "./Inputs/LastNameInput";
@@ -12,9 +12,13 @@ import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
 import CountriesInput from "./Inputs/CountriesInput";
 
-const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
-
-
+const FormRegister = ({
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  form,
+  errors,
+}) => {
   return (
     <form className="Form">
       <h2>REGISTER</h2>
@@ -29,22 +33,22 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           handleSubmit={handleSubmit}
           form={form}
         />
-         {errors.name !== undefined ? (
+        {errors.name !== undefined ? (
           <Alert severity="error">{errors.name}</Alert>
         ) : null}
-        
+
         <LastNameInput
           handleChange={handleChange}
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
         />
-        </Box>
-        
-        {errors.lastName !== undefined ? (
-          <Alert severity="error">{errors.lastName}</Alert>
-        ) : null}
-      
+      </Box>
+
+      {errors.lastName !== undefined ? (
+        <Alert severity="error">{errors.lastName}</Alert>
+      ) : null}
+
       <AgeInput
         handleChange={handleChange}
         handleBlur={handleBlur}
@@ -54,6 +58,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       {errors.age !== undefined ? (
         <Alert severity="error">{errors.age}</Alert>
       ) : null}
+
       <EmailRegisterInput
         handleChange={handleChange}
         handleBlur={handleBlur}
@@ -64,12 +69,12 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
         <Alert severity="error">{errors.registerEmail}</Alert>
       ) : null}
       <CountriesInput
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleSubmit={handleSubmit}
-      form={form}
-       />
-        {errors.Country !== undefined ? (
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+      {errors.Country !== undefined ? (
         <Alert severity="error">{errors.Country}</Alert>
       ) : null}
       <PasswordRegisterInput
@@ -90,7 +95,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       {errors.verifypassword !== undefined ? (
         <Alert severity="error">{errors.verifypassword}</Alert>
       ) : null}
-      
+
       <Box display="flex" justifyContent="space-around" alignItems="center">
         <Button
           variant="contained"

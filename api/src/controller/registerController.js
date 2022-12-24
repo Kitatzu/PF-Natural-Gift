@@ -60,7 +60,7 @@ async function registerUser(req, res) {
 
       const send = await transporter.sendMail({
         from: `"Te has registrado exitosamente" <${Email}>`, // sender address
-        to: "exe922@gmail.com", // list of receivers
+        to: email, // list of receivers
         subject: "No entendiste? te registraste bien", // Subject line
         html: "<b> Que miras? Andá pa'allá, bobo, andá pa'allá</b>", // html body
       });

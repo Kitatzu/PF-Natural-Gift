@@ -8,7 +8,10 @@ export const useForm = (initialForm, validateForm) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
 
-  const handleChange = (e) => {
+  const handleChange = (e, type) => {
+    if (type === "country" && type !== undefined) {
+      form.country = e.target.attributes.value.value;
+    }
     if (e.target.name === "verifypassword") {
       if (e.target.value !== form.registerpassword) {
         setErrors({ ...errors, verifypassword: "The passwords not match" });
@@ -30,11 +33,14 @@ export const useForm = (initialForm, validateForm) => {
     const formSend = {};
 
     formSend.firstName = form.name;
-    formSend.userName = form.firstName + form.lastName + form.age;
+    formSend.lastName = form.lastname;
+    formSend.userName = form.name + form.lastname + form.age;
     formSend.email = form.registerEmail;
     formSend.password = form.registerpassword;
+    formSend.country = form.country;
+    console.log(formSend);
     (async () => {
-      dispatch(RegisterUser(formSend));
+      await dispatch(RegisterUser(formSend));
     })();
   };
 

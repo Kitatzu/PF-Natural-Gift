@@ -1,12 +1,12 @@
 const sequelize = require("../db");
 const { Router } = require("express");
 const router = Router();
-const { Products, Transaction, Users, Review } = sequelize.models;
+const { Products, Transaction, Users, Review } = sequelize;
 const {
   createTransaction,
   updateTransaction,
-} = require("../controller/transactions");
-const { getCart } = require("../controller/cart");
+} = require("../controller/transactionsController");
+const { getCart } = require("../controller/cartController");
 
 router.post("/:userId", async (req, res) => {
   try {
