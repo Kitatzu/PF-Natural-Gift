@@ -7,6 +7,7 @@ import "./Home.scss";
 import NavBar from "../NavBar/NavBar.jsx";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import Loading from "../Loading/Loading.jsx";
 
 const Home = () => {
   const isLog = useSelector((store) => store.user.isLog);
