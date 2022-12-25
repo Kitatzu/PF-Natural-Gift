@@ -1,8 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { setIsLog, setUserName } from "../Slices";
+import { setIsLoading, setIsLog, setUserName } from "../Slices";
 export const loginUser = (form) => {
-  return async (dispatch) =>
+  return async (dispatch) => {
+    await dispatch(setIsLoading(true));
     await axios
       .post("http://localhost:3001/login", form)
       .then((data) => {
@@ -11,7 +12,7 @@ export const loginUser = (form) => {
           token: data.data.newToken,
         };
         localStorage.setItem("token", JSON.stringify(userData));
-
+        dispatch(setIsLoading(false));
         Swal.fire({
           icon: "success",
           title: "Login Ok!",
@@ -29,4 +30,5 @@ export const loginUser = (form) => {
         });
         console.log(response);
       });
+  };
 };

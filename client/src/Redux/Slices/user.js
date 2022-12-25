@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userName: null,
   isLog: false,
+  isLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -37,7 +38,11 @@ export const userSlice = createSlice({
     logout: (store) => {
       store.isLog = false;
     },
+    setIsLoading: (store, action) => {
+      store.isLoading = action.payload;
+    },
   },
 });
 
-export const { setUserName, setIsLog, logout } = userSlice.actions;
+export const { setUserName, setIsLog, logout, setIsLoading } =
+  userSlice.actions;

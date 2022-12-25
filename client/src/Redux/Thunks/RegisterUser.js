@@ -1,12 +1,14 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { setIsLog, setUserName } from "../Slices";
+import { setIsLoading, setIsLog, setUserName } from "../Slices";
 
 export const RegisterUser = (form) => {
-  return async (dispatch) =>
-    await axios
+  return async (dispatch) => {
+    dispatch(setIsLoading(true));
+    return await axios
       .post("http://localhost:3001/register", form)
       .then((data) => {
+        dispatch(setIsLoading(false));
         const userData = {
           userName: form.userName,
           token: data.data.newToken,
@@ -30,4 +32,5 @@ export const RegisterUser = (form) => {
         });
         console.log(response);
       });
+  };
 };
