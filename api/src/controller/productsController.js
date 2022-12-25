@@ -93,8 +93,7 @@ async function deleteProduct(req, res) {
 
 async function updateProduct(req, res) {
   const { id } = req.params;
-  const { name, imageProduct, description, stock, price, rating, categories } =
-    req.body;
+  const { name, imageProduct, description, stock, price, rating } = req.body;
 
   let product = await Products.findByPk(id, {
     include: [
@@ -106,17 +105,16 @@ async function updateProduct(req, res) {
     ],
   });
 
-  let allCategories = await Categories.findAll({ where: { name: categories } });
+  let updated = await product.update({
+    name: name,
+    imageProduct: imageProduct,
+    description: description,
+    stock: stock,
+    price: price,
+    rating,
+  });
 
-  product.name = name;
-  product.imageProduct = imageProduct;
-  product.description = description;
-  product.stock = stock;
-  product.price = price;
-  product.rating = rating;
-  product.categories = await product.addCategories(allCategories);
-
-  res.send("product updated");
+  res.json({ message: "product updated", updated });
 }
 
 module.exports = {
