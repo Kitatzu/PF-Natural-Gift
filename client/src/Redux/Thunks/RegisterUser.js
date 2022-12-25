@@ -11,7 +11,7 @@ export const RegisterUser = (form) => {
           userName: form.userName,
           token: data.data.newToken,
         };
-        localStorage.setItem(form.userName, JSON.stringify(userData));
+        localStorage.setItem("token", JSON.stringify(userData));
         Swal.fire({
           icon: "success",
           title: "Register OK!",
