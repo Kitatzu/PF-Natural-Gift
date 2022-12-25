@@ -13,16 +13,15 @@ import { Avatar } from "@mui/material";
 import { Menu } from "@mui/material";
 import { Tooltip, Button } from "@mui/material";
 import NaturalNG from "../Assets/img/LogoNG.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./NavBar.scss";
 import MaterialUISwitch from "../MaterialUiSwitch/MaterialUiSwitch";
 import { Icon } from "@iconify/react";
+import { logout } from "../../Redux/Slices";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-
-const Search = styled("div")(({ theme }) => (
-  {
+const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -65,9 +64,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const settingFunction = {
+    Logout: () => {
+      localStorage.removeItem("token");
+      dispatch(logout());
+    },
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -81,6 +86,9 @@ export default function NavBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const handleSetting = (type) => {
+    settingFunction[type]();
   };
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
@@ -214,12 +222,9 @@ export default function NavBar() {
                   onClick={handleCloseUserMenu}
                   style={{ background: Theme[mode].primary }}
                 >
-                  <Typography
-                    textAlign="center"
-                    style={{ color: Theme[mode].textPrimary }}
-                  >
+                  <Button onClick={() => handleSetting(setting)}>
                     {setting}
-                  </Typography>
+                  </Button>
                 </MenuItem>
               ))}
             </Menu>

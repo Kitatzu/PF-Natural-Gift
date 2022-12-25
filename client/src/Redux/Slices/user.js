@@ -14,9 +14,8 @@ export const userSlice = createSlice({
         store.userName = null;
       } else {
         if (
-          JSON.parse(localStorage.getItem(action.payload)) !== undefined &&
-          JSON.parse(localStorage.getItem(action.payload)).userName ===
-            action.payload
+          JSON.parse(localStorage.getItem("token")) !== null &&
+          JSON.parse(localStorage.getItem("token")).userName === action.payload
         ) {
           store.userName = action.payload;
           console.log(store.userName);
@@ -27,14 +26,18 @@ export const userSlice = createSlice({
     },
     setIsLog: (store, action) => {
       if (
-        JSON.parse(localStorage.getItem(store.userName)).token ===
-        action.payload
+        JSON.parse(localStorage.getItem("token")) !== null &&
+        JSON.parse(localStorage.getItem("token")).token === action.payload
       ) {
         store.isLog = true;
-        console.log(store.isLog);
+      } else {
+        store.isLog = false;
       }
+    },
+    logout: (store) => {
+      store.isLog = false;
     },
   },
 });
 
-export const { setUserName, setIsLog } = userSlice.actions;
+export const { setUserName, setIsLog, logout } = userSlice.actions;

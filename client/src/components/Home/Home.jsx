@@ -5,16 +5,19 @@ import ProductsHome from "./ProductsHome/ProductsHome.jsx";
 import Waves from "../Waves/Waves";
 import "./Home.scss";
 import NavBar from "../NavBar/NavBar.jsx";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const Home = () => {
+  const isLog = useSelector((store) => store.user.isLog);
   return (
     <div className="Home">
-
+      {!isLog && <Redirect to="/login" />}
       <NavBar />
       <Banner />
       <InfoSection />
-      <ProductsHome/>
-      <Waves/>
+      <ProductsHome />
+      <Waves />
     </div>
   );
 };

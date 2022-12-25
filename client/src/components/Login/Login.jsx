@@ -4,15 +4,16 @@ import Nav from "./Nav/Nav";
 import WavesLogin from "../Waves/WavesLogin/WavesLogin";
 import "./Login.scss";
 import Presentation from "../Assets/img/Presentationlogin-presentation.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import "@fontsource/roboto/300.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../Hooks/useForm";
 import { Box, Button } from "@mui/material";
 import { Redirect } from "react-router-dom";
+import { setIsLog, setUserName } from "../../Redux/Slices";
+
 const Login = () => {
-  const isLog = useSelector((store) => store.user.isLog);
   const initialForm = {
     email: "",
     password: "",
@@ -96,6 +97,10 @@ const Login = () => {
     return errors;
   };
 
+  const [loginType, setLoginType] = useState("login");
+
+  const mode = useSelector((state) => state.theme.mode);
+  const Theme = useSelector((state) => state.theme);
   const {
     form,
     errors,
@@ -106,18 +111,21 @@ const Login = () => {
     handleSubmit,
     handleSubmits,
   } = useForm(initialForm, validationsForm);
-
-  const [loginType, setLoginType] = useState("login");
-
-  const mode = useSelector((state) => state.theme.mode);
-  const Theme = useSelector((state) => state.theme);
-  console.log(Redirect);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem("token")));
+    if (JSON.parse(localStorage.getItem("token")) !== null) {
+      dispatch(setUserName(JSON.parse(localStorage.getItem("token")).userName));
+      dispatch(setIsLog(JSON.parse(localStorage.getItem("token")).token));
+    }
+  });
+  const isLog = useSelector((store) => store.user.isLog);
   return (
     <div
       className="Login-container"
       style={{ background: Theme[mode].primary }}
     >
-      {isLog && <Redirect to="/home" />}
+      {isLog ? <Redirect to="/home" /> : null}
       <Grid2 container spacing={2}>
         <Grid2 xs={12}>
           <Nav setLoginType={setLoginType} />
