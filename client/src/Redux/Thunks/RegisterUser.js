@@ -1,21 +1,25 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { setIsLog, setUserName } from "../Slices";
 
 export const RegisterUser = (form) => {
-  return async () =>
+  return async (dispatch) =>
     await axios
       .post("http://localhost:3001/register", form)
       .then((data) => {
-        const UserInfo = {
-          user: form.userName,
-          email: form.email,
+        const userData = {
+          userName: form.userName,
           token: data.data.newToken,
         };
-
+        localStorage.setItem(form.userName, JSON.stringify(userData));
         Swal.fire({
           icon: "success",
           title: "Register OK!",
           text: "Usuario registrado correctamente!",
+          confirmButtonText: "Continuar!",
+        }).then(async (response) => {
+          await dispatch(setUserName(form.userName));
+          await dispatch(setIsLog(data.data.newToken));
         });
       })
       .catch((response) => {

@@ -10,7 +10,9 @@ import "@fontsource/roboto/300.css";
 import { useSelector } from "react-redux";
 import { useForm } from "../../Hooks/useForm";
 import { Box, Button } from "@mui/material";
+import { Redirect } from "react-router-dom";
 const Login = () => {
+  const isLog = useSelector((store) => store.user.isLog);
   const initialForm = {
     email: "",
     password: "",
@@ -109,12 +111,13 @@ const Login = () => {
 
   const mode = useSelector((state) => state.theme.mode);
   const Theme = useSelector((state) => state.theme);
-  console.log(form, errors);
+  console.log(Redirect);
   return (
     <div
       className="Login-container"
       style={{ background: Theme[mode].primary }}
     >
+      {isLog && <Redirect to="/home" />}
       <Grid2 container spacing={2}>
         <Grid2 xs={12}>
           <Nav setLoginType={setLoginType} />
