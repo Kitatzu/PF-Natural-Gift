@@ -14,7 +14,6 @@ async function createCategories(req, res) {
   let { name } = req.body;
 
   const newCategory = await Categories.create({ name });
-
   res.status(201).json(newCategory);
 }
 
