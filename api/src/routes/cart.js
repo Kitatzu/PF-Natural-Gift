@@ -9,7 +9,7 @@ const {
   updateCart,
   updateProductsInCart,
 } = require("../controller/cartController");
-console.log(sequelize);
+
 let statusCode = 500;
 
 router.post("/:productId", async (req, res) => {

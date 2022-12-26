@@ -1,4 +1,6 @@
 const { Products, Categories } = require("../db.js");
+const { uploadProductImage } = require("../middlewares/cloudinary.js");
+const fs = require("fs-extra");
 const verifyToken = require("../middlewares/authenticationJwt.js").verifyToken;
 const isAdmin = require("../middlewares/authenticationJwt.js").isAdmin;
 
@@ -40,12 +42,15 @@ async function allProducts(req, res) {
 }
 
 async function createProduct(req, res) {
-  let { name, categories, description, imageProduct, stock, price, rating } =
-    req.body;
+  let { name, categories, description, stock, price, rating } = req.body;
+
+  const result = await uploadProductImage(req.files.imageProduct.tempFilePath);
+
+  await fs.unlink(req.files.imageProduct.tempFilePath);
 
   const newProduct = await Products.create({
     name,
-    imageProduct,
+    imageProduct: result.public_id,
     description,
     stock,
     price,
