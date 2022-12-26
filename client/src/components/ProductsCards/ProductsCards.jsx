@@ -1,9 +1,9 @@
 import BtnSeeMore from "./BtnSeeMore/BtnSeeMore.jsx";
 import "./ProductsCards.scss";
 
-const ProductsCards = ( {name, price, image} ) => {
+const ProductsCards = ( { id, name, price, image} ) => {
   return (
-    <div className="ProductsCard">
+    <div className="ProductsCard" key={id}>
       <img className="Product-img" src={image} alt={name}/>
       <div className="Product-info">
         <div className="Product-details">
