@@ -27,7 +27,21 @@ export const useForm = (initialForm, validateForm) => {
 
   const handleBlur = (e) => {
     handleChange(e);
-    setErrors(validateForm(form));
+    setErrors(validateForm(e.target.name, form[e.target.name]));
+    setErrors(validateForm(e.target.password, form[e.target.password]));
+    setErrors(validateForm(e.target.email, form[e.target.email]));
+    setErrors(validateForm(e.target.lastname, form[e.target.lastname]));
+    setErrors(validateForm(e.target.age, form[e.target.age]));
+    setErrors(validateForm(e.target.country, form[e.target.country]));
+    setErrors(
+      validateForm(e.target.registerpassword, form[e.target.registerpassword])
+    );
+    setErrors(
+      validateForm(e.target.verifypassword, form[e.target.verifypassword])
+    );
+    setErrors(
+      validateForm(e.target.registerEmail, form[e.target.registerEmail])
+    );
   };
 
   const handleSubmit = (e) => {
@@ -46,9 +60,7 @@ export const useForm = (initialForm, validateForm) => {
   };
 
   const handleSubmits = (e) => {
-    const formLogin = {};
-    formLogin.email = form.email;
-    formLogin.password = form.password;
+    const form = {};
     console.log(form);
     (async () => {
       await dispatch(loginUser(form));

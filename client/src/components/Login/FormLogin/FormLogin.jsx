@@ -6,12 +6,17 @@ import EmailInput from "./Inputs/EmailInput";
 import { Box } from "@mui/system";
 import PasswordInput from "./Inputs/PasswordInput";
 import { Alert } from "@mui/material";
+import { GoogleLogin } from 'react-google-login';
 
 
 function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
+  const responseGoogle = (response) => {
+    console.log(response)
+  }
   console.log(handleSubmits)
   return (
     <form className="Form">
+     
       <h2>LOGIN</h2>
       <EmailInput
         handleChange={handleChange}
@@ -42,14 +47,13 @@ function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
         >
           Login
         </Button>
-        <Button
-          variant="outlined"
-          startIcon={<Icon className="IconG" icon="logos:google-icon" />}
-          className="Google-button"
-          
-        >
-          Login Google
-        </Button>
+        <GoogleLogin
+    clientId="416109201338-lvmsqu9ckpmtegecqomqrbea6js15eic.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+  />,
       </Box>
     </form>
   );
