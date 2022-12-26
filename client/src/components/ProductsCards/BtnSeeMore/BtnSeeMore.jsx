@@ -4,7 +4,7 @@ const BtnSeeMore = () => {
   return (
     <>
       <button className="See-more">
-        Ver Más
+        Ver
       </button>
     </>
   )
