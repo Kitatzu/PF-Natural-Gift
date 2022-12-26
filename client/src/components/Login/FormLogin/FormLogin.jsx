@@ -53,7 +53,7 @@ function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
     onSuccess={responseGoogle}
     onFailure={responseGoogle}
     cookiePolicy={'single_host_origin'}
-  />,
+  />
       </Box>
     </form>
   );
