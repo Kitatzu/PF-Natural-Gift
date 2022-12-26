@@ -14,11 +14,13 @@ import { Menu } from "@mui/material";
 import { Tooltip, Button } from "@mui/material";
 import NaturalNG from "../Assets/img/LogoNG.png";
 import { useDispatch, useSelector } from "react-redux";
-import "./NavBar.scss";
 import MaterialUISwitch from "../MaterialUiSwitch/MaterialUiSwitch";
 import { Icon } from "@iconify/react";
 import { logout } from "../../Redux/Slices";
-const pages = ["Products", "Pricing", "Blog"];
+import { Link } from "react-router-dom";
+import "./NavBar.scss";
+
+const pages = ["Productos", "Categorias", "Sobre Nosotros"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Search = styled("div")(({ theme }) => ({
@@ -152,7 +154,9 @@ export default function NavBar() {
                     textAlign="center"
                     style={{ color: Theme[mode].textPrimary }}
                   >
-                    {page}
+                    <Link to="/products">
+                      {page}
+                    </Link>
                   </Typography>
                 </MenuItem>
               ))}

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../Redux/Thunks/index";
 import ProductsCards from "../../ProductsCards/ProductsCards";
+import BtnSeeAll from "./BtnSeeAll/BtnSeeAll";
 import "./ProductsHome.scss";
 
 const ProductsHome = () => {
@@ -27,6 +28,7 @@ const ProductsHome = () => {
           />
         ))}
       </div>
+      <BtnSeeAll />
     </div>
   );
 };
