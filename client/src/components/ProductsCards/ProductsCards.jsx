@@ -11,7 +11,9 @@ const ProductsCards = ( { id, name, price, image} ) => {
           <h3>{name}</h3>
           <div className="Products-details-flex">
             <p>${price}</p>
-            <BtnSeeMore/>
+            <BtnSeeMore
+              productId = {id}
+            />
           </div>
         </div>
       </div>
