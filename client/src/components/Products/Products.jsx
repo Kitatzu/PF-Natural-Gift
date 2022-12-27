@@ -18,7 +18,7 @@ const Products = () => {
 
   return (
     <div className="Products">
-      {!isLog && <Redirect to="/login" />}
+      {/* {!isLog && <Redirect to="/login" />} */}
       <NavBar/>
       <div className="Products-grid">
         <div className="Filters">

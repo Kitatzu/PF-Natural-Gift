@@ -20,7 +20,7 @@ import { logout } from "../../Redux/Slices";
 import { Link } from "react-router-dom";
 import "./NavBar.scss";
 
-const pages = ["Productos", "Categorias", "Sobre Nosotros"];
+const pages = ["Home", "Productos", "Categorias", "Sobre Nosotros"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Search = styled("div")(({ theme }) => ({
@@ -104,20 +104,22 @@ export default function NavBar() {
         }}
       >
         <Toolbar>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <img src={NaturalNG} alt="NaturalGift" style={{ width: "30px" }} />
-            <div
-              className="textLogo"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "0 10px",
-              }}
-            >
-              <span style={{ color: Theme["light"].textPrimary }}>Natural</span>
-              <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
-            </div>
-          </Box>
+          <Link to="/home">
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <img src={NaturalNG} alt="NaturalGift" style={{ width: "30px" }} />
+              <div
+                className="textLogo"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "0 10px",
+                }}
+              >
+                <span style={{ color: Theme["light"].textPrimary }}>Natural</span>
+                <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
+              </div>
+            </Box>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -154,9 +156,7 @@ export default function NavBar() {
                     textAlign="center"
                     style={{ color: Theme[mode].textPrimary }}
                   >
-                    <Link to="/products">
-                      {page}
-                    </Link>
+                  {page}
                   </Typography>
                 </MenuItem>
               ))}
@@ -170,7 +170,9 @@ export default function NavBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: Theme["dark"].primary, display: "block" }}
               >
-                {page}
+                <Link to="/products">
+                  {page}
+                </Link>
               </Button>
             ))}
           </Box>

@@ -13,7 +13,7 @@ const Home = () => {
   const isLog = useSelector((store) => store.user.isLog);
   return (
     <div className="Home">
-      {!isLog && <Redirect to="/login" />} 
+      {/* {!isLog && <Redirect to="/login" />}  */}
       <NavBar />
       <Banner />
       <InfoSection />
