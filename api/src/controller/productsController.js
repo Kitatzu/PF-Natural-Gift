@@ -44,26 +44,46 @@ async function allProducts(req, res) {
 async function createProduct(req, res) {
   let { name, categories, description, stock, price, rating } = req.body;
 
-  const result = await uploadProductImage(req.files.imageProduct.tempFilePath);
+  if (req.files?.imageProduct) {
+    const result = await uploadProductImage(
+      req.files.imageProduct.tempFilePath
+    );
 
-  await fs.unlink(req.files.imageProduct.tempFilePath);
+    const newProduct = await Products.create({
+      name,
+      imageProduct: result.public_id,
+      description,
+      stock,
+      price,
+      rating,
+    });
 
-  const newProduct = await Products.create({
-    name,
-    imageProduct: result.public_id,
-    description,
-    stock,
-    price,
-    rating,
-  });
+    await fs.unlink(req.files.imageProduct.tempFilePath);
 
-  const allCategories = await Categories.findAll({
-    where: { name: categories },
-  });
+    const allCategories = await Categories.findAll({
+      where: { name: categories },
+    });
 
-  await newProduct.addCategories(allCategories);
+    await newProduct.addCategories(allCategories);
 
-  res.status(201).send(newProduct);
+    return res.status(201).send(newProduct);
+  } else {
+    const newProduct = await Products.create({
+      name,
+      description,
+      stock,
+      price,
+      rating,
+    });
+
+    const allCategories = await Categories.findAll({
+      where: { name: categories },
+    });
+
+    await newProduct.addCategories(allCategories);
+
+    return res.status(201).send(newProduct);
+  }
 }
 
 async function findProduct(req, res) {
@@ -112,7 +132,6 @@ async function updateProduct(req, res) {
 
   let updated = await product.update({
     name: name,
-    imageProduct: imageProduct,
     description: description,
     stock: stock,
     price: price,

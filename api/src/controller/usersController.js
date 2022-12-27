@@ -41,29 +41,29 @@ async function deleteUser(req, res) {
   res.send("User is deleted");
 }
 
-// router.put(":id", async (req, res) => {
+// async function updateUser(req, res) {
 //   let { id } = req.params;
-//   let {
-//     userName,
-//     email,
-//     password,
-//     avatar,
-//     firstName,
-//     lastName,
-//     city,
-//     country,
-//     adress,
-//     phone,
-//   } = req.body;
+//   //let {
+//   //     userName,
+//   //     email,
+//   //     password,
+//   //     avatar,
+//   //     firstName,
+//   //     lastName,
+//   //     city,
+//   //     country,
+//   //     adress,
+//   //     phone,
+//   //   } = req.body;
 
-//  try {
-//     const salt = await bcrypt.genSalt(10);
-//     let user = Users.findByPk({where: {id: id}})
+//   //  try {
+//   //     const salt = await bcrypt.genSalt(10);
+//   //     let user = Users.findByPk({where: {id: id}})
 
-//  } catch (error) {
+//   //  } catch (error) {
 
-//  }
-// });
+//   //  }
+// }
 
 module.exports = {
   allUsers,
