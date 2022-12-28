@@ -17,7 +17,7 @@ const ProductsDetails = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
 
   const filtProduct = products.find((product) => {
     if (product.id === productsId) return product
@@ -26,35 +26,38 @@ const ProductsDetails = () => {
   return (
     <div>
       <NavBar/>
-      <div className="Product">        
-        <img  className="Product-img" src={filtProduct.imageProduct} alt={filtProduct.name} />
-        <div className="Product-info">
-          <h2 className="Product-name">{filtProduct.name}</h2>
-          <p><span>Precio:</span> ${filtProduct.price}</p>
-          <p><span>Categoría:</span> {filtProduct.categories[0].name}</p>
-          <p>{filtProduct.description}.</p>
-          <ul>
-            <li>Envíos a toda Argentina</li>
-            <li>Compra segura con Paypal</li>
-          </ul>
-          <Rating 
-            className="Product-rating"
-            defaultValue={filtProduct.rating}
-          />
-          <div className="Product-add">
-            <form>
-              <OutlinedInput
-                type={"number"}
-                inputProps={{ min: 1, max: 10}}
-              > 
-              </OutlinedInput>
-              <button className="Btn-Enviar-Carrito" type="submit">
-                Enviar al carrito <i class="fa-solid fa-cart-shopping"></i>
-              </button>
-            </form>
+      <div className="Product-container">
+        <div className="Product">        
+          <img  className="Product-img" src={filtProduct.imageProduct} alt={filtProduct.name} />
+          <div className="Product-info">
+            <h2 className="Product-name">{filtProduct.name}</h2>
+            <p><span>Precio:</span> ${filtProduct.price}</p>
+            <p><span>Categoría:</span> {filtProduct.categories[0].name}</p>
+            <p>{filtProduct.description}</p>
+            <ul>
+              <li>Envíos a toda Argentina</li>
+              <li>Compra segura con Paypal</li>
+            </ul>
+            <Rating 
+              className="Product-rating"
+              value={Number(filtProduct.rating)}
+            />
+            <div className="Product-add">
+              <form>
+                <OutlinedInput
+                  type={"number"}
+                  inputProps={{ min: 1, max: 10}}
+                > 
+                </OutlinedInput>
+                <button className="Btn-Enviar-Carrito" type="submit">
+                  Enviar al carrito <i className="fa-solid fa-cart-shopping"></i>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+      
       <div className="Products-more">
       <ProductsHome/>
       </div>

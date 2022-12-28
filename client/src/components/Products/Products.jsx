@@ -34,12 +34,15 @@ const Products = () => {
         </div>
         <div className="Products-cards">
           {products.map((product) => (
-            <ProductsCards
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.imageProduct}
-            />
+            <div key={product.id}>
+              <ProductsCards
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                image={product.imageProduct}
+                rating={product.rating}
+              />
+            </div>
           ))}
         </div>
       </div>
