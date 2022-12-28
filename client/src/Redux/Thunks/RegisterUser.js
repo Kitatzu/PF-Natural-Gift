@@ -30,6 +30,7 @@ export const RegisterUser = (form) => {
           title: "Error!",
           text: "Error no se registro el usuario!",
         });
+        dispatch(setIsLoading(false));
         console.log(response);
       });
   };
