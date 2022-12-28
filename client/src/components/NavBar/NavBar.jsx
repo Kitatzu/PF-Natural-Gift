@@ -156,7 +156,8 @@ export default function NavBar() {
                     textAlign="center"
                     style={{ color: Theme[mode].textPrimary }}
                   >
-                  {page}
+                    <Link to="/products">{page}</Link>
+
                   </Typography>
                 </MenuItem>
               ))}
@@ -165,18 +166,15 @@ export default function NavBar() {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: Theme["dark"].primary, display: "block" }}
-              >
-                <Link to="/products">
-                  {page}
-                </Link>
-              </Button>
+              <Link to="/products">{page}</Link>
             ))}
           </Box>
-          <Search style={{ padding: "0 10px", marginRight: "10px" }}>
+          <Search
+            style={{ padding: "0 10px", marginRight: "10px" }}
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

@@ -60,10 +60,11 @@ export const useForm = (initialForm, validateForm) => {
   };
 
   const handleSubmits = (e) => {
-    const form = {};
-    console.log(form);
+    const formSend = {};
+    formSend.email = form.email;
+    formSend.password = form.password;
     (async () => {
-      await dispatch(loginUser(form));
+      await dispatch(loginUser("local", formSend));
     })();
   };
 
