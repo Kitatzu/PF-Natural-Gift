@@ -104,20 +104,22 @@ export default function NavBar() {
         }}
       >
         <Toolbar>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <img src={NaturalNG} alt="NaturalGift" style={{ width: "30px" }} />
-            <div
-              className="textLogo"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "0 10px",
-              }}
-            >
-              <span style={{ color: Theme["light"].textPrimary }}>Natural</span>
-              <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
-            </div>
-          </Box>
+          <Link to="/home">
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <img src={NaturalNG} alt="NaturalGift" style={{ width: "30px" }} />
+              <div
+                className="textLogo"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "0 10px",
+                }}
+              >
+                <span style={{ color: Theme["light"].textPrimary }}>Natural</span>
+                <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
+              </div>
+            </Box>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -155,6 +157,7 @@ export default function NavBar() {
                     style={{ color: Theme[mode].textPrimary }}
                   >
                     <Link to="/products">{page}</Link>
+
                   </Typography>
                 </MenuItem>
               ))}

@@ -1,10 +1,13 @@
 import "./BtnSeeMore.scss";
+import { Link } from "react-router-dom";
 
-const BtnSeeMore = () => {
+const BtnSeeMore = ( {productId} ) => {
   return (
     <>
       <button className="See-more">
-        Ver
+        <Link to={'/products/' + productId}>
+          Ver
+        </Link>
       </button>
     </>
   )
