@@ -4,17 +4,7 @@
 .Nav-cart{
     position: relative;
     margin: 0 20px;
-    .Cart-bg{
-        position: relative;
-        background-color: rgba($color: #535353, $alpha: .3);
-        padding: 20px 60px ;
-        border-radius: 25px;
-    }
-    .Cart-icon{
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translate(-50%, -50%);
-    }
+   
+   
 
 }

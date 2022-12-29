@@ -106,13 +106,6 @@ const FormRegister = ({
         >
           Register
         </Button>
-        <Button
-          variant="outlined"
-          startIcon={<Icon className="IconG" icon="logos:google-icon" />}
-          className="Google-button"
-        >
-          Google
-        </Button>
       </Box>
     </form>
   );

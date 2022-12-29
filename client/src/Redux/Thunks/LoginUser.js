@@ -10,6 +10,8 @@ export const loginUser = (origin, form, Token) => {
         .then((data) => {
           const userData = {
             userName: form.email,
+            name: form.firstName,
+            avatar: form.avatar,
             token: data.data.newToken,
           };
           localStorage.setItem("token", JSON.stringify(userData));
@@ -40,6 +42,8 @@ export const loginUser = (origin, form, Token) => {
           console.log(data);
           const userData = {
             userName: form.email,
+            avatar: form.avatar,
+            name: form.firstName,
             token: Token,
           };
           localStorage.setItem("token", JSON.stringify(userData));
@@ -61,6 +65,8 @@ export const loginUser = (origin, form, Token) => {
               dispatch(setIsLoading(false));
               const userData = {
                 userName: form.userName,
+                avatar: form.avatar,
+                name: form.firstName,
                 token: data.data.newToken,
               };
               localStorage.setItem("token", JSON.stringify(userData));
