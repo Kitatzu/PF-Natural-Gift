@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Products.scss";
 
 const Products = () => {
-  const { isLoading, products = [] } = useSelector((state) => state.products);
+  const { products = [] } = useSelector((state) => state.products);
   const isLog = useSelector((store) => store.user.isLog);
 
   const dispatch = useDispatch();

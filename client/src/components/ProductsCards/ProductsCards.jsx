@@ -7,7 +7,7 @@ const ProductsCards = ( { id, name, price, image, rating} ) => {
   let rate = Number(rating);
   
   return (
-    <Link to={`/products/${id}`}>
+    <Link to={`/products/${id}`} >
       <div className="ProductsCard">
         <img className="Product-img" src={image} alt={name}>  
         </img>
