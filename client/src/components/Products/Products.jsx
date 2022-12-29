@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Products.scss";
 
 const Products = () => {
-  const { isLoading, products = [] } = useSelector((state) => state.products);
+  const { products = [] } = useSelector((state) => state.products);
   const isLog = useSelector((store) => store.user.isLog);
 
   const dispatch = useDispatch();
@@ -34,12 +34,15 @@ const Products = () => {
         </div>
         <div className="Products-cards">
           {products.map((product) => (
-            <ProductsCards
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.imageProduct}
-            />
+            <div key={product.id}>
+              <ProductsCards
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                image={product.imageProduct}
+                rating={product.rating}
+              />
+            </div>
           ))}
         </div>
       </div>

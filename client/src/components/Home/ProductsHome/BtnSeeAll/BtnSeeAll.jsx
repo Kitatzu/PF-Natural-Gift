@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 const BtnSeeAll = () => {
   return (
     <div>
-      <button className="Button-See-All">
-        <Link to="/products">
+      <Link to="/products">
+        <button className="Button-See-All">
           Ver Todo
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   )
 }
