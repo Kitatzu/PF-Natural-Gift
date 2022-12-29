@@ -11,17 +11,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import { MenuItem } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { Menu } from "@mui/material";
-import { Tooltip, Button } from "@mui/material";
+import { Tooltip, Button, Chip } from "@mui/material";
 import NaturalNG from "../Assets/img/LogoNG.png";
 import { useDispatch, useSelector } from "react-redux";
 import MaterialUISwitch from "../MaterialUiSwitch/MaterialUiSwitch";
 import { Icon } from "@iconify/react";
 import { logout } from "../../Redux/Slices";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./NavBar.scss";
-
+import { setTheme } from "../../Redux/Slices";
 const pages = ["Home", "Productos", "Categorias", "Sobre Nosotros"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Account", "Dashboard", "Logout"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,13 +66,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+  const handleTheme = (e) => {
+    e.target.checked === true
+      ? dispatch(setTheme("dark"))
+      : dispatch(setTheme("light"));
+  };
+
+  const userData = {};
+  if (localStorage.getItem("token") !== null) {
+    userData.avatar = JSON.parse(localStorage.getItem("token")).avatar;
+    userData.name = JSON.parse(localStorage.getItem("token")).name;
+  }
+
+  console.log(userData);
   const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [redSettings, setRedSettings] = React.useState(null);
   const settingFunction = {
     Logout: () => {
       localStorage.removeItem("token");
       dispatch(logout());
+    },
+    Account: () => {
+      setRedSettings("account");
     },
   };
   const handleOpenNavMenu = (event) => {
@@ -94,8 +111,11 @@ export default function NavBar() {
   };
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
+  const isLog = useSelector((store) => store.user.isLog);
   return (
     <Box sx={{ flexGrow: 1 }}>
+      {!isLog && <Redirect to="/login" />}
+      {redSettings !== null && <Redirect to={"/" + redSettings} />}
       <AppBar
         position="static"
         style={{
@@ -106,7 +126,11 @@ export default function NavBar() {
         <Toolbar>
           <Link to="/home">
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              <img src={NaturalNG} alt="NaturalGift" style={{ width: "30px" }} />
+              <img
+                src={NaturalNG}
+                alt="NaturalGift"
+                style={{ width: "30px" }}
+              />
               <div
                 className="textLogo"
                 style={{
@@ -115,7 +139,9 @@ export default function NavBar() {
                   padding: "0 10px",
                 }}
               >
-                <span style={{ color: Theme["light"].textPrimary }}>Natural</span>
+                <span style={{ color: Theme["light"].textPrimary }}>
+                  Natural
+                </span>
                 <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
               </div>
             </Box>
@@ -157,7 +183,6 @@ export default function NavBar() {
                     style={{ color: Theme[mode].textPrimary }}
                   >
                     <Link to="/products">{page}</Link>
-
                   </Typography>
                 </MenuItem>
               ))}
@@ -184,24 +209,31 @@ export default function NavBar() {
             />
           </Search>
           <Box sx={{ flexGrow: 0 }}>
-            <MaterialUISwitch />
+            <MaterialUISwitch
+              onChange={handleTheme}
+              defaultChecked={mode === "dark"}
+            />
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             <div className="Nav-cart">
               <div className="Cart-bg"></div>
-              <span className="Cart-icon">
+              <IconButton sx={{ color: "#f2f2f2" }}>
                 <Icon
                   icon="material-symbols:shopping-cart-rounded"
                   width="25"
                   height="25"
                 />
-              </span>
+              </IconButton>
             </div>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Chip
+                  avatar={<Avatar alt="Natacha" src={userData.avatar} />}
+                  label={userData.name}
+                  variant="outlined"
+                />
               </IconButton>
             </Tooltip>
             <Menu

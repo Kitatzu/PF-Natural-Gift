@@ -2,6 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userName: null,
+  linkName: null,
+  avatar: null,
+  email: null,
+  firstName: null,
+  lastName: null,
   isLog: false,
   isLoading: false,
 };
@@ -41,8 +46,18 @@ export const userSlice = createSlice({
     setIsLoading: (store, action) => {
       store.isLoading = action.payload;
     },
+    setData: (store, action) => {
+      store.avatar = action.payload.avatar;
+      store.firstName = action.payload.firstName;
+      store.lastName = action.payload.lastName;
+      store.email = action.payload.email;
+      store.linkName = action.payload.userName;
+    },
+    setEmail: (store, action) => {
+      store.email = action.payload;
+    },
   },
 });
 
-export const { setUserName, setIsLog, logout, setIsLoading } =
+export const { setUserName, setIsLog, logout, setIsLoading, setData } =
   userSlice.actions;

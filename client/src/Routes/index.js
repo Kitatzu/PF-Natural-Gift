@@ -4,6 +4,7 @@ import Login from "../components/Login/Login";
 import Products from "../components/Products/Products";
 import ProductsDetails from "../components/Products/ProductsDetail/ProductsDetail";
 import DefaultRoute from "../components/DefaultRoute/DefaultRoute";
+import AccountSettings from "../components/Profile/AccountSettings/AccountSettings";
 
 const Routes = () => {
   return (
@@ -13,6 +14,7 @@ const Routes = () => {
       <Route exact path="/Home" component={Home} />
       <Route exact path="/Products" component={Products} />
       <Route exact path="/Products/:productsId" component={ProductsDetails} />
+      <Route exact path="/account" component={AccountSettings} />
       <Route component={DefaultRoute} />
     </Switch>
   );

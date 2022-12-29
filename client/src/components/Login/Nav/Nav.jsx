@@ -60,7 +60,11 @@ const Nav = ({ setLoginType }) => {
             </button>
           </li>
         </ul>
-        <MaterialUISwitch sx={{ m: 1 }} onChange={handleTheme} />
+        <MaterialUISwitch
+          sx={{ m: 1 }}
+          onChange={handleTheme}
+          defaultChecked={mode === "dark"}
+        />
       </div>
     </nav>
   );

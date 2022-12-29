@@ -6,8 +6,16 @@ const fs = require("fs-extra");
 const { uploadAvatarImage } = require("../middlewares/cloudinary.js");
 
 async function registerUser(req, res) {
-  let { userName, password, email, firstName, lastName, country, roleName } =
-    req.body;
+  let {
+    userName,
+    password,
+    email,
+    firstName,
+    lastName,
+    country,
+    roleName,
+    avatar,
+  } = req.body;
 
   try {
     let findUser = await Users.findOne({ where: { userName } });
