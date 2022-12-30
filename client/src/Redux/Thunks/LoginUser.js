@@ -6,7 +6,7 @@ export const loginUser = (origin, form, Token) => {
     if (origin === "local") {
       await dispatch(setIsLoading(true));
       await axios
-        .post("http://localhost:3001/login", form)
+        .post("https://naturalgift.up.railway.app/login", form)
         .then((data) => {
           const userData = {
             userName: form.email,
@@ -37,7 +37,7 @@ export const loginUser = (origin, form, Token) => {
     } else if (origin === "google") {
       await dispatch(setIsLoading(true));
       await axios
-        .get("http://localhost:3001/users?email=" + form.email)
+        .get("https://naturalgift.up.railway.app/users?email=" + form.email)
         .then((data) => {
           console.log(data);
           const userData = {
@@ -60,7 +60,7 @@ export const loginUser = (origin, form, Token) => {
         .catch(async (response) => {
           dispatch(setIsLoading(true));
           return await axios
-            .post("http://localhost:3001/register", form)
+            .post("https://naturalgift.up.railway.app/register", form)
             .then((data) => {
               dispatch(setIsLoading(false));
               const userData = {

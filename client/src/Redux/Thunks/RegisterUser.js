@@ -6,7 +6,7 @@ export const RegisterUser = (form) => {
   return async (dispatch) => {
     dispatch(setIsLoading(true));
     return await axios
-      .post("http://localhost:3001/register", form)
+      .post("https://naturalgift.up.railway.app/register", form)
       .then((data) => {
         dispatch(setIsLoading(false));
         const userData = {
