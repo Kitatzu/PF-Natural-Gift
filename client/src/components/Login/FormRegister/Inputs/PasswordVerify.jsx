@@ -61,7 +61,7 @@ const PasswordVerifyInput = ({ handleChange, handleBlur, form }) => {
             </IconButton>
           </InputAdornment>
         }
-        label="Password"
+        label="Verify Password"
       />
     </FormControl>
   );

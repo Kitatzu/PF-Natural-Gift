@@ -1,0 +1,18 @@
+.Products-grid {
+  display: flex;
+  justify-content: space-around;
+
+  .Products-cards {
+    margin: 2rem 0;
+  }
+
+  .Filters {
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #e5e5e5;
+    width: 200px;
+    text-align: center;
+  }
+}
+

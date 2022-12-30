@@ -1,0 +1,56 @@
+
+section.Loading-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 999999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+   .loader{
+    position: relative;
+    width: 250px;
+    height: 250px;
+    filter: url("#gooey");
+}
+.loader span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform: rotate(calc(45deg * var(--i)));
+}
+.loader span::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
+    background:  linear-gradient(45deg,#3abd66,#0f974e);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #29cb39;
+}
+.rotate{
+    animation: animate 4s ease-in-out infinite;
+    animation-delay: calc(0.2s * var(--j));
+}
+svg{
+    width: 0;
+    height: 0;
+}
+}
+
+@keyframes animate{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+       transform: rotate(360deg);
+    }
+}

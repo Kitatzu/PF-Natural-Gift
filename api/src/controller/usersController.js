@@ -1,20 +1,25 @@
 const { Users, Roles } = require("../db");
 
 async function allUsers(req, res) {
-  let { userName } = req.query;
-
-  if (userName) {
+  let { email } = req.query;
+  console.log(req.query.email);
+  if (email) {
     try {
       let usersInDb = await Users.findAll({
-        where: { userName },
-        include: { Roles },
+        where: { email },
+        include: {
+          model: Roles,
+          attributes: ["roleName"],
+          through: { attributes: [] },
+        },
       });
-
-      usersInDb.length
+      console.log(usersInDb);
+      usersInDb.length > 0
         ? res.status(201).json(usersInDb)
         : res.status(404).json("user not found");
     } catch (error) {
-      res.status(404).json(error);
+      console.log(error);
+      res.status(404).json({ error: error });
     }
   } else {
     try {
@@ -41,29 +46,29 @@ async function deleteUser(req, res) {
   res.send("User is deleted");
 }
 
-// router.put(":id", async (req, res) => {
+// async function updateUser(req, res) {
 //   let { id } = req.params;
-//   let {
-//     userName,
-//     email,
-//     password,
-//     avatar,
-//     firstName,
-//     lastName,
-//     city,
-//     country,
-//     adress,
-//     phone,
-//   } = req.body;
+//   //let {
+//   //     userName,
+//   //     email,
+//   //     password,
+//   //     avatar,
+//   //     firstName,
+//   //     lastName,
+//   //     city,
+//   //     country,
+//   //     adress,
+//   //     phone,
+//   //   } = req.body;
 
-//  try {
-//     const salt = await bcrypt.genSalt(10);
-//     let user = Users.findByPk({where: {id: id}})
+//   //  try {
+//   //     const salt = await bcrypt.genSalt(10);
+//   //     let user = Users.findByPk({where: {id: id}})
 
-//  } catch (error) {
+//   //  } catch (error) {
 
-//  }
-// });
+//   //  }
+// }
 
 module.exports = {
   allUsers,

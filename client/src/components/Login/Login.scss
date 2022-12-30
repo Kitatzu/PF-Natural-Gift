@@ -2,8 +2,8 @@
 @import "../Assets/Styles/fonts.scss";
 .Login-container {
   position: relative;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+ 
   img{
    width: 100%;
    padding: 20px;
@@ -11,6 +11,7 @@
   .Form{
     position: relative;
     z-index: 9999;
+    margin-bottom: 90px;
     .Form-button{
       background: $color_text_secondary !important;
     }

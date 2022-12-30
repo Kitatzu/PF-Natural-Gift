@@ -15,7 +15,8 @@ p {
 }
 
 .Wave {
-  position: absolute;
+  position: relative;
+  bottom: 0 !important;
   width: 100%;
   z-index: 9;
 }

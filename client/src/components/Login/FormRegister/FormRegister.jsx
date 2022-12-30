@@ -1,7 +1,7 @@
 import React from "react";
 import "./FormRegister.scss";
 import { Icon } from "@iconify/react";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 import NameInput from "./Inputs/NameInput";
 import { Box } from "@mui/system";
 import LastNameInput from "./Inputs/LastNameInput";
@@ -10,14 +10,21 @@ import PasswordRegisterInput from "./Inputs/PasswordRegisterInput";
 import PasswordVerifyInput from "./Inputs/PasswordVerify";
 import EmailRegisterInput from "./Inputs/EmailRegisterInput";
 import { Alert } from "@mui/material";
-const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) => {
+import CountriesInput from "./Inputs/CountriesInput";
 
+const FormRegister = ({
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  form,
+  errors,
+}) => {
   return (
     <form className="Form">
       <h2>REGISTER</h2>
       <Box
         className="Login-form-control"
-        display="flex"
+        display="flex-column"
         justifyContent="center"
       >
         <NameInput
@@ -25,48 +32,56 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
-          
         />
         {errors.name !== undefined ? (
-        <Alert severity="error">{errors.name}</Alert>
-      ) : null}
+          <Alert severity="error">{errors.name}</Alert>
+        ) : null}
+
         <LastNameInput
           handleChange={handleChange}
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
-          
         />
-        {errors.lastName !== undefined ? (
+      </Box>
+
+      {errors.lastName !== undefined ? (
         <Alert severity="error">{errors.lastName}</Alert>
       ) : null}
-      </Box>
+
       <AgeInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         form={form}
-        
       />
       {errors.age !== undefined ? (
         <Alert severity="error">{errors.age}</Alert>
       ) : null}
-      <EmailRegisterInput 
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleSubmit={handleSubmit}
-      form={form}
-      
+
+      <EmailRegisterInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
       />
       {errors.registerEmail !== undefined ? (
         <Alert severity="error">{errors.registerEmail}</Alert>
+      ) : null}
+      <CountriesInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        handleSubmit={handleSubmit}
+        form={form}
+      />
+      {errors.Country !== undefined ? (
+        <Alert severity="error">{errors.Country}</Alert>
       ) : null}
       <PasswordRegisterInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         form={form}
-        
       />
       {errors.registerpassword !== undefined ? (
         <Alert severity="error">{errors.registerpassword}</Alert>
@@ -80,6 +95,7 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
       {errors.verifypassword !== undefined ? (
         <Alert severity="error">{errors.verifypassword}</Alert>
       ) : null}
+
       <Box display="flex" justifyContent="space-around" alignItems="center">
         <Button
           variant="contained"
@@ -89,13 +105,6 @@ const FormRegister = ({ handleChange, handleBlur, handleSubmit, form, errors }) 
           onClick={handleSubmit}
         >
           Register
-        </Button>
-        <Button
-          variant="outlined"
-          startIcon={<Icon className="IconG" icon="logos:google-icon" />}
-          className="Google-button"
-        >
-          Google
         </Button>
       </Box>
     </form>

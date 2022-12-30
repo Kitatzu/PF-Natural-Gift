@@ -1,4 +1,6 @@
 const { Products, Categories } = require("../db.js");
+const { uploadProductImage } = require("../middlewares/cloudinary.js");
+const fs = require("fs-extra");
 const verifyToken = require("../middlewares/authenticationJwt.js").verifyToken;
 const isAdmin = require("../middlewares/authenticationJwt.js").isAdmin;
 
@@ -40,24 +42,48 @@ async function allProducts(req, res) {
 }
 
 async function createProduct(req, res) {
-  let { name, categories, description, imageProduct, stock, price, rating } = req.body;
+  let { name, categories, description, stock, price, rating } = req.body;
 
-  const newProduct = await Products.create({
-    name,
-    imageProduct,
-    description,
-    stock,
-    price,
-    rating,
-  });
+  if (req.files?.imageProduct) {
+    const result = await uploadProductImage(
+      req.files.imageProduct.tempFilePath
+    );
 
-  const allCategories = await Categories.findAll({
-    where: { name: categories },
-  });
+    const newProduct = await Products.create({
+      name,
+      imageProduct: result.public_id,
+      description,
+      stock,
+      price,
+      rating,
+    });
 
-  await newProduct.addCategories(allCategories);
+    await fs.unlink(req.files.imageProduct.tempFilePath);
 
-  res.status(201).send(newProduct);
+    const allCategories = await Categories.findAll({
+      where: { name: categories },
+    });
+
+    await newProduct.addCategories(allCategories);
+
+    return res.status(201).send(newProduct);
+  } else {
+    const newProduct = await Products.create({
+      name,
+      description,
+      stock,
+      price,
+      rating,
+    });
+
+    const allCategories = await Categories.findAll({
+      where: { name: categories },
+    });
+
+    await newProduct.addCategories(allCategories);
+
+    return res.status(201).send(newProduct);
+  }
 }
 
 async function findProduct(req, res) {
@@ -92,7 +118,7 @@ async function deleteProduct(req, res) {
 
 async function updateProduct(req, res) {
   const { id } = req.params;
-  const { name, imageProduct, description, stock, price, rating, categories } = req.body;
+  const { name, description, stock, price, rating } = req.body;
 
   let product = await Products.findByPk(id, {
     include: [
@@ -104,17 +130,15 @@ async function updateProduct(req, res) {
     ],
   });
 
-  let allCategories = await Categories.findAll({ where: { name: categories } });
+  let updated = await product.update({
+    name: name,
+    description: description,
+    stock: stock,
+    price: price,
+    rating,
+  });
 
-  product.name = name;
-  product.imageProduct = imageProduct;
-  product.description= description;
-  product.stock = stock;
-  product.price = price;
-  product.rating = rating;
-  product.categories = await product.addCategories(allCategories);
-
-  res.send("product updated");
+  res.json({ message: "product updated", updated });
 }
 
 module.exports = {

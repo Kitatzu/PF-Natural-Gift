@@ -1,0 +1,95 @@
+import axios from "axios";
+import Swal from "sweetalert2";
+import { setIsLoading, setIsLog, setUserName } from "../Slices";
+export const loginUser = (origin, form, Token) => {
+  return async (dispatch) => {
+    if (origin === "local") {
+      await dispatch(setIsLoading(true));
+      await axios
+        .post("http://localhost:3001/login", form)
+        .then((data) => {
+          const userData = {
+            userName: form.email,
+            name: form.firstName,
+            avatar: form.avatar,
+            token: data.data.newToken,
+          };
+          localStorage.setItem("token", JSON.stringify(userData));
+          dispatch(setIsLoading(false));
+          Swal.fire({
+            icon: "success",
+            title: "Login Ok!",
+            text: "Usuario Logeado correctamente!",
+          }).then(async (response) => {
+            await dispatch(setUserName(form.email));
+            await dispatch(setIsLog(data.data.newToken));
+          });
+        })
+        .catch((response) => {
+          dispatch(setIsLoading(false));
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Error usuario o contraseña invalidos",
+          });
+          console.log(response);
+        });
+    } else if (origin === "google") {
+      await dispatch(setIsLoading(true));
+      await axios
+        .get("http://localhost:3001/users?email=" + form.email)
+        .then((data) => {
+          console.log(data);
+          const userData = {
+            userName: form.email,
+            avatar: form.avatar,
+            name: form.firstName,
+            token: Token,
+          };
+          localStorage.setItem("token", JSON.stringify(userData));
+          dispatch(setIsLoading(false));
+          Swal.fire({
+            icon: "success",
+            title: "Login Ok!",
+            text: "Usuario Logeado correctamente!",
+          }).then(async (response) => {
+            await dispatch(setUserName(form.email));
+            await dispatch(setIsLog(Token));
+          });
+        })
+        .catch(async (response) => {
+          dispatch(setIsLoading(true));
+          return await axios
+            .post("http://localhost:3001/register", form)
+            .then((data) => {
+              dispatch(setIsLoading(false));
+              const userData = {
+                userName: form.userName,
+                avatar: form.avatar,
+                name: form.firstName,
+                token: data.data.newToken,
+              };
+              localStorage.setItem("token", JSON.stringify(userData));
+              Swal.fire({
+                icon: "success",
+                title: "Register OK!",
+                text: "Usuario registrado correctamente!",
+                confirmButtonText: "Continuar!",
+              }).then(async (response) => {
+                await dispatch(setUserName(form.userName));
+                await dispatch(setIsLog(data.data.newToken));
+              });
+            })
+            .catch((response) => {
+              Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Error no se registro el usuario!",
+              });
+              dispatch(setIsLoading(false));
+              console.log(response);
+            });
+        });
+    }
+  };
+};
