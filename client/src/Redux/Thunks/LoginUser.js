@@ -1,12 +1,13 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import Global from "../../Global";
 import { setIsLoading, setIsLog, setUserName } from "../Slices";
 export const loginUser = (origin, form, Token) => {
   return async (dispatch) => {
     if (origin === "local") {
       await dispatch(setIsLoading(true));
       await axios
-        .post("https://naturalgift.up.railway.app/login", form)
+        .post(Global.ApiUrl + "/login", form)
         .then((data) => {
           const userData = {
             userName: form.email,
@@ -37,7 +38,7 @@ export const loginUser = (origin, form, Token) => {
     } else if (origin === "google") {
       await dispatch(setIsLoading(true));
       await axios
-        .get("https://naturalgift.up.railway.app/users?email=" + form.email)
+        .get(Global.ApiUrl + "/users?email=" + form.email)
         .then((data) => {
           console.log(data);
           const userData = {
@@ -60,7 +61,8 @@ export const loginUser = (origin, form, Token) => {
         .catch(async (response) => {
           dispatch(setIsLoading(true));
           return await axios
-            .post("https://naturalgift.up.railway.app/register", form)
+
+            .post(Global.ApiUrl + "/register", form)
             .then((data) => {
               dispatch(setIsLoading(false));
               const userData = {
