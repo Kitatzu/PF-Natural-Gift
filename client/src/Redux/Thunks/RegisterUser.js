@@ -1,12 +1,13 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import Global from "../../Global";
 import { setIsLoading, setIsLog, setUserName } from "../Slices";
 
 export const RegisterUser = (form) => {
   return async (dispatch) => {
     dispatch(setIsLoading(true));
     return await axios
-      .post("http://localhost:3001/register", form)
+      .post(Global.ApiUrl + "/register", form)
       .then((data) => {
         dispatch(setIsLoading(false));
         const userData = {

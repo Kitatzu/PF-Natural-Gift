@@ -7,6 +7,8 @@ import "./ProductsHome.scss";
 
 const ProductsHome = () => {
   const { isLoading, products = [] } = useSelector((state) => state.products);
+  const mode = useSelector((store) => store.theme.mode);
+  const Theme = useSelector((store) => store.theme);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,8 +18,11 @@ const ProductsHome = () => {
   return (
     <div className="ProductsHome">
       <div className="ProductsHome-title">
-        <h1>Dale un vistazo a nuestros productos</h1>
+        <h1 style={{ color: Theme[mode].textPrimary, fontFamily: "roboto" }}>
+          Dale un vistazo a nuestros productos
+        </h1>
       </div>
+
       <div className="Products-cards">
         {products.map((product) => (
           <div key={product.id}>
@@ -28,7 +33,7 @@ const ProductsHome = () => {
               image={product.imageProduct}
               rating={product.rating}
             />
-          </div>  
+          </div>
         ))}
       </div>
       <BtnSeeAll />
