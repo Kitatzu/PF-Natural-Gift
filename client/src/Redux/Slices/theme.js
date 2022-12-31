@@ -4,6 +4,7 @@ const initialState = {
   mode: "light",
   dark: {
     primary: "#272727",
+    sidebar: "#565656",
     second: "#565656",
     buttonPrimary:
       "linear-gradient(135.13deg, #FFB929 10.46%, #FF7DC1 127.81%);",
@@ -12,6 +13,7 @@ const initialState = {
   },
   light: {
     primary: "#f2f2f2",
+    sidebar: "#ffff",
     second: "linear-gradient(135.13deg, #FF7DC1 10.46%, #4244FF 127.81%);",
     buttonPrimary:
       "linear-gradient(135.13deg, #FFB929 10.46%, #FF7DC1 127.81%);",

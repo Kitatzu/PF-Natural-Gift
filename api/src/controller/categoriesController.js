@@ -4,7 +4,10 @@ async function allCategories(req, res) {
   try {
     let categoriesInDb = await Categories.findAll();
 
-    if (categoriesInDb.length) return res.status(201).json(categoriesInDb);
+    if (categoriesInDb.length)
+      return res
+        .status(201)
+        .json({ status: "success", categories: categoriesInDb });
   } catch (error) {
     res.status(404).json(error);
   }

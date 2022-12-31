@@ -20,7 +20,8 @@ import { logout } from "../../Redux/Slices";
 import { Link, Redirect } from "react-router-dom";
 import "./NavBar.scss";
 import { setTheme } from "../../Redux/Slices";
-const pages = ["Home", "Productos", "Categorias", "Sobre Nosotros"];
+import { searchProducts } from "../../Redux/Thunks/searchProducts";
+const pages = ["Home", "Productos", "Sobre Nosotros"];
 const settings = ["Account", "Dashboard", "Logout"];
 
 const Search = styled("div")(({ theme }) => ({
@@ -77,8 +78,8 @@ export default function NavBar() {
     userData.avatar = JSON.parse(localStorage.getItem("token")).avatar;
     userData.name = JSON.parse(localStorage.getItem("token")).name;
   }
-
-  console.log(userData);
+  const url = window.location.href.split("/")[3].toLowerCase();
+  console.log(url);
   const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -122,14 +123,16 @@ export default function NavBar() {
           background:
             " linear-gradient(0deg, rgba(255,185,41,1) 0%, rgba(255,125,193,1) 100%)",
         }}
+        sx={{ position: "relative", zIndex: 999 }}
       >
         <Toolbar>
           <Link to="/home">
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              <img
-                src={NaturalNG}
-                alt="NaturalGift"
-                style={{ width: "30px" }}
+              <Icon
+                icon="ph:flame-fill"
+                color={"#f2f2f2"}
+                width="40"
+                height="40"
               />
               <div
                 className="textLogo"
@@ -139,10 +142,10 @@ export default function NavBar() {
                   padding: "0 10px",
                 }}
               >
-                <span style={{ color: Theme["light"].textPrimary }}>
+                <span style={{ color: "#ffff", fontWeight: "600" }}>
                   Natural
                 </span>
-                <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
+                <span style={{ color: "#ffff", fontWeight: "400" }}>Gift</span>
               </div>
             </Box>
           </Link>
@@ -182,39 +185,58 @@ export default function NavBar() {
                     textAlign="center"
                     style={{ color: Theme[mode].textPrimary }}
                   >
-                    <Link to="/products">{page}</Link>
+                    <Link to={"/" + page}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link to="/products">{page}</Link>
-            ))}
-          </Box>
-          <Search
-            style={{ padding: "0 10px", marginRight: "10px" }}
-            onChange={(e) => {
-              console.log(e.target.value);
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
             }}
           >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+            {pages.map((page) => (
+              <Link
+                style={{
+                  margin: "0 20px",
+                  fontFamily: "roboto",
+                  color: "#ffff",
+                  padding: "10px",
+                }}
+                to={"/" + page}
+              >
+                {page}
+              </Link>
+            ))}
+          </Box>
+          {url === "productos" ? (
+            <Search
+              style={{ padding: "0 10px", marginRight: "10px" }}
+              onChange={(e) => {
+                dispatch(searchProducts(e.target.value));
+              }}
+            >
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          ) : null}
+
           <Box sx={{ flexGrow: 0 }}>
             <MaterialUISwitch
               onChange={handleTheme}
               defaultChecked={mode === "dark"}
             />
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 0 }}>
             <div className="Nav-cart">
               <div className="Cart-bg"></div>
               <IconButton sx={{ color: "#f2f2f2" }}>
@@ -230,7 +252,7 @@ export default function NavBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Chip
-                  avatar={<Avatar alt="Natacha" src={userData.avatar} />}
+                  avatar={<Avatar alt={userData.name} src={userData.avatar} />}
                   label={userData.name}
                   variant="outlined"
                 />

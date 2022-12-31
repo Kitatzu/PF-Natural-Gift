@@ -18,7 +18,7 @@ async function allProducts(req, res) {
         },
       });
 
-      productsInDb.length
+      productsInDb.length > 0
         ? res.status(201).json(productsInDb)
         : res.status(404).json("product not found");
     } catch (error) {
