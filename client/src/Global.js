@@ -1,4 +1,4 @@
 const Global = {
-  ApiUrl: "naturalgift.up.railway.app",
+  ApiUrl: "https://naturalgift.up.railway.app",
 };
 export default Global;
