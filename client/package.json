@@ -21,7 +21,7 @@
     "dotenv-expand": "^10.0.0",
     "fs": "^0.0.1-security",
     "gapi-script": "^1.2.0",
-    "nodejs": "16.0.0",
+    "nodejs": "0.0.0",
     "npm": "^9.2.0",
     "os": "^0.1.2",
     "path": "^0.12.7",
@@ -42,6 +42,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+  "node": "16.x.x"
   },
   "eslintConfig": {
     "extends": [
