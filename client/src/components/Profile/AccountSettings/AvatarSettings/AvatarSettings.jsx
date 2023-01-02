@@ -18,7 +18,7 @@ const AvatarSettings = () => {
   if (JSON.parse(localStorage.getItem("token")) !== null) {
     avatar = JSON.parse(localStorage.getItem("token")).avatar;
   }
-
+  console.log(avatar);
   const { firstName, lastName, email, linkName } = useSelector(
     (store) => store.user
   );
@@ -37,7 +37,7 @@ const AvatarSettings = () => {
         </Typography>
         <Box sx={{ padding: "20px" }} display="flex">
           <Avatar
-            alt="Natacha"
+            alt={firstName}
             src={avatar}
             sx={{ width: "60px !important", height: "60px !important" }}
           />
