@@ -9,9 +9,18 @@ cloudinary.config({
 });
 
 module.exports.uploadProductImage = async (filePath) => {
-  return await cloudinary.uploader.upload(filePath, {
-    folder: "Products",
-  });
+  return await cloudinary.uploader
+    .upload(filePath, {
+      folder: "Products",
+    })
+    .then((response) => {
+      console.log("thenCloudinary", response);
+      return response.secure_url;
+    })
+    .catch((response) => {
+      console.log("catchCloudinary", response);
+      return response;
+    });
 };
 
 module.exports.uploadAvatarImage = async (filePath) => {
