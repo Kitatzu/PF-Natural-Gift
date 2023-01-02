@@ -7,8 +7,8 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
-const EmailRegisterInput = ({ handleChange, handleBlur, form }) => {
-  console.log(form)
+const EmailRegisterInput = ({ handleChange, handleBlur, form, error }) => {
+  console.log(form);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   return (
@@ -32,6 +32,7 @@ const EmailRegisterInput = ({ handleChange, handleBlur, form }) => {
         value={form.registerEmail}
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
+        error={error}
         required
         endAdornment={
           <InputAdornment position="end">

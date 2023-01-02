@@ -32,9 +32,12 @@ const FormRegister = ({
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
+          error={errors.name !== undefined}
         />
         {errors.name !== undefined ? (
-          <Alert severity="error">{errors.name}</Alert>
+          <Alert severity="error" sx={{ margin: "150x 0" }}>
+            {errors.name}
+          </Alert>
         ) : null}
 
         <LastNameInput
@@ -42,31 +45,40 @@ const FormRegister = ({
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           form={form}
+          error={errors.lastName !== undefined}
         />
       </Box>
 
-      {errors.lastName !== undefined ? (
-        <Alert severity="error">{errors.lastName}</Alert>
+      {errors.lastname !== undefined ? (
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.lastname}
+        </Alert>
       ) : null}
 
       <AgeInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
+        error={errors.age !== undefined}
         form={form}
       />
       {errors.age !== undefined ? (
-        <Alert severity="error">{errors.age}</Alert>
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.age}
+        </Alert>
       ) : null}
 
       <EmailRegisterInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
+        error={errors.registerEmail !== undefined}
         form={form}
       />
       {errors.registerEmail !== undefined ? (
-        <Alert severity="error">{errors.registerEmail}</Alert>
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.registerEmail}
+        </Alert>
       ) : null}
       <CountriesInput
         handleChange={handleChange}
@@ -75,25 +87,33 @@ const FormRegister = ({
         form={form}
       />
       {errors.Country !== undefined ? (
-        <Alert severity="error">{errors.Country}</Alert>
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.Country}
+        </Alert>
       ) : null}
       <PasswordRegisterInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
+        error={errors.registerpassword !== undefined}
         form={form}
       />
       {errors.registerpassword !== undefined ? (
-        <Alert severity="error">{errors.registerpassword}</Alert>
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.registerpassword}
+        </Alert>
       ) : null}
       <PasswordVerifyInput
         handleChange={handleChange}
         handleBlur={handleBlur}
+        error={errors.verifypassword !== undefined}
         handleSubmit={handleSubmit}
         form={form}
       />
       {errors.verifypassword !== undefined ? (
-        <Alert severity="error">{errors.verifypassword}</Alert>
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.verifypassword}
+        </Alert>
       ) : null}
 
       <Box display="flex" justifyContent="space-around" alignItems="center">
