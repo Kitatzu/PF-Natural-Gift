@@ -10,6 +10,8 @@ import GoogleLogin from "react-google-login";
 import { gapi } from "gapi-script";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../Redux/Thunks/LoginUser";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+
 function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
   const dispatch = useDispatch();
   const clientId =
@@ -40,28 +42,39 @@ function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
     console.log(response);
   };
   return (
-    <form className="Form">
+    <ValidatorForm className="Form">
       <h2>LOGIN</h2>
       <EmailInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmits={handleSubmits}
         form={form}
+        error={errors.email !== undefined}
       />
       {errors.email !== undefined ? (
-        <Alert severity="error">{errors.email}</Alert>
+        <Alert severity="error" sx={{ margin: "10px 0" }}>
+          {errors.email}
+        </Alert>
       ) : null}
       <PasswordInput
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmits={handleSubmits}
         form={form}
+        error={errors.password !== undefined}
       />
       {errors.password !== undefined ? (
-        <Alert severity="error">{errors.password}</Alert>
+        <Alert severity="error" sx={{ margin: "150x 0" }}>
+          {errors.password}
+        </Alert>
       ) : null}
 
-      <Box display="flex" justifyContent="space-around" alignItems="center">
+      <Box
+        sx={{ margin: "5px 0" }}
+        display="flex"
+        justifyContent="space-around"
+        alignItems="center"
+      >
         <Button
           variant="contained"
           color="secondary"
@@ -79,7 +92,7 @@ function FormLogin({ handleChange, handleBlur, handleSubmits, form, errors }) {
           cookiePolicy={"single_host_origin"}
         />
       </Box>
-    </form>
+    </ValidatorForm>
   );
 }
 

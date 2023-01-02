@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import { loginUser } from "../Redux/Thunks/LoginUser";
 import { RegisterUser } from "../Redux/Thunks/RegisterUser";
-export const useForm = (initialForm, validateForm) => {
+export const useForm = (initialForm, validateForm, localeErrors) => {
   const dispatch = useDispatch();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
+
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
 
@@ -27,45 +29,78 @@ export const useForm = (initialForm, validateForm) => {
 
   const handleBlur = (e) => {
     handleChange(e);
-    setErrors(validateForm(e.target.name, form[e.target.name]));
-    setErrors(validateForm(e.target.password, form[e.target.password]));
-    setErrors(validateForm(e.target.email, form[e.target.email]));
-    setErrors(validateForm(e.target.lastname, form[e.target.lastname]));
-    setErrors(validateForm(e.target.age, form[e.target.age]));
-    setErrors(validateForm(e.target.country, form[e.target.country]));
-    setErrors(
-      validateForm(e.target.registerpassword, form[e.target.registerpassword])
-    );
-    setErrors(
-      validateForm(e.target.verifypassword, form[e.target.verifypassword])
-    );
-    setErrors(
-      validateForm(e.target.registerEmail, form[e.target.registerEmail])
-    );
+    setErrors({
+      ...errors,
+      ...validateForm(e.target.name, form[e.target.name]),
+    });
+    console.log(errors);
   };
 
   const handleSubmit = (e) => {
-    const formSend = {};
+    console.log(errors, form);
+    if (
+      errors.age === undefined &&
+      errors.lastname === undefined &&
+      errors.name === undefined &&
+      errors.registerEmail === undefined &&
+      errors.registerpassword === undefined &&
+      errors.verifypassword === undefined &&
+      form.age !== undefined &&
+      form.lastname !== undefined &&
+      form.name !== undefined &&
+      form.registerEmail !== undefined &&
+      form.registerpassword !== undefined &&
+      form.verifypassword !== undefined &&
+      form.age !== "" &&
+      form.lastname !== "" &&
+      form.name !== "" &&
+      form.registerEmail !== "" &&
+      form.registerpassword !== "" &&
+      form.verifypassword !== ""
+    ) {
+      const formSend = {};
 
-    formSend.firstName = form.name;
-    formSend.lastName = form.lastname;
-    formSend.userName = form.name + form.lastname + form.age;
-    formSend.email = form.registerEmail;
-    formSend.password = form.registerpassword;
-    formSend.country = form.country;
-    console.log(formSend);
-    (async () => {
-      await dispatch(RegisterUser(formSend));
-    })();
+      formSend.firstName = form.name;
+      formSend.lastName = form.lastname;
+      formSend.userName = form.name + form.lastname + form.age;
+      formSend.email = form.registerEmail;
+      formSend.password = form.registerpassword;
+      formSend.country = form.country;
+      console.log(formSend);
+      (async () => {
+        await dispatch(RegisterUser(formSend));
+      })();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Form",
+        text: "Completar el formulario!",
+      });
+    }
   };
 
   const handleSubmits = (e) => {
-    const formSend = {};
-    formSend.email = form.email;
-    formSend.password = form.password;
-    (async () => {
-      await dispatch(loginUser("local", formSend));
-    })();
+    if (
+      errors.email === undefined &&
+      errors.password === undefined &&
+      form.email !== undefined &&
+      form.password !== undefined &&
+      form.email !== "" &&
+      form.password !== ""
+    ) {
+      const formSend = {};
+      formSend.email = form.email;
+      formSend.password = form.password;
+      (async () => {
+        await dispatch(loginUser("local", formSend));
+      })();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Form",
+        text: "Completar el formulario!",
+      });
+    }
   };
 
   return {

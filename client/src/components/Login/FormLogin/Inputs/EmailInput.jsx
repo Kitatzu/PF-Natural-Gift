@@ -8,7 +8,7 @@ import {
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
 
-const EmailInput = ({ handleChange, handleBlur, form }) => {
+const EmailInput = ({ handleChange, handleBlur, form, error }) => {
   console.log(form);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
@@ -25,6 +25,7 @@ const EmailInput = ({ handleChange, handleBlur, form }) => {
         E-mail
       </InputLabel>
       <OutlinedInput
+        error={error}
         id="outlined-adornment-email"
         name="email"
         type={"email"}
