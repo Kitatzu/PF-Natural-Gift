@@ -6,7 +6,7 @@ const searchController = async (req, res) => {
     const dataSearch = await Products.findAll({
       where: {
         name: {
-          [Op.substring]: value,
+          [Op.iLike]: "%" + value + "%",
         },
       },
       include: {
