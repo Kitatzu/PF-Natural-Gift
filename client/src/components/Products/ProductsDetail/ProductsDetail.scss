@@ -13,7 +13,8 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   padding-bottom: 2rem;
   border-bottom: 1px solid #c8c8c8;
-  width: 80%;
+  width: 100%;
+  padding: 20px;
 
   .Product-img {
     width: 500px;
@@ -23,7 +24,7 @@
   }
 
   .Product-info {
-    margin-right: 2rem;
+ 
     span {
       font-weight: bold;
     }
@@ -71,9 +72,28 @@
   border: none;
   transition: .6s;
   font-weight: bold;
+  color: #ffff;
 
   &:hover {
     cursor: pointer;
     background-color: rgb(68, 150, 86);
+  }
+}
+@media screen and (max-width: 600px) {
+  .Product{
+    padding: 0px !important;
+  }
+  .Product-img{
+    width: 100% !important;
+  }
+  
+}
+@media screen and (max-width: 440px) {
+  .Product{
+    margin: 0px  !important;
+    padding: 10px !important;
+  }
+  .Btn-Enviar-Carrito {
+    font-size: 10px !important;
   }
 }

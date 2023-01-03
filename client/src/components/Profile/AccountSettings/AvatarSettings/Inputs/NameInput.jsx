@@ -22,7 +22,7 @@ const NameInput = ({ name, label, value }) => {
         type={"text"}
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
-        value={value}
+        defaultValue={value}
         required
         label={label}
       />

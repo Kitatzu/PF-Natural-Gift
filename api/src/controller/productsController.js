@@ -43,46 +43,55 @@ async function allProducts(req, res) {
 
 async function createProduct(req, res) {
   let { name, categories, description, stock, price, rating } = req.body;
+  console.log(req.body);
+  console.log(req.files.imageProduct);
+  if (req.files.imageProduct) {
+    try {
+      const result = await uploadProductImage(
+        req.files.imageProduct.tempFilePath
+      );
+      console.log(result);
+      const newProduct = await Products.create({
+        name,
+        imageProduct: result,
+        description,
+        stock,
+        price,
+        rating,
+      });
+      await fs.unlink(req.files.imageProduct.tempFilePath);
 
-  if (req.files?.imageProduct) {
-    const result = await uploadProductImage(
-      req.files.imageProduct.tempFilePath
-    );
+      const allCategories = await Categories.findAll({
+        where: { name: categories },
+      });
 
-    const newProduct = await Products.create({
-      name,
-      imageProduct: result.public_id,
-      description,
-      stock,
-      price,
-      rating,
-    });
+      await newProduct.addCategories(allCategories);
 
-    await fs.unlink(req.files.imageProduct.tempFilePath);
-
-    const allCategories = await Categories.findAll({
-      where: { name: categories },
-    });
-
-    await newProduct.addCategories(allCategories);
-
-    return res.status(201).send(newProduct);
+      return res.status(201).send(newProduct);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ status: "error", msg: e });
+    }
   } else {
-    const newProduct = await Products.create({
-      name,
-      description,
-      stock,
-      price,
-      rating,
-    });
+    try {
+      const newProduct = await Products.create({
+        name,
+        description,
+        stock,
+        price,
+        rating,
+      });
 
-    const allCategories = await Categories.findAll({
-      where: { name: categories },
-    });
+      const allCategories = await Categories.findAll({
+        where: { name: categories },
+      });
 
-    await newProduct.addCategories(allCategories);
+      await newProduct.addCategories(allCategories);
 
-    return res.status(201).send(newProduct);
+      return res.status(201).send(newProduct);
+    } catch (e) {
+      return res.status(500).json({ status: "error", msg: e });
+    }
   }
 }
 

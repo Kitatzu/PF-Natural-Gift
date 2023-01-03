@@ -10,6 +10,8 @@ import Rating from "@mui/material/Rating";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import NavBar from "../../NavBar/NavBar";
 import "./ProductsDetail.scss";
+import { Box } from "@mui/material";
+import AppBar from "../../AppBar/AppBar";
 
 const ProductsDetails = () => {
   const { productsId } = useParams();
@@ -22,15 +24,23 @@ const ProductsDetails = () => {
   useEffect(() => {
     dispatch(getDetails(productsId));
   }, []);
-
+  const Theme = useSelector((store) => store.theme);
+  const mode = useSelector((store) => store.theme.mode);
   return (
-    <div>
+    <div style={{ background: Theme[mode].primary }}>
       <NavBar />
       {isLoading ? (
         <Loading />
       ) : (
         <div className="Product-container">
-          <div className="Product">
+          <Box
+            className="Product"
+            display={"flex"}
+            flexWrap="wrap"
+            justifyContent={"center"}
+            alignItems="center"
+            sx={{ marginBottom: "100px" }}
+          >
             <img
               className="Product-img"
               src={
@@ -41,26 +51,39 @@ const ProductsDetails = () => {
               alt={productDetail.name}
             />
             <div className="Product-info">
-              <h2 className="Product-name">{productDetail.name}</h2>
-              <p>
-                <span>Precio:</span> ${productDetail.price}
+              <h2
+                className="Product-name"
+                style={{ color: Theme[mode].textPrimary }}
+              >
+                {productDetail.name}
+              </h2>
+              <p style={{ color: Theme[mode].textPrimary }}>
+                <span style={{ color: Theme[mode].textPrimary }}>Precio:</span>{" "}
+                ${productDetail.price}
               </p>
               {/* No se puede mostrar la categoría en pantalla, ya que al recargar la página nada se vuelve a renderizar y queda en blanco. */}
               {/* <p><span>Categoría:</span> {productDetail.categories[0].name}</p> */}
-              <p>{productDetail.description}</p>
-              <ul>
-                <li>Envíos a toda Argentina</li>
-                <li>Compra segura con Paypal</li>
+              <p style={{ color: Theme[mode].textPrimary }}>
+                {productDetail.description}
+              </p>
+              <ul style={{ color: Theme[mode].textPrimary }}>
+                <li style={{ color: Theme[mode].textPrimary }}>
+                  Envíos a toda Argentina
+                </li>
+                <li style={{ color: Theme[mode].textPrimary }}>
+                  Compra segura con Paypal
+                </li>
               </ul>
               <Rating
                 className="Product-rating"
                 value={Number(productDetail.rating)}
               />
               <div className="Product-add">
-                <form>
+                <form style={{ marginBottom: "100px" }}>
                   <OutlinedInput
                     type={"number"}
                     inputProps={{ min: 1, max: 10 }}
+                    sx={{ color: Theme[mode].textPrimary }}
                   ></OutlinedInput>
                   <button className="Btn-Enviar-Carrito" type="submit">
                     Enviar al carrito{" "}
@@ -69,13 +92,14 @@ const ProductsDetails = () => {
                 </form>
               </div>
             </div>
-          </div>
+          </Box>
         </div>
       )}
       {/* Un problema para alguien del futuro que vea esto: al darle click a alguna card no se mostrara en pantalla debido a que solo se rendizar con useEffect */}
       {/* <div className="Products-more">
         <ProductsHome/>
       </div> */}
+      <AppBar />
       <Waves />
     </div>
   );

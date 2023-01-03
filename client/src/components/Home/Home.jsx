@@ -6,6 +6,7 @@ import Waves from "../Waves/Waves";
 import "./Home.scss";
 import NavBar from "../NavBar/NavBar.jsx";
 import { useSelector } from "react-redux";
+import AppBar from "../AppBar/AppBar.jsx";
 
 const Home = () => {
   const mode = useSelector((store) => store.theme.mode);
@@ -17,6 +18,7 @@ const Home = () => {
       <Banner />
       <InfoSection />
       <ProductsHome />
+      <AppBar />
       <Waves />
     </div>
   );

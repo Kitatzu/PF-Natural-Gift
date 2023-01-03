@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Products.scss";
 import { Alert } from "@mui/material";
 import Loading from "../Loading/Loading";
+import { Search, SearchIconWrapper, StyledInputBase } from "../Search/Search";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   List,
@@ -17,6 +19,12 @@ import {
 } from "@mui/material";
 import { getCategories } from "../../Redux/Thunks/Categories";
 import { filterProducts } from "../../Redux/Thunks/filterProducts";
+import { searchProducts } from "../../Redux/Thunks/searchProducts";
+import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
+import AppBar from "../AppBar/AppBar";
+
+const url = window.location.href.split("/")[3].toLowerCase();
+const urlRoute = window.location.href.split("/")[4];
 const Products = () => {
   const { products = [] } = useSelector((state) => state.products);
   const { status, error } = useSelector((state) => state.products);
@@ -34,16 +42,29 @@ const Products = () => {
   return (
     <div
       className="Products"
-      style={{ background: Theme[mode].primary, minHeight: "100vh" }}
+      style={{
+        background: Theme[mode].primary,
+        minHeight: "100vh",
+        height: "max-content",
+      }}
     >
       <NavBar />
       <Box
         display={"flex"}
         justifyContent="space-between"
-        sx={{ minHeight: "100vh" }}
+        sx={{
+          minHeight: "100vh",
+
+          background: Theme[mode].primary,
+        }}
       >
         <Box
-          sx={{ width: "100%", maxWidth: 360, background: Theme[mode].sidebar }}
+          sx={{
+            width: "100%",
+            maxWidth: 360,
+            background: Theme[mode].sidebar,
+            display: { xs: "none", sm: "flex" },
+          }}
         >
           <List
             component="nav"
@@ -84,8 +105,41 @@ const Products = () => {
           display={"flex"}
           flexWrap="wrap"
           justifyContent={"center"}
-          sx={{ width: "70%" }}
+          sx={{ marginBottom: "90px", width: { xs: "100%", md: "70%" } }}
         >
+          <Box sx={{ width: "100%", padding: "20px" }}>
+            {url === "productos" &&
+            (urlRoute === "" || urlRoute === undefined) ? (
+              <Search
+                style={{ padding: "0 10px", marginRight: "10px" }}
+                onChange={(e) => {
+                  dispatch(searchProducts(e.target.value));
+                }}
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "block", sm: "none", md: "none" },
+                  color: Theme[mode].textPrimary,
+                }}
+              >
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+            ) : null}
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              padding: "20px",
+              display: { xs: "block", sm: "none" },
+            }}
+          >
+            <CategoriesMenu />
+          </Box>
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
@@ -110,6 +164,7 @@ const Products = () => {
           )}
         </Box>
       </Box>
+      <AppBar />
     </div>
   );
 };
