@@ -23,7 +23,7 @@ const EmailAddress = ({ email }) => {
         type={"email"}
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
-        value={email}
+        defaultValue={email}
         required
         label="E-mail"
       />

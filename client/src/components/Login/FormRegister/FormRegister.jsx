@@ -35,7 +35,7 @@ const FormRegister = ({
           error={errors.name !== undefined}
         />
         {errors.name !== undefined ? (
-          <Alert severity="error" sx={{ margin: "150x 0" }}>
+          <Alert severity="error" sx={{ margin: "15px 0" }}>
             {errors.name}
           </Alert>
         ) : null}
@@ -50,7 +50,7 @@ const FormRegister = ({
       </Box>
 
       {errors.lastname !== undefined ? (
-        <Alert severity="error" sx={{ margin: "150x 0" }}>
+        <Alert severity="error" sx={{ margin: "15px 0" }}>
           {errors.lastname}
         </Alert>
       ) : null}
@@ -63,7 +63,7 @@ const FormRegister = ({
         form={form}
       />
       {errors.age !== undefined ? (
-        <Alert severity="error" sx={{ margin: "150x 0" }}>
+        <Alert severity="error" sx={{ margin: "15px 0" }}>
           {errors.age}
         </Alert>
       ) : null}
@@ -76,7 +76,7 @@ const FormRegister = ({
         form={form}
       />
       {errors.registerEmail !== undefined ? (
-        <Alert severity="error" sx={{ margin: "150x 0" }}>
+        <Alert severity="error" sx={{ margin: "15px 0" }}>
           {errors.registerEmail}
         </Alert>
       ) : null}
@@ -87,7 +87,7 @@ const FormRegister = ({
         form={form}
       />
       {errors.Country !== undefined ? (
-        <Alert severity="error" sx={{ margin: "150x 0" }}>
+        <Alert severity="error" sx={{ margin: "15px 0" }}>
           {errors.Country}
         </Alert>
       ) : null}
@@ -99,7 +99,7 @@ const FormRegister = ({
         form={form}
       />
       {errors.registerpassword !== undefined ? (
-        <Alert severity="error" sx={{ margin: "150x 0" }}>
+        <Alert severity="error" sx={{ margin: "15px 0" }}>
           {errors.registerpassword}
         </Alert>
       ) : null}
@@ -111,7 +111,7 @@ const FormRegister = ({
         form={form}
       />
       {errors.verifypassword !== undefined ? (
-        <Alert severity="error" sx={{ margin: "150x 0" }}>
+        <Alert severity="error" sx={{ margin: "15px 0" }}>
           {errors.verifypassword}
         </Alert>
       ) : null}
