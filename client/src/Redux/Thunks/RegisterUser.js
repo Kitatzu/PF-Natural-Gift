@@ -11,7 +11,8 @@ export const RegisterUser = (form) => {
       .then((data) => {
         dispatch(setIsLoading(false));
         const userData = {
-          userName: form.userName,
+          userName: form.email,
+          name: form.firstName,
           token: data.data.newToken,
         };
         localStorage.setItem("token", JSON.stringify(userData));
@@ -21,7 +22,7 @@ export const RegisterUser = (form) => {
           text: "Usuario registrado correctamente!",
           confirmButtonText: "Continuar!",
         }).then(async (response) => {
-          await dispatch(setUserName(form.userName));
+          await dispatch(setUserName(userData.userName));
           await dispatch(setIsLog(data.data.newToken));
         });
       })

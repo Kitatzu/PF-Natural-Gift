@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Seguridad from "./Seguridad/Seguridad";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "../../../Redux/Thunks/GetUser";
+import AppBar from "../../AppBar/AppBar";
 const AccountSettings = () => {
   const dispatch = useDispatch();
   const userName = JSON.parse(localStorage.getItem("token")).userName;
@@ -35,7 +36,9 @@ const AccountSettings = () => {
         <Box>
           <h2 style={{ color: Theme[mode].textPrimary }}>Settings</h2>
         </Box>
-        <Box sx={{ width: "max-content", minWidth: "400px" }}>
+        <Box
+          sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "400px" }}
+        >
           <ul className="Account-links">
             <li>
               <Button
@@ -56,12 +59,13 @@ const AccountSettings = () => {
               </Button>
             </li>
           </ul>
-          <Box>
+          <Box marginBottom={"90px"}>
             {setting === "Perfil" && <AvatarSettings />}
             {setting === "Seguridad" && <Seguridad />}
           </Box>
         </Box>
       </Box>
+      <AppBar />
     </div>
   );
 };
