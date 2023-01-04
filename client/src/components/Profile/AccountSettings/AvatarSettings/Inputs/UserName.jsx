@@ -23,7 +23,7 @@ const UserName = ({ userName }) => {
         type={"text"}
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
-        value={userName}
+        defaultValue={userName}
         required
         label="UserName"
       />
