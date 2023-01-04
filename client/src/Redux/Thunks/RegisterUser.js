@@ -1,16 +1,18 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import Global from "../../Global";
 import { setIsLoading, setIsLog, setUserName } from "../Slices";
 
 export const RegisterUser = (form) => {
   return async (dispatch) => {
     dispatch(setIsLoading(true));
     return await axios
-      .post("http://localhost:3001/register", form)
+      .post(Global.ApiUrl + "/register", form)
       .then((data) => {
         dispatch(setIsLoading(false));
         const userData = {
-          userName: form.userName,
+          userName: form.email,
+          name: form.firstName,
           token: data.data.newToken,
         };
         localStorage.setItem("token", JSON.stringify(userData));
@@ -20,7 +22,7 @@ export const RegisterUser = (form) => {
           text: "Usuario registrado correctamente!",
           confirmButtonText: "Continuar!",
         }).then(async (response) => {
-          await dispatch(setUserName(form.userName));
+          await dispatch(setUserName(userData.userName));
           await dispatch(setIsLog(data.data.newToken));
         });
       })

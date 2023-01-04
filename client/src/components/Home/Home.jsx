@@ -6,18 +6,19 @@ import Waves from "../Waves/Waves";
 import "./Home.scss";
 import NavBar from "../NavBar/NavBar.jsx";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import Loading from "../Loading/Loading.jsx";
+import AppBar from "../AppBar/AppBar.jsx";
 
 const Home = () => {
-  const isLog = useSelector((store) => store.user.isLog);
+  const mode = useSelector((store) => store.theme.mode);
+  const Theme = useSelector((store) => store.theme);
   return (
-    <div className="Home">
-      {!isLog && <Redirect to="/login" />} 
+    <div className="Home" style={{ background: Theme[mode].primary }}>
+      {/* {!isLog && <Redirect to="/login" />}  */}
       <NavBar />
       <Banner />
       <InfoSection />
       <ProductsHome />
+      <AppBar />
       <Waves />
     </div>
   );

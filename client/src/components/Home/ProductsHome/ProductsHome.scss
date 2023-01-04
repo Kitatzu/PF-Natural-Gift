@@ -2,12 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom:90px;
 }
 
 .ProductsHome-title {
   display: flex;
   text-align: center;
   justify-content: center;
+  width: 100%;
+
 }
 
 .Products-cards {
@@ -17,4 +20,5 @@
   align-items: center;
   gap: 2.5rem;
   margin: 2rem 3rem;
+ 
 }

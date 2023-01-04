@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useSelector } from "react-redux";
-const LastNameInput = ({ handleChange, handleBlur, form }) => {
+const LastNameInput = ({ handleChange, handleBlur, form, error }) => {
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   return (
@@ -32,6 +32,7 @@ const LastNameInput = ({ handleChange, handleBlur, form }) => {
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
         required
+        error={error}
         endAdornment={
           <InputAdornment position="end">
             <IconButton edge="end">

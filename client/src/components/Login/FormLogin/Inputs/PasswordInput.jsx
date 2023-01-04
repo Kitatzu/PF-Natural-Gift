@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 import { React, useState } from "react";
 import { useSelector } from "react-redux";
 
-const PasswordInput = ({ handleChange, handleBlur, form }) => {
+const PasswordInput = ({ handleChange, handleBlur, form, error }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -40,6 +40,7 @@ const PasswordInput = ({ handleChange, handleBlur, form }) => {
         name="password"
         value={form.password}
         style={{ color: Theme[mode].textPrimary }}
+        error={error}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
