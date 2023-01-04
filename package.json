@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jquery": "^3.6.3",
     "react-autosuggest": "^10.1.0"
   }
 }
