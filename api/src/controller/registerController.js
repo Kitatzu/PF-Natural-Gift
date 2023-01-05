@@ -4,6 +4,8 @@ const { transporter } = require("../middlewares/mails.js");
 const { Email } = process.env;
 const fs = require("fs-extra");
 const { uploadAvatarImage } = require("../middlewares/cloudinary.js");
+const path = require("path");
+const filepath = path.join(__dirname, "../public/registerMail.html");
 
 async function registerUser(req, res) {
   let { userName, password, email, firstName, lastName, country, roleName } =
@@ -57,10 +59,10 @@ async function registerUser(req, res) {
       );
 
       const send = await transporter.sendMail({
-        from: `"Te has registrado exitosamente" <${Email}>`, // sender address
+        from: `${Email}`, // sender address
         to: email, // list of receivers
-        subject: "No entendiste? te registraste bien", // Subject line
-        html: "<b> Que miras? Andá pa'allá, bobo, andá pa'allá</b>", // html body
+        subject: "Registro Exitoso", // Subject line
+        html: { path: filepath }, // html body
       });
       res.status(200).json({ newToken, send });
     } else {
@@ -99,10 +101,10 @@ async function registerUser(req, res) {
       );
 
       const send = await transporter.sendMail({
-        from: `"Te has registrado exitosamente" <${Email}>`, // sender address
+        from: `${Email}`, // sender address
         to: email, // list of receivers
-        subject: "No entendiste? te registraste bien", // Subject line
-        html: "<b> Que miras? Andá pa'allá, bobo, andá pa'allá</b>", // html body
+        subject: "Registro Exitoso", // Subject line
+        html: { path: filepath }, // html body
       });
       res.status(200).json({ newToken, send });
     }
