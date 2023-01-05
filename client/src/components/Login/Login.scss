@@ -3,7 +3,7 @@
 .Login-container {
   position: relative;
   min-height: 100vh;
- 
+
   img{
    width: 100%;
    padding: 20px;
@@ -59,4 +59,8 @@
   .Login-nav-links{
     display: none !important;
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
