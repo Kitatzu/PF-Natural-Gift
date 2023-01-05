@@ -6,16 +6,8 @@ const fs = require("fs-extra");
 const { uploadAvatarImage } = require("../middlewares/cloudinary.js");
 
 async function registerUser(req, res) {
-  let {
-    userName,
-    password,
-    email,
-    firstName,
-    lastName,
-    country,
-    roleName,
-    avatar,
-  } = req.body;
+  let { userName, password, email, firstName, lastName, country, roleName } =
+    req.body;
 
   try {
     let findUser = await Users.findOne({ where: { userName } });
@@ -29,7 +21,8 @@ async function registerUser(req, res) {
       const result = await uploadAvatarImage(req.files.avatar.tempFilePath);
 
       const newUser = await Users.create({
-        avatar: result.public_id,
+        avatar: result.secure_url,
+        avatarId: result.public_id,
         userName,
         password: await bcrypt.hash(password, salt),
         email,

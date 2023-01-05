@@ -6,13 +6,28 @@ const {
   deleteProduct,
   updateProduct,
 } = require("../controller/productsController.js");
+const fileUpload = require("express-fileupload");
 
 const router = Router();
 
 router.get("/", allProducts);
-router.post("/", createProduct);
+router.post(
+  "/",
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./uploads",
+  }),
+  createProduct
+);
 router.get("/:id", findProduct);
 router.delete("/:id", deleteProduct);
-router.put("/:id", updateProduct);
+router.put(
+  "/:id",
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./uploads",
+  }),
+  updateProduct
+);
 
 module.exports = router;
