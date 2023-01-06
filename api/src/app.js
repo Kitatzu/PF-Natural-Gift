@@ -4,10 +4,13 @@ const morgan = require("morgan");
 const routes = require("./routes/index.js");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 require("./db.js");
 
 const server = express();
+
+dotenv.config();
 
 server.name = "API";
 
@@ -17,7 +20,7 @@ server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(cors());
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://naturalgift.vercel.app"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
