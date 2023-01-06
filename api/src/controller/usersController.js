@@ -1,8 +1,9 @@
 const { Users, Roles } = require("../db");
+const { updateAvatarImage } = require("../middlewares/cloudinary.js");
+const fs = require("fs-extra");
 
 async function allUsers(req, res) {
   let { email } = req.query;
-  console.log(req.query.email);
   if (email) {
     try {
       let usersInDb = await Users.findAll({
@@ -46,31 +47,92 @@ async function deleteUser(req, res) {
   res.send("User is deleted");
 }
 
-// async function updateUser(req, res) {
-//   let { id } = req.params;
-//   //let {
-//   //     userName,
-//   //     email,
-//   //     password,
-//   //     avatar,
-//   //     firstName,
-//   //     lastName,
-//   //     city,
-//   //     country,
-//   //     adress,
-//   //     phone,
-//   //   } = req.body;
+async function updateUser(req, res) {
+  let { id } = req.params;
+  const { userName, firstName, lastName, city, country, adress, phone } =
+    req.body;
+  if (req.files?.avatar) {
+    try {
+      let user = await Users.findByPk(id, {
+        include: {
+          model: Roles,
+          attributes: ["roleName"],
+          through: { attributes: [] },
+        },
+      });
 
-//   //  try {
-//   //     const salt = await bcrypt.genSalt(10);
-//   //     let user = Users.findByPk({where: {id: id}})
+      let findUser = await Users.findOne({ where: { userName } });
 
-//   //  } catch (error) {
+      const avatarUpdate = await updateAvatarImage(
+        req.files.avatar.tempFilePath,
+        user.avatarId
+      );
 
-//   //  }
-// }
+      if (user.userName === userName) {
+        return res.status(404).json(`the username ${userName} is repeat`);
+      }
+      if (findUser) {
+        return res.status(400).json(`the username ${userName} is registered`);
+      } else {
+        let userUpdate = await user.update({
+          avatar: avatarUpdate.secure_url,
+          avatarId: avatarUpdate.public_id,
+          userName: userName,
+          firstName: firstName,
+          lastName: lastName,
+          city: city,
+          country: country,
+          adress: adress,
+          phone: phone,
+        });
+
+        res.status(200).json({ message: "User Updated", userUpdate });
+      }
+
+      await fs.unlink(req.files.avatar.tempFilePath);
+    } catch (error) {
+      res.status(400).json({ message: "Error updated with files", error });
+    }
+  } else {
+    try {
+      let user = await Users.findByPk(id, {
+        include: {
+          model: Roles,
+          attributes: ["roleName"],
+          through: { attributes: [] },
+        },
+      });
+
+      let findUser = await Users.findOne({ where: { userName } });
+
+      if (user.userName === userName) {
+        return res.status(404).json(`the username ${userName} is repeat`);
+      }
+      if (findUser) {
+        return res.status(400).json(`the username ${userName} is registered`);
+      } else {
+        let userUpdate = await user.update({
+          userName: userName,
+          firstName: firstName,
+          lastName: lastName,
+          city: city,
+          country: country,
+          adress: adress,
+          phone: phone,
+        });
+
+        await fs.unlink(req.files.avatar.tempFilePath);
+
+        res.status(200).json({ message: "User Updated", userUpdate });
+      }
+    } catch (error) {
+      res.status(400).json({ message: "Error!", error });
+    }
+  }
+}
 
 module.exports = {
   allUsers,
   deleteUser,
+  updateUser,
 };
