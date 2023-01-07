@@ -6,7 +6,9 @@ import ProductsDetails from "../components/Products/ProductsDetail/ProductsDetai
 import DefaultRoute from "../components/DefaultRoute/DefaultRoute";
 import AccountSettings from "../components/Profile/AccountSettings/AccountSettings";
 import SobreNosotros from "../components/Sobre-nosotros/Sobre-nosotros";
-
+import Dashboard from "../components/Dashboard/Dashboard";
+import Users from "../components/Dashboard/Users";
+import Prods from "../components/Dashboard/Prods";
 const Routes = () => {
   return (
     <>
@@ -15,12 +17,15 @@ const Routes = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/Home" component={Home} />
         <Route exact path="/Productos" component={Products} />
+        <Route exact path="/Users" component={Users} />
+        <Route exact path="/Prods" component={Prods} />
         <Route
           exact
           path="/Productos/:productsId"
           component={ProductsDetails}
         />
         <Route exact path="/account" component={AccountSettings} />
+        <Route exact path="/Dashboard" component={Dashboard} />
         <Route exact path="/Sobre Nosotros" component={SobreNosotros} />
         <Route component={DefaultRoute} />
       </Switch>
