@@ -1,17 +1,18 @@
 import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-
+import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { MenuItem } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { Menu } from "@mui/material";
 import { Tooltip, Button, Chip } from "@mui/material";
-
+import NaturalNG from "../Assets/img/LogoNG.png";
 import { useDispatch, useSelector } from "react-redux";
 import MaterialUISwitch from "../MaterialUiSwitch/MaterialUiSwitch";
 import { Icon } from "@iconify/react";
@@ -19,10 +20,50 @@ import { logout } from "../../Redux/Slices";
 import { Link, Redirect } from "react-router-dom";
 import "./NavBar.scss";
 import { setTheme } from "../../Redux/Slices";
-import { searchProducts } from "../../Redux/Thunks/searchProducts";
-import { Search, SearchIconWrapper, StyledInputBase } from "../Search/Search";
-const pages = ["Home", "Productos", "Sobre Nosotros"];
+const pages = ["Home", "Productos", "Categorias", "Sobre Nosotros"];
 const settings = ["Account", "Dashboard", "Logout"];
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
 
 export default function NavBar() {
   const handleTheme = (e) => {
@@ -34,11 +75,10 @@ export default function NavBar() {
   const userData = {};
   if (localStorage.getItem("token") !== null) {
     userData.avatar = JSON.parse(localStorage.getItem("token")).avatar;
-    userData.name = JSON.parse(localStorage.getItem("token")).userName;
+    userData.name = JSON.parse(localStorage.getItem("token")).name;
   }
-  const url = window.location.href.split("/")[3].toLowerCase();
-  const urlRoute = window.location.href.split("/")[4];
-  console.log(url);
+
+  console.log(userData);
   const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -51,6 +91,10 @@ export default function NavBar() {
     Account: () => {
       setRedSettings("account");
     },
+    Dashboard: () => {
+      setRedSettings("Dashboard")
+    },
+    
   };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -82,16 +126,14 @@ export default function NavBar() {
           background:
             " linear-gradient(0deg, rgba(255,185,41,1) 0%, rgba(255,125,193,1) 100%)",
         }}
-        sx={{ position: "relative", zIndex: 999 }}
       >
         <Toolbar>
           <Link to="/home">
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              <Icon
-                icon="ph:flame-fill"
-                color={"#f2f2f2"}
-                width="40"
-                height="40"
+              <img
+                src={NaturalNG}
+                alt="NaturalGift"
+                style={{ width: "30px" }}
               />
               <div
                 className="textLogo"
@@ -101,20 +143,15 @@ export default function NavBar() {
                   padding: "0 10px",
                 }}
               >
-                <span style={{ color: "#ffff", fontWeight: "600" }}>
+                <span style={{ color: Theme["light"].textPrimary }}>
                   Natural
                 </span>
-                <span style={{ color: "#ffff", fontWeight: "400" }}>Gift</span>
+                <span style={{ color: Theme["light"].textPrimary }}>Gift</span>
               </div>
             </Box>
           </Link>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", sm: "flex", md: "none" },
-            }}
-          >
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -149,63 +186,39 @@ export default function NavBar() {
                     textAlign="center"
                     style={{ color: Theme[mode].textPrimary }}
                   >
-                    <Link to={"/" + page}>{page}</Link>
+                    <Link to="/products">{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "center",
-            }}
-          >
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link
-                style={{
-                  margin: "0 20px",
-                  fontFamily: "roboto",
-                  color: "#ffff",
-                  padding: "10px",
-                }}
-                to={"/" + page}
-              >
-                {page}
-              </Link>
+              <Link to="/products">{page}</Link>
             ))}
           </Box>
-          {url === "productos" &&
-          (urlRoute === "" || urlRoute === undefined) ? (
-            <Search
-              style={{ padding: "0 10px", marginRight: "10px" }}
-              onChange={(e) => {
-                dispatch(searchProducts(e.target.value));
-              }}
-              sx={{
-                flexGrow: 1,
-                display: { xs: "none", sm: "flex", md: "flex" },
-              }}
-            >
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          ) : null}
-
+          <Search
+            style={{ padding: "0 10px", marginRight: "10px" }}
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
+          >
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 0 }}>
             <MaterialUISwitch
               onChange={handleTheme}
               defaultChecked={mode === "dark"}
             />
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             <div className="Nav-cart">
               <div className="Cart-bg"></div>
               <IconButton sx={{ color: "#f2f2f2" }}>
@@ -221,10 +234,9 @@ export default function NavBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Chip
-                  avatar={<Avatar alt={userData.name} src={userData.avatar} />}
+                  avatar={<Avatar alt="Natacha" src={userData.avatar} />}
                   label={userData.name}
                   variant="outlined"
-                  sx={{ maxWidth: "115px", overflow: "hidden" }}
                 />
               </IconButton>
             </Tooltip>
