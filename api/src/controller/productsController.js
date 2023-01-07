@@ -44,8 +44,8 @@ async function allProducts(req, res) {
 async function createProduct(req, res) {
   let { name, categories, description, stock, price, rating } = req.body;
   console.log(req.body);
-  console.log(req.files.imageProduct);
-  if (req.files.imageProduct) {
+
+  if (req.files) {
     try {
       const result = await uploadProductImage(
         req.files.imageProduct.tempFilePath

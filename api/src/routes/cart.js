@@ -1,6 +1,7 @@
 const sequelize = require("../db");
 const { Router } = require("express");
 const router = Router();
+const isUUID = require("is-uuid");
 const { Users, Products, ProductInCart, Cart } = sequelize;
 const {
   getCart,
@@ -20,7 +21,7 @@ router.post("/:productId", async (req, res) => {
       return res
         .status(400)
         .send({ error: "quantity debe ser un numero y mayor a cero" });
-    if (!isUUID(productId))
+    if (!isUUID.anyNonNil(productId))
       return res.status(400).send({ error: "id del producto no valida" });
     let product = await Products.findByPk(productId);
     if (!product) return res.status(404).send({ error: "Product not found" });
@@ -62,9 +63,9 @@ router.put("/:productId", async (req, res) => {
   let { productId } = req.params;
   let { userId, quantity } = req.body;
   try {
-    if (productId !== "all" && !isUUID(productId))
+    if (productId !== "all" && !isUUID.anyNonNil(productId))
       return res.status(400).send({ error: "id del producto no valida" });
-    if (!isUUID(userId))
+    if (!isUUID.anyNonNil(userId))
       return res.status(400).send({ error: "id del usuario no valida" });
     let user = await Users.findByPk(userId);
     if (!user) return res.status(404).send({ error: "User not found" });
@@ -106,7 +107,7 @@ router.put("/:productId", async (req, res) => {
 router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
-    if (!isUUID(userId))
+    if (!isUUID.anyNonNil(userId))
       return res
         .status(400)
         .send({ status: "The sent id is not valid (UUID)" });
