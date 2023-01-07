@@ -5,7 +5,7 @@ const PaymentService = require("../services/PaymentService");
 const PaymentInstance = new PaymentController(new PaymentService());
 
 //tendria que ser un post
-router.get("/", function (req, res, next) {
+router.post("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 

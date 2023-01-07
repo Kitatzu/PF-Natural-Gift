@@ -44,8 +44,8 @@ const {
   Users,
   ProductInCart,
   Cart,
-  Transaction,
   Roles,
+  Payment,
   Reviews,
 } = sequelize.models;
 
@@ -57,8 +57,8 @@ Roles.belongsToMany(Users, { through: "User_Role" });
 Cart.hasMany(ProductInCart);
 ProductInCart.belongsTo(Cart);
 
-Users.hasMany(Transaction);
-Transaction.belongsTo(Users);
+Users.hasMany(Payment);
+Payment.belongsTo(Users);
 
 // Reviews.belongsTo(Products);
 
