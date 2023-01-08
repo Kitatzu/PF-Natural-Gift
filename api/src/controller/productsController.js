@@ -1,5 +1,8 @@
 const { Products, Categories } = require("../db.js");
-const { uploadProductImage } = require("../middlewares/cloudinary.js");
+const {
+  uploadProductImage,
+  updateProductImage,
+} = require("../middlewares/cloudinary.js");
 const fs = require("fs-extra");
 const verifyToken = require("../middlewares/authenticationJwt.js").verifyToken;
 const isAdmin = require("../middlewares/authenticationJwt.js").isAdmin;
@@ -43,9 +46,8 @@ async function allProducts(req, res) {
 
 async function createProduct(req, res) {
   let { name, categories, description, stock, price, rating } = req.body;
-  console.log(req.body);
 
-  if (req.files) {
+  if (req.files?.imageProduct) {
     try {
       const result = await uploadProductImage(
         req.files.imageProduct.tempFilePath
@@ -53,7 +55,8 @@ async function createProduct(req, res) {
       console.log(result);
       const newProduct = await Products.create({
         name,
-        imageProduct: result,
+        imageProduct: result.secure_url,
+        imageId: result.public_id,
         description,
         stock,
         price,
@@ -69,7 +72,6 @@ async function createProduct(req, res) {
 
       return res.status(201).send(newProduct);
     } catch (e) {
-      console.log(e);
       res.status(500).json({ status: "error", msg: e });
     }
   } else {
@@ -108,7 +110,6 @@ async function findProduct(req, res) {
       ],
     });
 
-    console.log(databaseProduct);
     return res.status(201).json(databaseProduct);
   } catch (error) {
     res.status(404).json("Product is not found");
@@ -127,27 +128,66 @@ async function deleteProduct(req, res) {
 
 async function updateProduct(req, res) {
   const { id } = req.params;
-  const { name, imageProduct, description, stock, price, rating } = req.body;
+  const { name, description, stock, price, rating } = req.body;
 
-  let product = await Products.findByPk(id, {
-    include: [
-      {
-        model: Categories,
-        attributes: ["name"],
-        through: { attributes: [] },
-      },
-    ],
-  });
+  if (req.files?.imageProduct) {
+    try {
+      let product = await Products.findByPk(id, {
+        include: [
+          {
+            model: Categories,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+        ],
+      });
 
-  let updated = await product.update({
-    name: name,
-    description: description,
-    stock: stock,
-    price: price,
-    rating,
-  });
+      const imgUpdate = await updateProductImage(
+        req.files.imageProduct.tempFilePath,
+        product.imageId
+      );
 
-  res.json({ message: "product updated", updated });
+      let updated = await product.update({
+        name: name,
+        imageProduct: imgUpdate.secure_url,
+        imageId: imgUpdate.public_id,
+        description: description,
+        stock: stock,
+        price: price,
+        rating: rating,
+      });
+
+      await fs.unlink(req.files.imageProduct.tempFilePath);
+
+      res.json({ message: "product updated", updated });
+    } catch (error) {
+      res.status(400).json({ message: error });
+    }
+  } else {
+    try {
+      let product = await Products.findByPk(id, {
+        include: [
+          {
+            model: Categories,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+        ],
+      });
+
+      let updated = await product.update({
+        name: name,
+        description: description,
+        stock: stock,
+        price: price,
+        rating: rating,
+      });
+
+      res.status(200).json({ message: "Product updated", updated });
+    } catch (error) {
+      res.status(401).json({ message: "Error!", error });
+    }
+  }
 }
 
 module.exports = {

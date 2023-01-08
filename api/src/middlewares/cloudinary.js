@@ -15,7 +15,39 @@ module.exports.uploadProductImage = async (filePath) => {
     })
     .then((response) => {
       console.log("thenCloudinary", response);
-      return response.secure_url;
+      return response;
+    })
+    .catch((response) => {
+      console.log("catchCloudinary", response);
+      return response;
+    });
+};
+
+module.exports.updateProductImage = async (filePath, public_id) => {
+  return await cloudinary.uploader
+    .upload(filePath, {
+      invalidate: true,
+      public_id: public_id,
+    })
+    .then((response) => {
+      console.log("thenCloudinary", response);
+      return response;
+    })
+    .catch((response) => {
+      console.log("catchCloudinary", response);
+      return response;
+    });
+};
+
+module.exports.updateAvatarImage = async (filePath, public_id) => {
+  return await cloudinary.uploader
+    .upload(filePath, {
+      invalidate: true,
+      public_id: public_id,
+    })
+    .then((response) => {
+      console.log("thenCloudinary", response);
+      return response;
     })
     .catch((response) => {
       console.log("catchCloudinary", response);
@@ -24,11 +56,20 @@ module.exports.uploadProductImage = async (filePath) => {
 };
 
 module.exports.uploadAvatarImage = async (filePath) => {
-  return await cloudinary.uploader.upload(filePath, {
-    folder: "Avatar",
-  });
+  return await cloudinary.uploader
+    .upload(filePath, {
+      folder: "Avatar",
+    })
+    .then((response) => {
+      console.log("thenCloudinary", response);
+      return response;
+    })
+    .catch((response) => {
+      console.log("catchCloudinary", response);
+      return response;
+    });
 };
 
-module.exports.deleteImage = async (public_Id) => {
-  return await cloudinary.uploader.destroy(public_Id);
+module.exports.deleteImage = async (public_id) => {
+  return await cloudinary.uploader.destroy(public_id);
 };
