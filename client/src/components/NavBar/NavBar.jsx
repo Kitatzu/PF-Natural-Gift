@@ -20,7 +20,7 @@ import { logout } from "../../Redux/Slices";
 import { Link, Redirect } from "react-router-dom";
 import "./NavBar.scss";
 import { setTheme } from "../../Redux/Slices";
-const pages = ["Home", "Productos", "Categorias", "Sobre Nosotros"];
+const pages = ["Home", "Productos", "Sobre Nosotros"];
 const settings = ["Account", "Dashboard", "Logout"];
 
 const Search = styled("div")(({ theme }) => ({
@@ -186,16 +186,32 @@ export default function NavBar() {
                     textAlign="center"
                     style={{ color: Theme[mode].textPrimary }}
                   >
-                    <Link to="/products">{page}</Link>
+                    <Link to={"/" + page}>{page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
             {pages.map((page) => (
-              <Link to="/products">{page}</Link>
+              <Link
+                style={{
+                  margin: "0 20px",
+                  fontFamily: "roboto",
+                  color: "#ffff",
+                  padding: "10px",
+                }}
+                to={"/" + page}
+              >
+                {page}
+              </Link>
             ))}
           </Box>
           <Search
