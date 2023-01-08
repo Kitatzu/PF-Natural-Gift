@@ -2,17 +2,37 @@ const sequelize = require("../db");
 const { Cart, ProductInCart, Users, Products } = sequelize;
 
 const getCart = async (cartId) => {
-  return await Cart.findOne({
+  await Cart.findOne({
     where: { id: cartId },
     include: ProductInCart,
-  });
+  })
+    .then((response) => response)
+    .catch((e) => e);
 };
 
-const createProductInCart = async (quantity, productId) => {
-  return await ProductInCart.create({
+const createProductInCart = async (quantity, productId, cartId) => {
+  const findProduct = await ProductInCart.findOne({
+    include: {
+      model: Products,
+      through: { attributes: [] },
+      where: {
+        productId,
+      },
+    },
+  });
+  console.log(findProduct);
+  await ProductInCart.create({
     quantity,
     productId,
-  });
+  })
+    .then(async (response) => {
+      const cart = await Cart.findByPk(cartId);
+      await cart.addProductInCarts(response);
+      return await cart.getProductInCarts();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
 const updateProductInCart = async (quantity, productInCartId) => {

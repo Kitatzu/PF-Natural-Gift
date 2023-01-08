@@ -52,7 +52,6 @@ module.exports = (sequelize) => {
       },
       cartId: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
       phone: {

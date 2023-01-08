@@ -57,6 +57,8 @@ Roles.belongsToMany(Users, { through: "User_Role" });
 Cart.hasMany(ProductInCart);
 ProductInCart.belongsTo(Cart);
 
+ProductInCart.hasMany(Products);
+Products.belongsTo(ProductInCart, { foreignKey: "productId" });
 Users.hasMany(Transaction);
 Transaction.belongsTo(Users);
 

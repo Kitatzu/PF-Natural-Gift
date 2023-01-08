@@ -6,7 +6,7 @@ server.listen(3001, "192.168.1.6", () => {
   console.log("%s listening at 3001");
   try {
     conn
-      .sync()
+      .sync({ force: true })
       .then((response) => {
         createRoles();
       })

@@ -1,4 +1,4 @@
-const { Users, Roles, bcrypt } = require("../db");
+const { Users, Roles, bcrypt, Cart } = require("../db");
 const jwt = require("jsonwebtoken");
 const { transporter } = require("../middlewares/mails.js");
 const { Email } = process.env;
@@ -21,7 +21,9 @@ async function registerUser(req, res) {
     } else if (req.files?.avatar) {
       const salt = await bcrypt.genSalt(10);
       const result = await uploadAvatarImage(req.files.avatar.tempFilePath);
-
+      const newcart = await Cart.create({
+        totalPrice: 0,
+      });
       const newUser = await Users.create({
         avatar: result.secure_url,
         avatarId: result.public_id,
@@ -31,8 +33,9 @@ async function registerUser(req, res) {
         firstName,
         lastName,
         country,
+        cartId: newcart.id,
       });
-
+      console.log(newcart, newUser);
       await fs.unlink(req.files.avatar.tempFilePath);
 
       if (roleName) {
@@ -67,7 +70,9 @@ async function registerUser(req, res) {
       res.status(200).json({ newToken, send });
     } else {
       const salt = await bcrypt.genSalt(10);
-
+      const newcart = await Cart.create({
+        totalPrice: 0,
+      });
       const newUser = await Users.create({
         userName,
         password: await bcrypt.hash(password, salt),
@@ -75,8 +80,9 @@ async function registerUser(req, res) {
         firstName,
         lastName,
         country,
+        cartId: newcart.id,
       });
-
+      console.log(newcart, newUser);
       if (roleName) {
         const findRoles = await Roles.findAll({
           where: { roleName: roleName },
@@ -109,6 +115,7 @@ async function registerUser(req, res) {
       res.status(200).json({ newToken, send });
     }
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ message: error });
   }
 }

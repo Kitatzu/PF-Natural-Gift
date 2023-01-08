@@ -17,11 +17,11 @@ router.post("/:productId", async (req, res) => {
   try {
     const product = await Products.findByPk(productId);
     const user = await Users.findByPk(userId);
-    const cart = await Cart.create({
-      totalPrice: product.price,
-    });
-    return res.status(200).json({ status: "success", cart, user, product });
+    console.log(await getCart(user.cartId));
+    await createProductInCart(quantity, productId, user.cartId);
+    return res.status(200).json({ status: "success", user, product });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ error: err.message });
   }
 });
