@@ -1,5 +1,5 @@
 const sequelize = require("../db");
-const { Router } = require("express");
+const { Router, response } = require("express");
 const router = Router();
 const isUUID = require("is-uuid");
 const { Users, Products, ProductInCart, Cart } = sequelize;
@@ -11,51 +11,18 @@ const {
   updateProductsInCart,
 } = require("../controller/cartController");
 
-let statusCode = 500;
-
 router.post("/:productId", async (req, res) => {
   const { userId, quantity } = req.body;
   const { productId } = req.params;
   try {
-    if (isNaN(quantity) || quantity <= 0)
-      return res
-        .status(400)
-        .send({ error: "quantity debe ser un numero y mayor a cero" });
-    if (!isUUID.anyNonNil(productId))
-      return res.status(400).send({ error: "id del producto no valida" });
-    let product = await Products.findByPk(productId);
-    if (!product) return res.status(404).send({ error: "Product not found" });
-    if (quantity > product.stock)
-      return res.status(404).send({
-        error: "Quantity must not be greater than the stock of the product",
-      });
-
-    let user = await Users.findByPk(userId);
-    if (!user) return res.status(404).send({ error: "User not found" });
-
-    let cart = await getCart(user.cartId);
-    let productInCart = await createProductInCart(quantity, productId);
-    let totalPrice =
-      cart.totalPrice +
-      quantity * product.price -
-      quantity * product.price * product.discount;
-    let existProductInCart = cart.ProductInCarts.find(
-      (product) => product.productId === productId
-    );
-    if (existProductInCart) {
-      await updateProductInCart(quantity, existProductInCart.id);
-      totalPrice -=
-        existProductInCart.quantity * product.price -
-        existProductInCart.quantity * product.price * product.discount;
-    } else {
-      await cart.addProductInCart(productInCart);
-    }
-    await updateCart(totalPrice, user.cartId);
-    cart = await getCart(user.cartId);
-    let status = existProductInCart ? "Cart updated" : "Product added";
-    return res.status(200).json({ status, cart });
+    const product = await Products.findByPk(productId);
+    const user = await Users.findByPk(userId);
+    const cart = await Cart.create({
+      totalPrice: product.price,
+    });
+    return res.status(200).json({ status: "success", cart, user, product });
   } catch (err) {
-    return res.status(statusCode).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 });
 
