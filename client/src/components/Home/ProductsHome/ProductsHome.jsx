@@ -6,11 +6,11 @@ import BtnSeeAll from "./BtnSeeAll/BtnSeeAll";
 import "./ProductsHome.scss";
 
 const ProductsHome = () => {
-  const { isLoading, products = [] } = useSelector((state) => state.products);
+  let { isLoading, products = [] } = useSelector((state) => state.products);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   const dispatch = useDispatch();
-
+  products = products.slice(0, 3);
   useEffect(() => {
     dispatch(getProducts());
   }, []);
