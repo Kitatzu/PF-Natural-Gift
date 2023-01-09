@@ -13,7 +13,9 @@ module.exports = (sequelize) => {
       avatar: {
         type: DataTypes.STRING,
       },
-
+      avatarId: {
+        type: DataTypes.STRING,
+      },
       userName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -50,7 +52,6 @@ module.exports = (sequelize) => {
       },
       cartId: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
       phone: {

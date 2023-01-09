@@ -10,6 +10,7 @@ import Seguridad from "./Seguridad/Seguridad";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "../../../Redux/Thunks/GetUser";
 import AppBar from "../../AppBar/AppBar";
+import Loading from "../../Loading/Loading";
 const AccountSettings = () => {
   const dispatch = useDispatch();
   const userName = JSON.parse(localStorage.getItem("token")).userName;
@@ -19,7 +20,7 @@ const AccountSettings = () => {
   const [setting, setSetting] = useState("Perfil");
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
-
+  const userLoading = useSelector((store) => store.user.isLoading);
   return (
     <div
       className="Account"
@@ -29,15 +30,16 @@ const AccountSettings = () => {
       <Box
         display={"flex"}
         justifyContent="center"
-        sx={{ padding: "40px" }}
+        sx={{ padding: "20px" }}
         alignItems="center"
         flexDirection={"column"}
       >
+        {userLoading ? <Loading /> : null}
         <Box>
           <h2 style={{ color: Theme[mode].textPrimary }}>Settings</h2>
         </Box>
         <Box
-          sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "400px" }}
+          sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "300px" }}
         >
           <ul className="Account-links">
             <li>

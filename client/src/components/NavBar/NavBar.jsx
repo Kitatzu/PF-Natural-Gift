@@ -51,6 +51,12 @@ export default function NavBar() {
     Account: () => {
       setRedSettings("account");
     },
+    Dashboard: () => {
+      setRedSettings("dashboard");
+    },
+    cart: () => {
+      setRedSettings("cart");
+    },
   };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -208,7 +214,10 @@ export default function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <div className="Nav-cart">
               <div className="Cart-bg"></div>
-              <IconButton sx={{ color: "#f2f2f2" }}>
+              <IconButton
+                sx={{ color: "#f2f2f2" }}
+                onClick={() => handleSetting("cart")}
+              >
                 <Icon
                   icon="material-symbols:shopping-cart-rounded"
                   width="25"

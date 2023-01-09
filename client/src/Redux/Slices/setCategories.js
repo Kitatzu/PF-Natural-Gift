@@ -20,12 +20,12 @@ export const categoriesSlice = createSlice({
       state.status = action.payload.status;
     },
 
-    setStatus: (state, action) => {
+    setStatusC: (state, action) => {
       state.status = action.payload.status;
       state.error = action.payload.msg;
     },
   },
 });
 
-export const { startLoadingCategories, setCategories, setStatus } =
+export const { startLoadingCategories, setCategories, setStatusC } =
   categoriesSlice.actions;

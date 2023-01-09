@@ -1,6 +1,7 @@
 import NavBar from "../NavBar/NavBar";
+import Paginated from "../Paginated/Paginated";
 import ProductsCards from "../ProductsCards/ProductsCards";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProducts } from "../../Redux/Thunks/index";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +26,7 @@ import AppBar from "../AppBar/AppBar";
 
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
+console.log(url, urlRoute);
 const Products = () => {
   const { products = [] } = useSelector((state) => state.products);
   const { status, error } = useSelector((state) => state.products);
@@ -32,6 +34,14 @@ const Products = () => {
   const Theme = useSelector((store) => store.theme);
   const isLoading = useSelector((store) => store.products.isLoading);
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(15);
+  const indexLastProduct = currentPage * productsPerPage;
+  const indexFirstProduct = indexLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
+  const paginated = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     dispatch(getProducts());
@@ -143,7 +153,7 @@ const Products = () => {
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
-            products.map((product) => (
+            currentProducts.map((product) => (
               <div key={product.id}>
                 <ProductsCards
                   id={product.id}
@@ -163,8 +173,16 @@ const Products = () => {
             </Alert>
           )}
         </Box>
+
       </Box>
+      <Paginated 
+             productsPerPage={productsPerPage}
+             products = {products.length}
+             paginated = {paginated}
+            />
+
       <AppBar />
+     
     </div>
   );
 };
