@@ -3,6 +3,7 @@ import Leaf from "../../Assets/img/Leaf.png";
 import CreditCard from "../../Assets/img/Credit Card.png";
 import Logo from "../../Assets/img/LogoNG.png";
 import "./InfoSection.scss";
+import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const InfoSection = () => {
@@ -14,20 +15,20 @@ const InfoSection = () => {
         <img src={Leaf} alt="Leaf" />
         <div className="CardInfo-text">
           <h2>Eco-Friendly</h2>
-          <p>
+          <Typography>
             Nuestros productos son 100% amigables con el medio ambiente, porque
             todo lo que nos brinda la naturaleza lo replantamos.
-          </p>
+          </Typography>
         </div>
       </div>
       <div className="CardInfo">
         <img src={CreditCard} alt="Credit-card" />
         <div className="CardInfo-text">
           <h2>Formas de Pago</h2>
-          <p>
+          <Typography>
             Puedes pagar con tu tarjeta de débito/crédito en Mercadopago o
             mediante transferencia a nuestra cuenta RUT.
-          </p>
+          </Typography>
         </div>
       </div>
       <div className="CardIG">
