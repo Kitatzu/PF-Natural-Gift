@@ -1,4 +1,5 @@
 import React from "react";
+import "./Paginated.scss"
 
 export default function Paginated ({productsPerPage, products, paginated}) {
     const pageNumber = [];
@@ -8,17 +9,17 @@ export default function Paginated ({productsPerPage, products, paginated}) {
     }
 
     return (
-        <nav>
-            <ul>
+        <box className="Contenender"> 
+            <ul className="pagination">
                 {
                     pageNumber?.map(number => (
-                        <li>
-                            <button onClick={()=>paginated(number)}> {number} </button>
+                        <li className="numbers">
+                            <button className="button" onClick={()=>paginated(number)}> {number} </button>
                         </li>
 
                     )
                 )}
             </ul>
-        </nav>
+            </box>
     )
 }
