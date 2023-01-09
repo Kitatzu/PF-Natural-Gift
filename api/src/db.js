@@ -54,11 +54,12 @@ Categories.belongsToMany(Products, { through: "Products_Categories" });
 Users.belongsToMany(Roles, { through: "User_Role" });
 Roles.belongsToMany(Users, { through: "User_Role" });
 
-Cart.hasMany(ProductInCart);
-ProductInCart.belongsTo(Cart);
+Cart.hasMany(ProductInCart, { foreignKey: "cartId" });
+ProductInCart.belongsTo(Cart, { foreignKey: "cartId" });
 
-ProductInCart.hasMany(Products);
-Products.belongsTo(ProductInCart, { foreignKey: "productId" });
+Products.hasMany(ProductInCart, { foreignKey: "productId" });
+ProductInCart.belongsTo(Products, { foreignKey: "productId" });
+
 Users.hasMany(Transaction);
 Transaction.belongsTo(Users);
 

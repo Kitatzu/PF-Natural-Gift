@@ -9,10 +9,13 @@ export const RegisterUser = (form) => {
     return await axios
       .post(Global.ApiUrl + "/register", form)
       .then((data) => {
+        console.log(data);
         dispatch(setIsLoading(false));
         const userData = {
+          userId: data.data.id,
           userName: form.email,
-          name: form.firstName,
+          name: data.data.firstName,
+          lastName: data.data.lastName,
           token: data.data.newToken,
         };
         localStorage.setItem("token", JSON.stringify(userData));

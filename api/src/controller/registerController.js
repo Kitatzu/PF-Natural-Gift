@@ -67,7 +67,7 @@ async function registerUser(req, res) {
         subject: "Registro Exitoso", // Subject line
         html: { path: filepath }, // html body
       });
-      res.status(200).json({ newToken, send });
+      res.status(200).json({ newToken, send, ...newUser.dataValues });
     } else {
       const salt = await bcrypt.genSalt(10);
       const newcart = await Cart.create({
@@ -112,7 +112,7 @@ async function registerUser(req, res) {
         subject: "Registro Exitoso", // Subject line
         html: { path: filepath }, // html body
       });
-      res.status(200).json({ newToken, send });
+      res.status(200).json({ newToken, send, ...newUser.dataValues });
     }
   } catch (error) {
     console.log(error);

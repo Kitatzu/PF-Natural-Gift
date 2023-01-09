@@ -29,7 +29,7 @@ const AccountSettings = () => {
       <Box
         display={"flex"}
         justifyContent="center"
-        sx={{ padding: "40px" }}
+        sx={{ padding: "20px" }}
         alignItems="center"
         flexDirection={"column"}
       >
@@ -37,7 +37,7 @@ const AccountSettings = () => {
           <h2 style={{ color: Theme[mode].textPrimary }}>Settings</h2>
         </Box>
         <Box
-          sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "400px" }}
+          sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "300px" }}
         >
           <ul className="Account-links">
             <li>
