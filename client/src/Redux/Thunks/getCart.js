@@ -1,0 +1,81 @@
+import axios from "axios";
+import Global from "../../Global";
+import Swal from "sweetalert2";
+import {
+  setProductsCart,
+  setTotalPrice,
+  startLoadingCart,
+  setStatus,
+} from "../Slices/Cart";
+
+const userId = JSON.parse(localStorage.getItem("token"))
+  ? JSON.parse(localStorage.getItem("token")).userId
+  : null;
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
+export const getCart = () => {
+  return async (dispatch) => {
+    dispatch(startLoadingCart());
+    return axios
+      .get(Global.ApiUrl + "/cart/" + userId)
+      .then((response) => {
+        console.log(response);
+        dispatch(
+          setProductsCart({
+            status: response.data.status,
+            products: response.data.cart.products,
+          })
+        );
+        dispatch(setTotalPrice(response.data.cart.totalPrice));
+      })
+      .catch((e) => {
+        Toast.fire({
+          icon: "error",
+          title: "No data found!",
+        });
+        console.log(e);
+      });
+  };
+};
+export const setCart = (form) => {
+  return async (dispatch) => {
+    dispatch(startLoadingCart());
+    return axios
+      .post(Global.ApiUrl + "/cart/" + form.productId, {
+        quantity: form.quantity,
+        userId,
+      })
+      .then((response) => {
+        dispatch(
+          setStatus({ status: response.data.status, error: response.data.msg })
+        );
+        Toast.fire({
+          icon: "success",
+          title: response.data.msg,
+        });
+      })
+      .catch((e) => {
+        dispatch(
+          setStatus({
+            status: e.response.data.status,
+            error: e.response.data.msg,
+          })
+        );
+        Toast.fire({
+          icon: "error",
+          title: "El producto ya existe en el carrito!",
+        });
+        console.log(e);
+      });
+  };
+};

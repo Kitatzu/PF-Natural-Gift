@@ -1,4 +1,4 @@
 const Global = {
-  ApiUrl: "http://localhost:3001",
+  ApiUrl: "http://192.168.1.6:3001",
 };
 export default Global;

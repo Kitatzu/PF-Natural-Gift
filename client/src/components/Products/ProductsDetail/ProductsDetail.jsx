@@ -1,18 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getDetails } from "../../../Redux/Thunks/index";
 import defaultImage from "../../Assets/img/imgDefault.png";
 // import ProductsHome from "../../Home/ProductsHome/ProductsHome";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import Loading from "../../Loading/Loading";
 import Waves from "../../Waves/Waves";
 import Rating from "@mui/material/Rating";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import NavBar from "../../NavBar/NavBar";
 import "./ProductsDetail.scss";
-import { Box } from "@mui/material";
+import { Box, Button, Input, Typography } from "@mui/material";
 import AppBar from "../../AppBar/AppBar";
-
+import { Icon } from "@iconify/react";
+import { setCart } from "../../../Redux/Thunks/getCart";
 const ProductsDetails = () => {
   const { productsId } = useParams();
   const { productDetail = [], isLoading } = useSelector(
@@ -26,6 +27,8 @@ const ProductsDetails = () => {
   }, []);
   const Theme = useSelector((store) => store.theme);
   const mode = useSelector((store) => store.theme.mode);
+  const loadingCart = useSelector((store) => store.cart.isLoading);
+  const [cantidadProducto, setCantidad] = useState(1);
   return (
     <div style={{ background: Theme[mode].primary }}>
       <NavBar />
@@ -79,17 +82,34 @@ const ProductsDetails = () => {
                 value={Number(productDetail.rating)}
               />
               <div className="Product-add">
-                <form style={{ marginBottom: "100px" }}>
-                  <OutlinedInput
-                    type={"number"}
-                    inputProps={{ min: 1, max: 10 }}
-                    sx={{ color: Theme[mode].textPrimary }}
-                  ></OutlinedInput>
-                  <button className="Btn-Enviar-Carrito" type="submit">
-                    Enviar al carrito{" "}
-                    <i className="fa-solid fa-cart-shopping"></i>
-                  </button>
-                </form>
+                <Box sx={{ marginBottom: "100px" }} display="flex" gap={"10px"}>
+                  <Box sx={{ width: "40px" }}>
+                    <Input
+                      type="number"
+                      defaultValue={"1"}
+                      onChange={(e) => {
+                        setCantidad(e.target.value);
+                      }}
+                    />
+                  </Box>
+                  <LoadingButton
+                    loading={loadingCart}
+                    loadingPosition="end"
+                    endIcon={<Icon icon="material-symbols:shopping-cart" />}
+                    variant="contained"
+                    color="secondary"
+                    onClick={(e) => {
+                      dispatch(
+                        setCart({
+                          quantity: cantidadProducto,
+                          productId: productDetail.id,
+                        })
+                      );
+                    }}
+                  >
+                    Enviar al carrito
+                  </LoadingButton>
+                </Box>
               </div>
             </div>
           </Box>

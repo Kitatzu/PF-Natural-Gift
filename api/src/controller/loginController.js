@@ -25,7 +25,7 @@ async function loginUser(req, res) {
       expiresIn: 86400,
     }
   );
-  res.status(200).json({ newToken });
+  res.status(200).json({ newToken, ...validEmail.dataValues });
 }
 
 module.exports = {
