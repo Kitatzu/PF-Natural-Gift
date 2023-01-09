@@ -8,9 +8,6 @@ import {
   setStatus,
 } from "../Slices/Cart";
 
-const userId = JSON.parse(localStorage.getItem("token"))
-  ? JSON.parse(localStorage.getItem("token")).userId
-  : null;
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -24,6 +21,10 @@ const Toast = Swal.mixin({
 });
 
 export const getCart = () => {
+  const userId = JSON.parse(localStorage.getItem("token"))
+    ? JSON.parse(localStorage.getItem("token")).userId
+    : null;
+  console.log(userId);
   return async (dispatch) => {
     dispatch(startLoadingCart());
     return axios
@@ -48,6 +49,10 @@ export const getCart = () => {
   };
 };
 export const setCart = (form) => {
+  const userId = JSON.parse(localStorage.getItem("token"))
+    ? JSON.parse(localStorage.getItem("token")).userId
+    : null;
+  console.log(userId);
   return async (dispatch) => {
     dispatch(startLoadingCart());
     return axios
