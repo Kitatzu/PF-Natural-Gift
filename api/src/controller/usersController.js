@@ -14,9 +14,9 @@ async function allUsers(req, res) {
           through: { attributes: [] },
         },
       });
-      console.log(usersInDb);
-      usersInDb.length > 0
-        ? res.status(201).json(usersInDb)
+      console.log(usersInDb[0].dataValues);
+      usersInDb
+        ? res.status(201).json({ ...usersInDb[0].dataValues })
         : res.status(404).json("user not found");
     } catch (error) {
       console.log(error);

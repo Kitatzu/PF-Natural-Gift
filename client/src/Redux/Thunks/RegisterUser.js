@@ -16,6 +16,7 @@ export const RegisterUser = (form) => {
           userName: form.email,
           name: data.data.firstName,
           lastName: data.data.lastName,
+          rol: data.data.roles[0].roleName,
           token: data.data.newToken,
         };
         localStorage.setItem("token", JSON.stringify(userData));
