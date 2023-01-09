@@ -30,13 +30,13 @@
       padding-bottom: 2rem;
     }
 
-    p {
-      width: 300px;
-      color: black;
-      text-align: justify;
-      font-weight: bold;
-      font-size: 1rem;
-    }
+    // p {
+    //   width: 300px;
+    //   color: black;
+    //   text-align: justify;
+    //   font-weight: bold;
+    //   font-size: 1rem;
+    // }
 
     .CardInfo-text {
       text-align: center;
@@ -143,10 +143,10 @@
     }
   }
 }
-@media screen and (max-width: 400px) {
-  .CardInfo{
-    p{
-      font-size: 0.7rem !important;
-    }
-  }
-}
+// @media screen and (max-width: 400px) {
+//   .CardInfo{
+//     p{
+//       font-size: 0.7rem !important;
+//     }
+//   }
+// }
