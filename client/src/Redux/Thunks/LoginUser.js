@@ -9,11 +9,15 @@ export const loginUser = (origin, form, Token) => {
       await axios
         .post(Global.ApiUrl + "/login", form)
         .then((data) => {
+          console.log(data);
           const userData = {
+            userId: data.data.id,
             userName: form.email,
-            name: form.firstName,
+            name: data.data.firstName,
+            lastName: data.data.lastName,
             avatar: form.avatar,
             token: data.data.newToken,
+            rol: data.data.roles[0].roleName,
           };
           localStorage.setItem("token", JSON.stringify(userData));
           dispatch(setIsLoading(false));
@@ -42,9 +46,12 @@ export const loginUser = (origin, form, Token) => {
         .then((data) => {
           console.log(data);
           const userData = {
+            userId: data.data.id,
             userName: form.email,
+            name: data.data.firstName,
+            lastName: data.data.lastName,
             avatar: form.avatar,
-            name: form.firstName,
+            rol: data.data.roles[0].roleName,
             token: Token,
           };
           localStorage.setItem("token", JSON.stringify(userData));
@@ -65,9 +72,12 @@ export const loginUser = (origin, form, Token) => {
             .then((data) => {
               dispatch(setIsLoading(false));
               const userData = {
-                userName: form.userName,
+                userId: data.data.id,
+                userName: form.email,
+                name: data.data.firstName,
+                lastName: data.data.lastName,
                 avatar: form.avatar,
-                name: form.firstName,
+                rol: data.data.roles[0].roleName,
                 token: data.data.newToken,
               };
               localStorage.setItem("token", JSON.stringify(userData));

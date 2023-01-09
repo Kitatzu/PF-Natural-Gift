@@ -9,8 +9,8 @@ export const GetUser = (email, origin) => {
     return await axios
       .get(Global.ApiUrl + "/users?email=" + email)
       .then((response) => {
-        const { firstName, lastName, email, userName } = response.data[0];
         console.log(response.data);
+        const { firstName, lastName, email, userName } = response.data;
         dispatch(setIsLoading(false));
         dispatch(setData({ firstName, lastName, email, userName }));
       })
