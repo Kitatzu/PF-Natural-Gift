@@ -31,7 +31,7 @@ const Cart = () => {
             ))
           : null}
       </Box>
-      <Box width={{ xs: "100%", sm: "240px" }} padding="20px">
+      <Box width={{ xs: "100%", sm: "340px" }} padding="20px">
         <Card>
           <CardContent>
             <Box>

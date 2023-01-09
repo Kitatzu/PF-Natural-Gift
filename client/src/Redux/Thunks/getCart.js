@@ -5,11 +5,24 @@ import {
   setProductsCart,
   setTotalPrice,
   startLoadingCart,
+  setStatus,
 } from "../Slices/Cart";
 
 const userId = JSON.parse(localStorage.getItem("token"))
   ? JSON.parse(localStorage.getItem("token")).userId
   : null;
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 export const getCart = () => {
   return async (dispatch) => {
     dispatch(startLoadingCart());
@@ -26,10 +39,9 @@ export const getCart = () => {
         dispatch(setTotalPrice(response.data.cart.totalPrice));
       })
       .catch((e) => {
-        Swal.fire({
+        Toast.fire({
           icon: "error",
-          text: "No existen datos!",
-          timer: 2000,
+          title: "No data found!",
         });
         console.log(e);
       });
@@ -44,15 +56,24 @@ export const setCart = (form) => {
         userId,
       })
       .then((response) => {
-        Swal.fire({
+        dispatch(
+          setStatus({ status: response.data.status, error: response.data.msg })
+        );
+        Toast.fire({
           icon: "success",
-          text: response.data.msg,
+          title: response.data.msg,
         });
       })
       .catch((e) => {
-        Swal.fire({
-          icon: "success",
-          text: "Error al agregar producto!",
+        dispatch(
+          setStatus({
+            status: e.response.data.status,
+            error: e.response.data.msg,
+          })
+        );
+        Toast.fire({
+          icon: "error",
+          title: "El producto ya existe en el carrito!",
         });
         console.log(e);
       });
