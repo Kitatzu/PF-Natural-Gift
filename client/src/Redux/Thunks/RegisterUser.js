@@ -31,13 +31,14 @@ export const RegisterUser = (form) => {
         });
       })
       .catch((response) => {
+        console.log(response);
+        dispatch(setIsLoading(false));
+
         Swal.fire({
           icon: "error",
-          title: "Error!",
-          text: "Error no se registro el usuario!",
+          title: response.response ? response.response.status : response.code,
+          text: response.response ? response.response.data : response.message,
         });
-        dispatch(setIsLoading(false));
-        console.log(response);
       });
   };
 };

@@ -3,25 +3,35 @@ const { Cart, ProductInCart, Users, Products } = sequelize;
 
 const getCart = async (req, res) => {
   const { userId } = req.params;
+  console.log(userId);
   if (userId) {
     await Users.findByPk(userId)
       .then(async (user) => {
-        await Cart.findByPk(user.cartId).then(async (cart) => {
-          await ProductInCart.findAll({
-            where: { cartId: cart.id },
-            include: Products,
-          })
-            .then((products) => {
-              return res.status(200).json({
-                status: "success",
-                cart: { ...cart.dataValues, products },
-              });
+        console.log(user);
+        user
+          ? await Cart.findByPk(user.cartId).then(async (cart) => {
+              await ProductInCart.findAll({
+                where: { cartId: cart.id },
+                include: Products,
+              })
+                .then((products) => {
+                  return res.status(200).json({
+                    status: "success",
+                    cart: { ...cart.dataValues, products },
+                  });
+                })
+                .catch((e) => {
+                  console.log(e);
+                  return res
+                    .status(500)
+                    .json({ status: "error", msg: e.error });
+                });
             })
-            .catch((e) => res.status(500).json({ status: "error", msg_e }));
-        });
+          : res.status(404).json({ status: "error", msg: "No user found!" });
       })
       .catch((e) => {
-        return res.status(500).json({ status: "error", msg: e });
+        console.log(e);
+        return res.status(500).json({ status: "error", msg: e.error });
       });
   } else {
     return res
