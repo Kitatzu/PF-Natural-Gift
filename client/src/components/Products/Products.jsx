@@ -175,14 +175,14 @@ const Products = () => {
             </Alert>
           )}
         </Box>
-        <Paginated
+      </Box>
+      <Paginated 
              productsPerPage={productsPerPage}
              products = {products.length}
              paginated = {paginated}
             />
-            
-      </Box>
       <AppBar />
+     
     </div>
   );
 

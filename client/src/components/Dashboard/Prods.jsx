@@ -55,6 +55,8 @@ function Prods() {
   console.log(prodsSeleccionanda)
  }
 
+
+ const { categories = null } = useSelector((store) => store.categories);
   const { products = [] } = useSelector((state) => state.products);
    const dispatch = useDispatch()
     useEffect(() => {
