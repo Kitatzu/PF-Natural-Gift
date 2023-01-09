@@ -61,6 +61,7 @@ export const loginUser = (origin, form, Token) => {
         .catch(async (response) => {
           dispatch(setIsLoading(true));
           return await axios
+
             .post(Global.ApiUrl + "/register", form)
             .then((data) => {
               dispatch(setIsLoading(false));
