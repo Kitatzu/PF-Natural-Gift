@@ -27,46 +27,50 @@ const AccountSettings = () => {
       style={{ background: Theme[mode].primary, minHeight: "100vh" }}
     >
       <NavBar />
-      <Box
-        display={"flex"}
-        justifyContent="center"
-        sx={{ padding: "20px" }}
-        alignItems="center"
-        flexDirection={"column"}
-      >
-        {userLoading ? <Loading /> : null}
-        <Box>
-          <h2 style={{ color: Theme[mode].textPrimary }}>Settings</h2>
-        </Box>
+      {userLoading ? (
+        <Loading />
+      ) : (
         <Box
-          sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "300px" }}
+          display={"flex"}
+          justifyContent="center"
+          sx={{ padding: "20px" }}
+          alignItems="center"
+          flexDirection={"column"}
         >
-          <ul className="Account-links">
-            <li>
-              <Button
-                startIcon={<Icon icon="mdi:user" />}
-                onClick={() => setSetting("Perfil")}
-                sx={{ color: Theme[mode].textPrimary }}
-              >
-                Perfil
-              </Button>
-            </li>
-            <li>
-              <Button
-                startIcon={<Icon icon="mdi:account-security" />}
-                onClick={() => setSetting("Seguridad")}
-                sx={{ color: Theme[mode].textPrimary }}
-              >
-                Seguridad
-              </Button>
-            </li>
-          </ul>
-          <Box marginBottom={"90px"}>
-            {setting === "Perfil" && <AvatarSettings />}
-            {setting === "Seguridad" && <Seguridad />}
+          <Box>
+            <h2 style={{ color: Theme[mode].textPrimary }}>Settings</h2>
+          </Box>
+          <Box
+            sx={{ width: { xs: "100%", sm: "max-content" }, minWidth: "300px" }}
+          >
+            <ul className="Account-links">
+              <li>
+                <Button
+                  startIcon={<Icon icon="mdi:user" />}
+                  onClick={() => setSetting("Perfil")}
+                  sx={{ color: Theme[mode].textPrimary }}
+                >
+                  Perfil
+                </Button>
+              </li>
+              <li>
+                <Button
+                  startIcon={<Icon icon="mdi:account-security" />}
+                  onClick={() => setSetting("Seguridad")}
+                  sx={{ color: Theme[mode].textPrimary }}
+                >
+                  Seguridad
+                </Button>
+              </li>
+            </ul>
+            <Box marginBottom={"90px"}>
+              {setting === "Perfil" && <AvatarSettings />}
+              {setting === "Seguridad" && <Seguridad />}
+            </Box>
           </Box>
         </Box>
-      </Box>
+      )}
+
       <AppBar />
     </div>
   );

@@ -17,8 +17,8 @@
   padding: 20px;
 
   .Product-img {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    
     object-fit: cover;
     border-radius: 1rem;
   }
@@ -84,7 +84,7 @@
     padding: 0px !important;
   }
   .Product-img{
-    width: 100% !important;
+    width: 80% !important;
   }
   
 }
