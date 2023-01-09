@@ -24,9 +24,9 @@ import { searchProducts } from "../../Redux/Thunks/searchProducts";
 import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
 import AppBar from "../AppBar/AppBar";
 
-
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
+console.log(url, urlRoute);
 const Products = () => {
   const { products = [] } = useSelector((state) => state.products);
   const { status, error } = useSelector((state) => state.products);
@@ -34,14 +34,14 @@ const Products = () => {
   const Theme = useSelector((store) => store.theme);
   const isLoading = useSelector((store) => store.products.isLoading);
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(15)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(15);
   const indexLastProduct = currentPage * productsPerPage;
   const indexFirstProduct = indexLastProduct - productsPerPage;
   const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
   const paginated = (pageNumber) => {
-    setCurrentPage (pageNumber)
-  }
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     dispatch(getProducts());
@@ -149,8 +149,6 @@ const Products = () => {
             }}
           >
             <CategoriesMenu />
-
-            
           </Box>
           {isLoading ? (
             <Loading />
@@ -176,16 +174,14 @@ const Products = () => {
           )}
         </Box>
         <Paginated
-             productsPerPage={productsPerPage}
-             products = {products.length}
-             paginated = {paginated}
-            />
-            
+          productsPerPage={productsPerPage}
+          products={products.length}
+          paginated={paginated}
+        />
       </Box>
       <AppBar />
     </div>
   );
-
 };
 
 export default Products;
