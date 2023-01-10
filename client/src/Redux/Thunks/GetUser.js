@@ -10,12 +10,12 @@ export const GetUser = (email, origin) => {
       .get(Global.ApiUrl + "/users?email=" + email)
       .then((response) => {
         const { firstName, lastName, email, userName } = response.data[0];
-        console.log(response.data);
+        //console.log(response.data);
         dispatch(setIsLoading(false));
         dispatch(setData({ firstName, lastName, email, userName }));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         dispatch(setIsLoading(false));
         Swal.fire({
           icon: "error",

@@ -15,11 +15,11 @@ export const filterProducts = (value) => {
         .get(Global.ApiUrl + "/filter/" + value)
         .then((response) => {
           const { dataSearch, status } = response.data;
-          console.log(dataSearch);
+          //console.log(dataSearch);
           dispatch(setProducts({ products: dataSearch, status }));
         })
         .catch((response) => {
-          console.log(response);
+          //console.log(response);
           const { status, msg } = response.response.data;
           dispatch(setStatus({ status, msg }));
         });

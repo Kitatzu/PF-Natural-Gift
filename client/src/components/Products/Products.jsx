@@ -1,14 +1,13 @@
+import AppBar from "../AppBar/AppBar";
 import NavBar from "../NavBar/NavBar";
+import Loading from "../Loading/Loading";
 import Paginated from "../Paginated/Paginated";
 import ProductsCards from "../ProductsCards/ProductsCards";
-import { useEffect, useState } from "react";
-import { getProducts } from "../../Redux/Thunks/index";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "./Products.scss";
-import { Alert } from "@mui/material";
-import Loading from "../Loading/Loading";
+import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
 import { Search, SearchIconWrapper, StyledInputBase } from "../Search/Search";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -18,27 +17,30 @@ import {
   Divider,
   ListSubheader,
 } from "@mui/material";
+import { getProducts } from "../../Redux/Thunks/index";
 import { getCategories } from "../../Redux/Thunks/Categories";
 import { filterProducts } from "../../Redux/Thunks/filterProducts";
 import { searchProducts } from "../../Redux/Thunks/searchProducts";
-import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
-import AppBar from "../AppBar/AppBar";
+import "./Products.scss";
 
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
-console.log(url, urlRoute);
+
 const Products = () => {
   const { products = [] } = useSelector((state) => state.products);
   const { status, error } = useSelector((state) => state.products);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   const isLoading = useSelector((store) => store.products.isLoading);
+
   const dispatch = useDispatch();
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(15);
+  const [productsPerPage, setProductsPerPage] = useState(3);
   const indexLastProduct = currentPage * productsPerPage;
   const indexFirstProduct = indexLastProduct - productsPerPage;
   const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
+
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -47,8 +49,9 @@ const Products = () => {
     dispatch(getProducts());
     dispatch(getCategories());
   }, []);
+
   const { categories = null } = useSelector((store) => store.categories);
-  console.log(categories);
+  //console.log(categories);
   return (
     <div
       className="Products"
@@ -64,7 +67,6 @@ const Products = () => {
         justifyContent="space-between"
         sx={{
           minHeight: "100vh",
-
           background: Theme[mode].primary,
         }}
       >
@@ -86,11 +88,11 @@ const Products = () => {
                   background: Theme[mode].sidebar,
                 }}
               >
-                Categories
+                Categorías
               </ListSubheader>
             }
           >
-            <Divider />
+            <Divider/>
             {categories !== null ? (
               categories.map((cat) => (
                 <>
@@ -102,13 +104,16 @@ const Products = () => {
                       sx={{ color: Theme[mode].textPrimary }}
                     />
                   </ListItemButton>
+                  
                 </>
+                
               ))
             ) : (
               <ListItemButton>
                 <Alert severity="warning">No hay categorias!</Alert>
               </ListItemButton>
             )}
+            <Divider/>
           </List>
         </Box>
         <Box
@@ -150,6 +155,11 @@ const Products = () => {
           >
             <CategoriesMenu />
           </Box>
+          <Paginated 
+        productsPerPage={productsPerPage}
+        products = {products.length}
+        paginated = {paginated}
+      />
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
@@ -173,14 +183,7 @@ const Products = () => {
             </Alert>
           )}
         </Box>
-
       </Box>
-      <Paginated 
-             productsPerPage={productsPerPage}
-             products = {products.length}
-             paginated = {paginated}
-            />
-
       <AppBar />
      
     </div>

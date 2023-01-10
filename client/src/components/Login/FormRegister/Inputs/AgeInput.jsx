@@ -25,6 +25,7 @@ const AgeInput = ({ handleChange, handleBlur, form, error }) => {
       <OutlinedInput
         id="outlined-adornment-lastname"
         name="age"
+        inputProps={{min: 0}}
         type={"number"}
         onChange={handleChange}
         onBlur={handleBlur}

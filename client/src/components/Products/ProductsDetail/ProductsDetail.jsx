@@ -3,17 +3,17 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { getDetails } from "../../../Redux/Thunks/index";
 import defaultImage from "../../Assets/img/imgDefault.png";
-// import ProductsHome from "../../Home/ProductsHome/ProductsHome";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import Loading from "../../Loading/Loading";
 import Waves from "../../Waves/Waves";
 import Rating from "@mui/material/Rating";
 import NavBar from "../../NavBar/NavBar";
 import "./ProductsDetail.scss";
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button, Input, Typography, TextField } from "@mui/material";
 import AppBar from "../../AppBar/AppBar";
 import { Icon } from "@iconify/react";
 import { setCart } from "../../../Redux/Thunks/getCart";
+import { border } from "@mui/system";
 const ProductsDetails = () => {
   const { productsId } = useParams();
   const { productDetail = [], isLoading } = useSelector(
@@ -29,9 +29,10 @@ const ProductsDetails = () => {
   const mode = useSelector((store) => store.theme.mode);
   const loadingCart = useSelector((store) => store.cart.isLoading);
   const [cantidadProducto, setCantidad] = useState(1);
+
   return (
     <div style={{ background: Theme[mode].primary }}>
-      <NavBar />
+      <NavBar /> 
       {isLoading ? (
         <Loading />
       ) : (
@@ -81,36 +82,50 @@ const ProductsDetails = () => {
                 className="Product-rating"
                 value={Number(productDetail.rating)}
               />
-              <div className="Product-add">
-                <Box sx={{ marginBottom: "100px" }} display="flex" gap={"10px"}>
-                  <Box sx={{ width: "40px" }}>
-                    <Input
-                      type="number"
-                      defaultValue={"1"}
-                      onChange={(e) => {
-                        setCantidad(e.target.value);
-                      }}
-                    />
-                  </Box>
-                  <LoadingButton
-                    loading={loadingCart}
-                    loadingPosition="end"
-                    endIcon={<Icon icon="material-symbols:shopping-cart" />}
-                    variant="contained"
-                    color="secondary"
-                    onClick={(e) => {
-                      dispatch(
-                        setCart({
-                          quantity: cantidadProducto,
-                          productId: productDetail.id,
-                        })
-                      );
-                    }}
-                  >
-                    Enviar al carrito
-                  </LoadingButton>
-                </Box>
-              </div>
+              {
+                productDetail.stock > 0 ? 
+                (
+                <div>
+                  <div className="ConStock">
+                    <h3>{productDetail.stock} unidades disponibles!</h3>
+                  </div>
+                  <div className="Product-add">
+                    <Box sx={{ marginBottom: "100px" }} display="flex" gap={"10px"}>
+                      <Box sx={{ width: "100px" }} style={{ color: Theme[mode].textPrimary }}>
+                        <TextField
+                          type="number"
+                          InputProps={{ inputProps: { min: 1, max: 10}, style: {color: Theme[mode].textPrimary}}}
+                          defaultValue={"1"}
+                          onChange={(e) => {
+                            setCantidad(e.target.value);
+                          }}
+                        />
+                      </Box>
+                      <LoadingButton
+                        loading={loadingCart}
+                        loadingPosition="end"
+                        endIcon={<Icon icon="material-symbols:shopping-cart" />}
+                        variant="contained"
+                        color="secondary"
+                        onClick={(e) => {
+                          dispatch(
+                            setCart({
+                              quantity: cantidadProducto,
+                              productId: productDetail.id,
+                            })
+                          );
+                        }}
+                      >
+                        Enviar al carrito
+                      </LoadingButton>
+                    </Box>
+                  </div>
+                </div>                                
+                ) : 
+                <div className="SinStock">
+                  <h3>No hay unidades disponibles</h3>
+                </div>
+              } 
             </div>
           </Box>
         </div>
