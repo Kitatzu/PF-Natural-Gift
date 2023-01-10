@@ -59,6 +59,8 @@ ProductInCart.belongsTo(Cart);
 
 Users.hasMany(Payment);
 Payment.belongsTo(Users);
+Payment.belongsToMany(Products, {through: "payment_product"})
+Products.belongsTo(Payment, {through: "payment_product"})
 
 // Reviews.belongsTo(Products);
 

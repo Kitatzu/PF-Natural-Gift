@@ -8,7 +8,8 @@ const cart = require("../routes/cart");
 const transaction = require("../routes/Transaction");
 const search = require("./searchRoute");
 const filter = require("./filterRoute");
-const payment = require("./paymentRoute");
+// const payment = require("./paymentRoute");
+const mercadopago = require("./mercadopagoRoute")
 
 const router = Router();
 
@@ -21,6 +22,7 @@ router.use("/cart", cart);
 router.use("/transaction", transaction);
 router.use("/search", search);
 router.use("/filter", filter);
-router.use("/", payment);
+// router.use("/", payment);
+router.use("/mercadopago", mercadopago)
 
 module.exports = router;

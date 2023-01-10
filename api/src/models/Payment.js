@@ -1,43 +1,56 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("payment", {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+  sequelize.define(
+    "payment",
+    {
+      idTogether: {
+        type: DataTypes.FLOAT,
+      },
+      idMatch: {
+        type: DataTypes.STRING,
+      },
+      name: {
+        type: DataTypes.STRING,
+      },
+      picture: {
+        type: DataTypes.TEXT,
+      },
+      date: {
+        type: DataTypes.STRING,
+      },
+      price: {
+        type: DataTypes.FLOAT,
+      },
+      quantity: {
+        type: DataTypes.FLOAT,
+      },
+      total_paid_amount: {
+        type: DataTypes.FLOAT,
+      },
+      status: {
+        type: DataTypes.STRING,
+      },
+      status_detail: {
+        type: DataTypes.STRING,
+      },
+      state: {
+        type: DataTypes.STRING,
+      },
+      userEmail: {
+        type: DataTypes.STRING,
+      },
+      extraEmail: {
+        type: DataTypes.STRING,
+      },
+      extraAddress: {
+        type: DataTypes.STRING,
+      },
     },
-    payer_email: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    items: {
-      type: DataTypes.ARRAY,
-      allowNull: true,
-    },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    picture_url: {
-      type: DataTypes.STRING,
-      defaultValue: "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
-    },
-    category_id: {
-      type: DataTypes.STRING,
-      defaultValue: "No disponible",
-    },
-    quantity: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-    },
-    unit_price: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-  });
+
+    {
+      timestamps: false,
+      freezeTableName: true,
+    }
+  );
 };
