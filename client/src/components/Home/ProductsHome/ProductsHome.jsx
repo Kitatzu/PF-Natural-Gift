@@ -24,7 +24,7 @@ const ProductsHome = () => {
       </div>
 
       <div className="Products-cards">
-        {products.map((product) => (
+        {products.slice(0,5).map((product) => (
           <div key={product.id}>
             <ProductsCards
               id={product.id}

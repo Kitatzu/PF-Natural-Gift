@@ -15,7 +15,7 @@ export const searchProducts = (value) => {
         .get(Global.ApiUrl + "/search/" + value)
         .then((response) => {
           const { dataSearch, status } = response.data;
-          console.log(dataSearch);
+          //console.log(dataSearch);
           dispatch(setProducts({ products: dataSearch, status }));
         })
         .catch((response) => {

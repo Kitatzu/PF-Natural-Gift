@@ -15,7 +15,7 @@ export const GetUser = (email, origin) => {
         dispatch(setIsLoading(false));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         dispatch(setIsLoading(false));
         Swal.fire({
           icon: "error",
