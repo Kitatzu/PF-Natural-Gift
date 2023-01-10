@@ -7,12 +7,33 @@ const initialState = {
   productDetail: [],
   page: 0,
   isLoading: false,
+  filters: {
+    prices: {
+      min: 0,
+      max: 0,
+    },
+  },
 };
 
 export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    filterPrice: (state, action) => {
+      state.filters.prices[action.payload.name] = action.payload.value;
+      console.log(state.filters);
+    },
+    filterProduct: (state) => {
+      if (state.filters.prices.min !== 0)
+        state.products = state.products.filter(
+          (p) => p.price > state.filters.prices.min
+        );
+      if (state.filters.prices.max !== 0)
+        state.products = state.products.filter(
+          (p) => p.price < state.filters.prices.max
+        );
+      console.log(state.products);
+    },
     startLoadingProducts: (state) => {
       state.isLoading = true;
     },
@@ -34,5 +55,11 @@ export const productSlice = createSlice({
   },
 });
 
-export const { startLoadingProducts, setProducts, setDetails, setStatus } =
-  productSlice.actions;
+export const {
+  startLoadingProducts,
+  setProducts,
+  filterPrice,
+  filterProduct,
+  setDetails,
+  setStatus,
+} = productSlice.actions;

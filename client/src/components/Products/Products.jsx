@@ -23,6 +23,8 @@ import { filterProducts } from "../../Redux/Thunks/filterProducts";
 import { searchProducts } from "../../Redux/Thunks/searchProducts";
 import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
 import AppBar from "../AppBar/AppBar";
+import FilterPrice from "../FilterPrice/FilterPrice";
+
 
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
@@ -180,6 +182,8 @@ const Products = () => {
              products = {products.length}
              paginated = {paginated}
             />
+            <FilterPrice />
+            
 
       <AppBar />
      
