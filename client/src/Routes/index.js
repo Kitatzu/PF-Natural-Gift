@@ -10,6 +10,7 @@ import Dashboard from "../components/Dashboard/Dashboard";
 import Users from "../components/Dashboard/Users";
 import Prods from "../components/Dashboard/Prods";
 import Cart from "../components/Profile/Cart/Cart";
+import FilterPrice from "../components/FilterPrice/FilterPrice";
 const Routes = () => {
   return (
     <>
@@ -28,6 +29,7 @@ const Routes = () => {
         <Route exact path={"/cart"} component={Cart} />
         <Route exact path="/account" component={AccountSettings} />
         <Route exact path="/Dashboard" component={Dashboard} />
+        <Route exact path="/FilterPrice" component={FilterPrice} />
         <Route exact path="/Sobre Nosotros" component={SobreNosotros} />
         <Route component={DefaultRoute} />
       </Switch>

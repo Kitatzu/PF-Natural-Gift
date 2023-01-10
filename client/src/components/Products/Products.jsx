@@ -21,7 +21,9 @@ import { getProducts } from "../../Redux/Thunks/index";
 import { getCategories } from "../../Redux/Thunks/Categories";
 import { filterProducts } from "../../Redux/Thunks/filterProducts";
 import { searchProducts } from "../../Redux/Thunks/searchProducts";
+import FilterPrice from "../FilterPrice/FilterPrice";
 import "./Products.scss";
+
 
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
@@ -190,6 +192,13 @@ const Products = () => {
           />
         </Box>
       </Box>
+      <Paginated 
+             productsPerPage={productsPerPage}
+             products = {products.length}
+             paginated = {paginated}
+            />
+            <FilterPrice />   
+
       <AppBar />
     </div>
   );
