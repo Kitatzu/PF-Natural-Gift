@@ -37,14 +37,14 @@ export const loginUser = (origin, form, Token) => {
             title: "Error!",
             text: "Error usuario o contraseña invalidos",
           });
-          console.log(response);
+          //console.log(response);
         });
     } else if (origin === "google") {
       await dispatch(setIsLoading(true));
       await axios
         .get(Global.ApiUrl + "/users?email=" + form.email)
         .then((data) => {
-          console.log(data);
+          //console.log(data);
           const userData = {
             userId: data.data.id,
             userName: form.email,
@@ -98,7 +98,7 @@ export const loginUser = (origin, form, Token) => {
                 text: "Error no se registro el usuario!",
               });
               dispatch(setIsLoading(false));
-              console.log(response);
+              //console.log(response);
             });
         });
     }

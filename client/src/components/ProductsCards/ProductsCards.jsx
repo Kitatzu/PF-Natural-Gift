@@ -12,7 +12,7 @@ const ProductsCards = ({ id, name, price, image, rating }) => {
   return (
     <Link to={`/productos/${id}`}>
       <div className="ProductsCard">
-        <img className="Product-img" src={image} alt={name}></img>
+        <img className="Product-card-img" src={image} alt={name}></img>
         <div className="Product-info">
           <div className="Product-details">
             <h3 style={{ color: Theme[mode].textPrimary }}>{name}</h3>

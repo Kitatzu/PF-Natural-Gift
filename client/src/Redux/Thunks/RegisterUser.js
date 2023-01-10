@@ -9,7 +9,7 @@ export const RegisterUser = (form) => {
     return await axios
       .post(Global.ApiUrl + "/register", form)
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         dispatch(setIsLoading(false));
         const userData = {
           userId: data.data.id,

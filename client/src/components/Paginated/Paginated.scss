@@ -4,27 +4,30 @@
     margin: auto;
 }
 .pagination{
-    margin:30px 0;
+    padding: 1rem;
     list-style: none;
     text-align: center;
 }
 .numbers{
     display: inline-block;
     margin-right: 10px;
-    
-    
 }
 .button{
     display: block;
-    padding: 13px 22px;
+    padding: 1rem;
     color: rgb(58, 58, 58);
     background: linear-gradient(135.13deg, #FFB929 10.46%, #FF7DC1 127.81%);
-    font-size: 25px;
+    font-size: 1rem;
     border-radius: 10px;
     border: solid 1px;
     cursor: pointer;
+    transition: .4s;
 }
 .button:hover{
-    background: rgba(255, 154, 2, 0.988);
+    background: linear-gradient(135.13deg, #FF7DC1 10.46%, #4244FF 127.81%);
     color:white
+}
+
+@media screen and (max-width:600px) {
+    
 }

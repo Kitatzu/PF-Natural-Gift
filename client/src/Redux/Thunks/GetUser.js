@@ -11,11 +11,11 @@ export const GetUser = (email, origin) => {
       .then((response) => {
         console.log(response.data);
         const { firstName, lastName, email, userName } = response.data;
-        dispatch(setIsLoading(false));
         dispatch(setData({ firstName, lastName, email, userName }));
+        dispatch(setIsLoading(false));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         dispatch(setIsLoading(false));
         Swal.fire({
           icon: "error",
