@@ -29,6 +29,7 @@ const Login = () => {
   };
 
   const [loginType, setLoginType] = useState("login");
+  const url = window.location.href;
 
   const mode = useSelector((state) => state.theme.mode);
   const Theme = useSelector((state) => state.theme);

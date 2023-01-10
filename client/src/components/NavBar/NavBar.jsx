@@ -22,7 +22,7 @@ import { setTheme } from "../../Redux/Slices";
 import { searchProducts } from "../../Redux/Thunks/searchProducts";
 import { Search, SearchIconWrapper, StyledInputBase } from "../Search/Search";
 const pages = ["Home", "Productos", "Sobre Nosotros"];
-const settings = ["Account", "Dashboard", "Logout"];
+let settings = ["Account", "Dashboard", "Logout"];
 
 export default function NavBar() {
   const handleTheme = (e) => {
@@ -35,6 +35,11 @@ export default function NavBar() {
   if (localStorage.getItem("token") !== null) {
     userData.avatar = JSON.parse(localStorage.getItem("token")).avatar;
     userData.name = JSON.parse(localStorage.getItem("token")).userName;
+    userData.rol = JSON.parse(localStorage.getItem("token")).rol;
+  }
+  if (userData.rol !== "Admin") {
+    settings = settings.filter((set) => set !== "Dashboard");
+    console.log(settings);
   }
   const url = window.location.href.split("/")[3].toLowerCase();
   const urlRoute = window.location.href.split("/")[4];

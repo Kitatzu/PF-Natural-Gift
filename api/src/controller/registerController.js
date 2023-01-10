@@ -88,11 +88,13 @@ async function registerUser(req, res) {
           where: { roleName: roleName },
         });
         newUser.addRoles(findRoles);
+        newUser.dataValues.roles = findRoles;
       } else {
         const findOrCreate = await Roles.findOne({
           where: { roleName: "User" },
         });
         newUser.addRoles(findOrCreate);
+        newUser.dataValues.roles = [findOrCreate];
       }
       const newToken = jwt.sign(
         {

@@ -72,8 +72,9 @@ const Products = () => {
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: 360,
+            width: "max-content",
+            padding: "20px",
+            maxWidth: "460px",
             background: Theme[mode].sidebar,
             display: { xs: "none", sm: "flex" },
           }}
@@ -86,6 +87,7 @@ const Products = () => {
                 sx={{
                   color: Theme[mode].textPrimary,
                   background: Theme[mode].sidebar,
+                  fontSize: "18px",
                 }}
               >
                 Categorías
@@ -123,28 +125,27 @@ const Products = () => {
           sx={{ marginBottom: "90px", width: { xs: "100%", md: "70%" } }}
         >
           <Box sx={{ width: "100%", padding: "20px" }}>
-            {url === "productos" &&
-            (urlRoute === "" || urlRoute === undefined) ? (
-              <Search
-                style={{ padding: "0 10px", marginRight: "10px" }}
-                onChange={(e) => {
-                  dispatch(searchProducts(e.target.value));
-                }}
-                sx={{
-                  flexGrow: 1,
-                  display: { xs: "block", sm: "none", md: "none" },
-                  color: Theme[mode].textPrimary,
-                }}
-              >
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-            ) : null}
+            {console.log(url, urlRoute)}
+
+            <Search
+              style={{ padding: "0 10px", marginRight: "10px" }}
+              onChange={(e) => {
+                dispatch(searchProducts(e.target.value));
+              }}
+              sx={{
+                flexGrow: 1,
+                display: { xs: "block", sm: "none", md: "none" },
+                color: Theme[mode].textPrimary,
+              }}
+            >
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
           </Box>
           <Box
             sx={{
@@ -182,10 +183,14 @@ const Products = () => {
               {error}
             </Alert>
           )}
+          <Paginated
+            productsPerPage={productsPerPage}
+            products={products.length}
+            paginated={paginated}
+          />
         </Box>
       </Box>
       <AppBar />
-     
     </div>
   );
 };

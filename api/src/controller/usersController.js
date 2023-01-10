@@ -1,6 +1,7 @@
 const { Users, Roles } = require("../db");
 const { updateAvatarImage } = require("../middlewares/cloudinary.js");
 const fs = require("fs-extra");
+const jwt = require("jsonwebtoken");
 
 async function allUsers(req, res) {
   let { email } = req.query;
@@ -14,9 +15,9 @@ async function allUsers(req, res) {
           through: { attributes: [] },
         },
       });
-      console.log(usersInDb);
-      usersInDb.length > 0
-        ? res.status(201).json(usersInDb)
+      console.log(usersInDb[0].dataValues);
+      usersInDb
+        ? res.status(201).json({ ...usersInDb[0].dataValues })
         : res.status(404).json("user not found");
     } catch (error) {
       console.log(error);
@@ -86,12 +87,23 @@ async function updateUser(req, res) {
           phone: phone,
         });
 
-        res.status(200).json({ message: "User Updated", userUpdate });
+        const newToken = jwt.sign(
+          {
+            id: user.id,
+            name: user.userName,
+          },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: 86400,
+          }
+        );
+
+        res.status(200).json({ ...userUpdate.dataValues, newToken });
       }
 
       await fs.unlink(req.files.avatar.tempFilePath);
     } catch (error) {
-      res.status(400).json({ message: "Error updated with files", error });
+      res.status(400).json({ error: error });
     }
   } else {
     try {
@@ -105,28 +117,35 @@ async function updateUser(req, res) {
 
       let findUser = await Users.findOne({ where: { userName } });
 
-      if (user.userName === userName) {
+      if (user.userName === userName)
         return res.status(404).json(`the username ${userName} is repeat`);
-      }
-      if (findUser) {
+      if (findUser)
         return res.status(400).json(`the username ${userName} is registered`);
-      } else {
-        let userUpdate = await user.update({
-          userName: userName,
-          firstName: firstName,
-          lastName: lastName,
-          city: city,
-          country: country,
-          adress: adress,
-          phone: phone,
-        });
 
-        await fs.unlink(req.files.avatar.tempFilePath);
+      let userUpdate = await user.update({
+        userName: userName,
+        firstName: firstName,
+        lastName: lastName,
+        city: city,
+        country: country,
+        adress: adress,
+        phone: phone,
+      });
 
-        res.status(200).json({ message: "User Updated", userUpdate });
-      }
+      const newToken = jwt.sign(
+        {
+          id: userUpdate.id,
+          name: userName,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400,
+        }
+      );
+
+      res.status(200).json({ ...userUpdate.dataValues, newToken });
     } catch (error) {
-      res.status(400).json({ message: "Error!", error });
+      res.status(400).json({ error: error });
     }
   }
 }

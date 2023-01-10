@@ -18,14 +18,13 @@ const Cart = () => {
     (store) => store.cart
   );
   return (
-    <Box sx={{ background: Theme[mode].primary }}>
+    <Box sx={{ background: Theme[mode].primary, minHeight: "100vh" }}>
       <NavBar />
       <Box
         display={"flex"}
         flexWrap="wrap"
         justifyContent="space-around"
         padding={"20px"}
-        marginBottom="90px"
       >
         <Box>
           {productsCart
@@ -38,7 +37,11 @@ const Cart = () => {
               ))
             : null}
         </Box>
-        <Box width={{ xs: "100%", sm: "340px" }} padding="20px">
+        <Box
+          width={{ xs: "100%", sm: "340px" }}
+          padding="20px"
+          sx={{ marginBottom: "100px !important" }}
+        >
           <Card>
             <CardContent>
               <Box>
