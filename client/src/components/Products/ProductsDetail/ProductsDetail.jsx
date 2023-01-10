@@ -1,18 +1,30 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getDetails } from "../../../Redux/Thunks/index";
 import defaultImage from "../../Assets/img/imgDefault.png";
 // import ProductsHome from "../../Home/ProductsHome/ProductsHome";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import Loading from "../../Loading/Loading";
 import Waves from "../../Waves/Waves";
 import Rating from "@mui/material/Rating";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import NavBar from "../../NavBar/NavBar";
 import "./ProductsDetail.scss";
-import { Box } from "@mui/material";
+import { Alert, Box, Button, Input, Typography, TextField } from "@mui/material";
 import AppBar from "../../AppBar/AppBar";
-
+import { Icon } from "@iconify/react";
+import { setCart } from "../../../Redux/Thunks/getCart";
+import { searchProducts } from "../../../Redux/Thunks/searchProducts";
+import {
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from "../../Search/Search";
+import SearchIcon from "@mui/icons-material/Search";
+import Paginated from "../../Paginated/Paginated";
+import ProductsCards from "../../ProductsCards/ProductsCards";
+const url = window.location.href.split("/")[3].toLowerCase();
+const urlRoute = window.location.href.split("/")[4];
 const ProductsDetails = () => {
   const { productsId } = useParams();
   const { productDetail = [], isLoading } = useSelector(
@@ -24,11 +36,25 @@ const ProductsDetails = () => {
   useEffect(() => {
     dispatch(getDetails(productsId));
   }, []);
+  let { products } = useSelector((store) => store.products);
+
   const Theme = useSelector((store) => store.theme);
   const mode = useSelector((store) => store.theme.mode);
+  const loadingCart = useSelector((store) => store.cart.isLoading);
+  const [cantidadProducto, setCantidad] = useState(1);
+
+  const { status, error } = useSelector((state) => state.products);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(15);
+  const indexLastProduct = currentPage * productsPerPage;
+  const indexFirstProduct = indexLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
+  const paginated = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div style={{ background: Theme[mode].primary }}>
-      <NavBar />
+      <NavBar /> 
       {isLoading ? (
         <Loading />
       ) : (
@@ -78,19 +104,50 @@ const ProductsDetails = () => {
                 className="Product-rating"
                 value={Number(productDetail.rating)}
               />
-              <div className="Product-add">
-                <form style={{ marginBottom: "100px" }}>
-                  <OutlinedInput
-                    type={"number"}
-                    inputProps={{ min: 1, max: 10 }}
-                    sx={{ color: Theme[mode].textPrimary }}
-                  ></OutlinedInput>
-                  <button className="Btn-Enviar-Carrito" type="submit">
-                    Enviar al carrito{" "}
-                    <i className="fa-solid fa-cart-shopping"></i>
-                  </button>
-                </form>
-              </div>
+              {
+                productDetail.stock > 0 ? 
+                (
+                <div>
+                  <div className="ConStock">
+                    <h3>{productDetail.stock} unidades disponibles!</h3>
+                  </div>
+                  <div className="Product-add">
+                    <Box sx={{ marginBottom: "100px" }} display="flex" gap={"10px"}>
+                      <Box sx={{ width: "100px" }} style={{ color: Theme[mode].textPrimary }}>
+                        <TextField
+                          type="number"
+                          InputProps={{ inputProps: { min: 1, max: 10}, style: {color: Theme[mode].textPrimary}}}
+                          defaultValue={"1"}
+                          onChange={(e) => {
+                            setCantidad(e.target.value);
+                          }}
+                        />
+                      </Box>
+                      <LoadingButton
+                        loading={loadingCart}
+                        loadingPosition="end"
+                        endIcon={<Icon icon="material-symbols:shopping-cart" />}
+                        variant="contained"
+                        color="secondary"
+                        onClick={(e) => {
+                          dispatch(
+                            setCart({
+                              quantity: cantidadProducto,
+                              productId: productDetail.id,
+                            })
+                          );
+                        }}
+                      >
+                        Enviar al carrito
+                      </LoadingButton>
+                    </Box>
+                  </div>
+                </div>                                
+                ) : 
+                <div className="SinStock">
+                  <h3>No hay unidades disponibles</h3>
+                </div>
+              } 
             </div>
           </Box>
         </div>
@@ -99,6 +156,77 @@ const ProductsDetails = () => {
       {/* <div className="Products-more">
         <ProductsHome/>
       </div> */}
+      <Box>
+        <Typography
+          component={"h2"}
+          fontSize="28px"
+          sx={{
+            width: "100%",
+            color: Theme[mode].textPrimary,
+            textAlign: "center",
+          }}
+        >
+          Mas productos
+        </Typography>
+        <Box
+          display={"flex"}
+          flexWrap="wrap"
+          justifyContent={"center"}
+          sx={{ marginBottom: "90px", width: "100%" }}
+        >
+          <Box sx={{ width: "100%", padding: "20px" }}>
+            {console.log(url, urlRoute)}
+
+            <Search
+              style={{ padding: "0 10px", marginRight: "10px" }}
+              onChange={(e) => {
+                dispatch(searchProducts(e.target.value));
+              }}
+              sx={{
+                flexGrow: 1,
+                display: "block",
+                color: Theme[mode].textPrimary,
+              }}
+            >
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </Box>
+
+          {isLoading ? (
+            <Loading />
+          ) : status !== "error" ? (
+            currentProducts.map((product) => (
+              <div key={product.id}>
+                <ProductsCards
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  image={product.imageProduct}
+                  rating={product.rating}
+                />
+              </div>
+            ))
+          ) : (
+            <Alert
+              severity="warning"
+              sx={{ height: "max-content", margin: "20px 0" }}
+            >
+              {error}
+            </Alert>
+          )}
+          <Paginated
+            productsPerPage={productsPerPage}
+            products={products.length}
+            paginated={paginated}
+          />
+        </Box>
+      </Box>
       <AppBar />
       <Waves />
     </div>

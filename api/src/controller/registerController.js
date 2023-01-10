@@ -1,4 +1,4 @@
-const { Users, Roles, bcrypt } = require("../db");
+const { Users, Roles, bcrypt, Cart } = require("../db");
 const jwt = require("jsonwebtoken");
 const { transporter } = require("../middlewares/mails.js");
 const { Email } = process.env;
@@ -21,7 +21,9 @@ async function registerUser(req, res) {
     } else if (req.files?.avatar) {
       const salt = await bcrypt.genSalt(10);
       const result = await uploadAvatarImage(req.files.avatar.tempFilePath);
-
+      const newcart = await Cart.create({
+        totalPrice: 0,
+      });
       const newUser = await Users.create({
         avatar: result.secure_url,
         avatarId: result.public_id,
@@ -31,8 +33,9 @@ async function registerUser(req, res) {
         firstName,
         lastName,
         country,
+        cartId: newcart.id,
       });
-
+      console.log(newcart, newUser);
       await fs.unlink(req.files.avatar.tempFilePath);
 
       if (roleName) {
@@ -64,10 +67,12 @@ async function registerUser(req, res) {
         subject: "Registro Exitoso", // Subject line
         html: { path: filepath }, // html body
       });
-      res.status(200).json({ newToken, send });
+      res.status(200).json({ newToken, send, ...newUser.dataValues });
     } else {
       const salt = await bcrypt.genSalt(10);
-
+      const newcart = await Cart.create({
+        totalPrice: 0,
+      });
       const newUser = await Users.create({
         userName,
         password: await bcrypt.hash(password, salt),
@@ -75,18 +80,21 @@ async function registerUser(req, res) {
         firstName,
         lastName,
         country,
+        cartId: newcart.id,
       });
-
+      console.log(newcart, newUser);
       if (roleName) {
         const findRoles = await Roles.findAll({
           where: { roleName: roleName },
         });
         newUser.addRoles(findRoles);
+        newUser.dataValues.roles = findRoles;
       } else {
         const findOrCreate = await Roles.findOne({
           where: { roleName: "User" },
         });
         newUser.addRoles(findOrCreate);
+        newUser.dataValues.roles = [findOrCreate];
       }
       const newToken = jwt.sign(
         {
@@ -106,9 +114,10 @@ async function registerUser(req, res) {
         subject: "Registro Exitoso", // Subject line
         html: { path: filepath }, // html body
       });
-      res.status(200).json({ newToken, send });
+      res.status(200).json({ newToken, send, ...newUser.dataValues });
     }
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ message: error });
   }
 }

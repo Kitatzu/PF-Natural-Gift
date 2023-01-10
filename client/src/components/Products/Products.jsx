@@ -1,13 +1,13 @@
+import AppBar from "../AppBar/AppBar";
 import NavBar from "../NavBar/NavBar";
-import ProductsCards from "../ProductsCards/ProductsCards";
-import { useEffect } from "react";
-import { getProducts } from "../../Redux/Thunks/index";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import "./Products.scss";
-import { Alert } from "@mui/material";
 import Loading from "../Loading/Loading";
+import Paginated from "../Paginated/Paginated";
+import ProductsCards from "../ProductsCards/ProductsCards";
+import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
 import { Search, SearchIconWrapper, StyledInputBase } from "../Search/Search";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -17,28 +17,41 @@ import {
   Divider,
   ListSubheader,
 } from "@mui/material";
+import { getProducts } from "../../Redux/Thunks/index";
 import { getCategories } from "../../Redux/Thunks/Categories";
 import { filterProducts } from "../../Redux/Thunks/filterProducts";
 import { searchProducts } from "../../Redux/Thunks/searchProducts";
-import CategoriesMenu from "./CategoriesMenu/CategoriesMenu.jsx";
-import AppBar from "../AppBar/AppBar";
+import "./Products.scss";
 
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
+
 const Products = () => {
   const { products = [] } = useSelector((state) => state.products);
   const { status, error } = useSelector((state) => state.products);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
   const isLoading = useSelector((store) => store.products.isLoading);
+
   const dispatch = useDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(3);
+  const indexLastProduct = currentPage * productsPerPage;
+  const indexFirstProduct = indexLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
+
+  const paginated = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
   }, []);
+
   const { categories = null } = useSelector((store) => store.categories);
-  console.log(categories);
+  //console.log(categories);
   return (
     <div
       className="Products"
@@ -54,14 +67,14 @@ const Products = () => {
         justifyContent="space-between"
         sx={{
           minHeight: "100vh",
-
           background: Theme[mode].primary,
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: 360,
+            width: "max-content",
+            padding: "20px",
+            maxWidth: "460px",
             background: Theme[mode].sidebar,
             display: { xs: "none", sm: "flex" },
           }}
@@ -74,13 +87,14 @@ const Products = () => {
                 sx={{
                   color: Theme[mode].textPrimary,
                   background: Theme[mode].sidebar,
+                  fontSize: "18px",
                 }}
               >
-                Categories
+                Categorías
               </ListSubheader>
             }
           >
-            <Divider />
+            <Divider/>
             {categories !== null ? (
               categories.map((cat) => (
                 <>
@@ -92,13 +106,16 @@ const Products = () => {
                       sx={{ color: Theme[mode].textPrimary }}
                     />
                   </ListItemButton>
+                  
                 </>
+                
               ))
             ) : (
               <ListItemButton>
                 <Alert severity="warning">No hay categorias!</Alert>
               </ListItemButton>
             )}
+            <Divider/>
           </List>
         </Box>
         <Box
@@ -108,28 +125,27 @@ const Products = () => {
           sx={{ marginBottom: "90px", width: { xs: "100%", md: "70%" } }}
         >
           <Box sx={{ width: "100%", padding: "20px" }}>
-            {url === "productos" &&
-            (urlRoute === "" || urlRoute === undefined) ? (
-              <Search
-                style={{ padding: "0 10px", marginRight: "10px" }}
-                onChange={(e) => {
-                  dispatch(searchProducts(e.target.value));
-                }}
-                sx={{
-                  flexGrow: 1,
-                  display: { xs: "block", sm: "none", md: "none" },
-                  color: Theme[mode].textPrimary,
-                }}
-              >
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-            ) : null}
+            {console.log(url, urlRoute)}
+
+            <Search
+              style={{ padding: "0 10px", marginRight: "10px" }}
+              onChange={(e) => {
+                dispatch(searchProducts(e.target.value));
+              }}
+              sx={{
+                flexGrow: 1,
+                display: { xs: "block", sm: "none", md: "none" },
+                color: Theme[mode].textPrimary,
+              }}
+            >
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
           </Box>
           <Box
             sx={{
@@ -140,10 +156,15 @@ const Products = () => {
           >
             <CategoriesMenu />
           </Box>
+          <Paginated 
+        productsPerPage={productsPerPage}
+        products = {products.length}
+        paginated = {paginated}
+      />
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
-            products.map((product) => (
+            currentProducts.map((product) => (
               <div key={product.id}>
                 <ProductsCards
                   id={product.id}
@@ -162,6 +183,11 @@ const Products = () => {
               {error}
             </Alert>
           )}
+          <Paginated
+            productsPerPage={productsPerPage}
+            products={products.length}
+            paginated={paginated}
+          />
         </Box>
       </Box>
       <AppBar />

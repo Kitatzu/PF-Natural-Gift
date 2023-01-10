@@ -6,6 +6,7 @@ import {
 import { setStatus } from "../Slices/setProducts";
 import axios from "axios";
 import Global from "../../Global";
+import { setIsLoading } from "../Slices";
 export const getProducts = (page = 0) => {
   return async (dispatch, getState) => {
     try {
@@ -16,7 +17,7 @@ export const getProducts = (page = 0) => {
         ? dispatch(setProducts({ products: data, page: page }))
         : dispatch(setStatus({ status: "error", msg: "No hay productos!" }));
     } catch (error) {
-      console.log("Something went wrong");
+      //console.log("Something went wrong");
       dispatch(setStatus({ status: "error", msg: "No hay productos!" }));
     }
   };

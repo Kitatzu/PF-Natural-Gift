@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.4.0",
     "fs-extra": "^11.1.0",
+    "is-uuid": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
     "mercadopago": "^1.5.14",
     "morgan": "^1.10.0",

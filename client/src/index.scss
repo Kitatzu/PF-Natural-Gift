@@ -8,7 +8,7 @@ body{
   background: $color__primary;
 }
 .swal2-container , .swal2-center , .swal2-backdrop-show{
-  z-index: 999999999999;
+  z-index: 9999999999999999 !important;
 }
 
 a {

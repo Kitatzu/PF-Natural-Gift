@@ -1,4 +1,4 @@
-const { DataTypes, UUIDV4 } = require("sequelize");
+const { DataTypes, UUIDV4, Sequelize } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
@@ -14,11 +14,6 @@ module.exports = (sequelize) => {
         validate: {
           isNumeric: true,
         },
-        allowNull: false,
-      },
-      productId: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
     },

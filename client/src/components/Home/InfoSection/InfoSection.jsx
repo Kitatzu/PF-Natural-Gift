@@ -3,6 +3,7 @@ import Leaf from "../../Assets/img/Leaf.png";
 import CreditCard from "../../Assets/img/Credit Card.png";
 import Logo from "../../Assets/img/LogoNG.png";
 import "./InfoSection.scss";
+import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const InfoSection = () => {
@@ -10,24 +11,24 @@ const InfoSection = () => {
   const Theme = useSelector((store) => store.theme);
   return (
     <div className="InfoSection" style={{ background: Theme[mode].primary }}>
-      <div className="CardInfo">
+      <div className="CardInfo" style={{ background: Theme[mode].sidebar }}>
         <img src={Leaf} alt="Leaf" />
         <div className="CardInfo-text">
-          <h2>Eco-Friendly</h2>
-          <p>
+          <h2 style={{ color: Theme[mode].textPrimary }}>Eco-Friendly</h2>
+          <Typography style={{ color: Theme[mode].textPrimary }}>
             Nuestros productos son 100% amigables con el medio ambiente, porque
             todo lo que nos brinda la naturaleza lo replantamos.
-          </p>
+          </Typography>
         </div>
       </div>
-      <div className="CardInfo">
+      <div className="CardInfo" style={{ background: Theme[mode].sidebar }}>
         <img src={CreditCard} alt="Credit-card" />
         <div className="CardInfo-text">
-          <h2>Formas de Pago</h2>
-          <p>
+          <h2 style={{ color: Theme[mode].textPrimary }}>Formas de Pago</h2>
+          <Typography style={{ color: Theme[mode].textPrimary }}>
             Puedes pagar con tu tarjeta de débito/crédito en Mercadopago o
             mediante transferencia a nuestra cuenta RUT.
-          </p>
+          </Typography>
         </div>
       </div>
       <div className="CardIG">
