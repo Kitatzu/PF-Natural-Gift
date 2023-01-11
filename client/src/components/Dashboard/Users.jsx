@@ -25,28 +25,34 @@ function Users() {
       setData(response.data)
     ))
   }
+  
+  
+  const seleccionarUsers=(users, caso) => {
+    setUsersSelector(users);
+    (caso==="Eliminar")&&setModalEliminar(true)
+  }
+  
+  const abrirCerrarModalEliminar = () => {
+    setModalEliminar(!modalEliminar)
+  }
   const usersDelete = async() => {
     await axios.delete(Global.ApiUrl + "/users/" + usersSelector.id, usersSelector)
     .then(response =>{
       setData(data.filter(users => users.id !== usersSelector.id))
+      abrirCerrarModalEliminar()
     })
   }
-  const abrirCerrarModalEliminar = () => {
-    setModalEliminar(!modalEliminar)
-  }
 
-  const seleccionarUsers=(users, caso) => {
-    setUsersSelector(users);
-    (caso==="Eliminar")&&abrirCerrarModalEliminar()
-  }
+  
   useEffect(async() => {
     await usersGet()
   }, [])
+  
   const bodyEliminar =(
     <div className="Modal">
      <p>Estas seguro que deseas eliminar el Usuario <b>{usersSelector && usersSelector.firstName}</b> ? </p>
       <div align="right">
-        <Button color="secondary" onClick={()=>usersDelete()}>Si</Button>
+        <Button color="secondary" onClick={() => usersDelete()}>Si</Button>
         <Button onClick={() => abrirCerrarModalEliminar()}>No</Button>
       </div>
     </div>

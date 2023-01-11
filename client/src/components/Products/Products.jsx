@@ -21,13 +21,14 @@ import { getProducts } from "../../Redux/Thunks/index";
 import { getCategories } from "../../Redux/Thunks/Categories";
 import { filterProducts } from "../../Redux/Thunks/filterProducts";
 import { searchProducts } from "../../Redux/Thunks/searchProducts";
+import FilterPrice from "../FilterPrice/FilterPrice";
 import "./Products.scss";
 
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
 
 const Products = () => {
-  const { products = [] } = useSelector((state) => state.products);
+  const products = useSelector((state) => state.products.tempProducts);
   const { status, error } = useSelector((state) => state.products);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
@@ -36,7 +37,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(3);
+  const [productsPerPage, setProductsPerPage] = useState(6);
   const indexLastProduct = currentPage * productsPerPage;
   const indexFirstProduct = indexLastProduct - productsPerPage;
   const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
@@ -44,6 +45,11 @@ const Products = () => {
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const handleResetPaginated = (e) => {
+    dispatch(getProducts());
+    setCurrentPage(1);
+  }
 
   useEffect(() => {
     dispatch(getProducts());
@@ -77,45 +83,50 @@ const Products = () => {
             maxWidth: "460px",
             background: Theme[mode].sidebar,
             display: { xs: "none", sm: "flex" },
+            flexDirection: "column"
           }}
         >
+          <button className="Refresh-btn" onClick={(e) => handleResetPaginated(e)}>Quitar Filtros</button>   
           <List
             component="nav"
             aria-label="secondary mailbox folder"
             subheader={
               <ListSubheader
-                sx={{
-                  color: Theme[mode].textPrimary,
-                  background: Theme[mode].sidebar,
-                  fontSize: "18px",
-                }}
+              sx={{
+                color: Theme[mode].textPrimary,
+                background: Theme[mode].sidebar,
+                fontSize: "18px",
+              }}
               >
                 Categorías
               </ListSubheader>
             }
-          >
-            <Divider/>
+            >
+          
+            <Divider />
             {categories !== null ? (
               categories.map((cat) => (
                 <>
                   <ListItemButton
-                    onClick={(e) => dispatch(filterProducts(cat.name))}
+                    onClick={(e) => {
+                      dispatch(filterProducts(cat.name))
+                      setCurrentPage(1)
+                    }}
                   >
                     <ListItemText
                       primary={cat.name}
                       sx={{ color: Theme[mode].textPrimary }}
                     />
                   </ListItemButton>
-                  
                 </>
-                
               ))
             ) : (
               <ListItemButton>
                 <Alert severity="warning">No hay categorias!</Alert>
               </ListItemButton>
             )}
-            <Divider/>
+            <Divider />
+            <FilterPrice />
           </List>
         </Box>
         <Box
@@ -154,13 +165,13 @@ const Products = () => {
               display: { xs: "block", sm: "none" },
             }}
           >
-            <CategoriesMenu />
+          <CategoriesMenu />
           </Box>
           <Paginated 
-        productsPerPage={productsPerPage}
-        products = {products.length}
-        paginated = {paginated}
-      />
+            productsPerPage={productsPerPage}
+            products = {products.length}
+            paginated = {paginated}
+          />
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
@@ -183,11 +194,6 @@ const Products = () => {
               {error}
             </Alert>
           )}
-          <Paginated
-            productsPerPage={productsPerPage}
-            products={products.length}
-            paginated={paginated}
-          />
         </Box>
       </Box>
       <AppBar />
