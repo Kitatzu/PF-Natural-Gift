@@ -17,6 +17,7 @@ import {
   Input,
   Typography,
   TextField,
+  Chip,
 } from "@mui/material";
 import AppBar from "../../AppBar/AppBar";
 import { Icon } from "@iconify/react";
@@ -43,7 +44,7 @@ const ProductsDetails = () => {
 
   useEffect(() => {
     dispatch(getDetails(productsId));
-  }, []);
+  }, [productsId]);
   let { products } = useSelector((store) => store.products);
 
   const Theme = useSelector((store) => store.theme);
@@ -121,9 +122,15 @@ const ProductsDetails = () => {
               />
               {productDetail.stock > 0 ? (
                 <div>
-                  <div className="ConStock">
-                    <h3>{productDetail.stock} unidades disponibles!</h3>
-                  </div>
+                  <Box padding={"10px"}>
+                    <Chip
+                      label={productDetail.stock + " unidades disponibles!"}
+                      sx={{
+                        background: Theme[mode].textSecond,
+                        color: "#fffff",
+                      }}
+                    />
+                  </Box>
                   <div className="Product-add">
                     <Box
                       sx={{ marginBottom: "100px" }}
