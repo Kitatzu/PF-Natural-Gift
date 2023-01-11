@@ -11,6 +11,7 @@ import Users from "../components/Dashboard/Users";
 import Prods from "../components/Dashboard/Prods";
 import Cart from "../components/Profile/Cart/Cart";
 import FilterPrice from "../components/FilterPrice/FilterPrice";
+import Notificaciones from "../components/Notificaciones/Firebase";
 const Routes = () => {
   return (
     <>
@@ -31,6 +32,7 @@ const Routes = () => {
         <Route exact path="/Dashboard" component={Dashboard} />
         <Route exact path="/FilterPrice" component={FilterPrice} />
         <Route exact path="/Sobre Nosotros" component={SobreNosotros} />
+        <Route exact path="/Firebase" component={Notificaciones} />
         <Route component={DefaultRoute} />
       </Switch>
     </>
