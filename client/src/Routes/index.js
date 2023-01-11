@@ -12,9 +12,11 @@ import Prods from "../components/Dashboard/Prods";
 import Cart from "../components/Profile/Cart/Cart";
 import FilterPrice from "../components/FilterPrice/FilterPrice";
 import Notificaciones from "../components/Notificaciones/Firebase";
+
 const Routes = () => {
   return (
     <>
+      <Notificaciones />
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
