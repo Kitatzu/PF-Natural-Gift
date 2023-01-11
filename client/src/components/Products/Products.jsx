@@ -47,6 +47,11 @@ const Products = () => {
     setCurrentPage(pageNumber);
   };
 
+  const handleResetPaginated = (e) => {
+    dispatch(getProducts());
+    setCurrentPage(1);
+  }
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
@@ -79,29 +84,35 @@ const Products = () => {
             maxWidth: "460px",
             background: Theme[mode].sidebar,
             display: { xs: "none", sm: "flex" },
+            flexDirection: "column"
           }}
         >
+          <button className="Refresh-btn" onClick={(e) => handleResetPaginated(e)}>Quitar Filtros</button>   
           <List
             component="nav"
             aria-label="secondary mailbox folder"
             subheader={
               <ListSubheader
-                sx={{
-                  color: Theme[mode].textPrimary,
-                  background: Theme[mode].sidebar,
-                  fontSize: "18px",
-                }}
+              sx={{
+                color: Theme[mode].textPrimary,
+                background: Theme[mode].sidebar,
+                fontSize: "18px",
+              }}
               >
                 Categorías
               </ListSubheader>
             }
-          >
+            >
+
             <Divider/>
             {categories !== null ? (
               categories.map((cat) => (
                 <>
                   <ListItemButton
-                    onClick={(e) => dispatch(filterProducts(cat.name))}
+                    onClick={(e) => {
+                      dispatch(filterProducts(cat.name))
+                      setCurrentPage(1)
+                    }}
                   >
                     <ListItemText
                       primary={cat.name}
@@ -156,13 +167,13 @@ const Products = () => {
               display: { xs: "block", sm: "none" },
             }}
           >
-            <CategoriesMenu />
+          <CategoriesMenu />
           </Box>
           <Paginated 
-        productsPerPage={productsPerPage}
-        products = {products.length}
-        paginated = {paginated}
-      />
+            productsPerPage={productsPerPage}
+            products = {products.length}
+            paginated = {paginated}
+          />
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
@@ -185,20 +196,9 @@ const Products = () => {
               {error}
             </Alert>
           )}
-          <Paginated
-            productsPerPage={productsPerPage}
-            products={products.length}
-            paginated={paginated}
-          />
         </Box>
       </Box>
-      <Paginated 
-             productsPerPage={productsPerPage}
-             products = {products.length}
-             paginated = {paginated}
-            />
-            <FilterPrice />   
-
+      <FilterPrice />   
       <AppBar />
     </div>
   );
