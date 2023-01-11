@@ -10,7 +10,14 @@ import Waves from "../../Waves/Waves";
 import Rating from "@mui/material/Rating";
 import NavBar from "../../NavBar/NavBar";
 import "./ProductsDetail.scss";
-import { Alert, Box, Button, Input, Typography, TextField } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Input,
+  Typography,
+  TextField,
+} from "@mui/material";
 import AppBar from "../../AppBar/AppBar";
 import { Icon } from "@iconify/react";
 import { setCart } from "../../../Redux/Thunks/getCart";
@@ -23,6 +30,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import Paginated from "../../Paginated/Paginated";
 import ProductsCards from "../../ProductsCards/ProductsCards";
+import Toast from "../../Toast/Toast";
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
 const ProductsDetails = () => {
@@ -53,7 +61,7 @@ const ProductsDetails = () => {
     setCurrentPage(pageNumber);
   };
 
-  if(window.innerWidth > 1500) {
+  if (window.innerWidth > 1500) {
     var widthX = 6;
   } else {
     var widthX = 4;
@@ -61,7 +69,7 @@ const ProductsDetails = () => {
 
   return (
     <div style={{ background: Theme[mode].primary }}>
-      <NavBar /> 
+      <NavBar />
       {isLoading ? (
         <Loading />
       ) : (
@@ -111,19 +119,27 @@ const ProductsDetails = () => {
                 className="Product-rating"
                 value={Number(productDetail.rating)}
               />
-              {
-                productDetail.stock > 0 ? 
-                (
+              {productDetail.stock > 0 ? (
                 <div>
                   <div className="ConStock">
                     <h3>{productDetail.stock} unidades disponibles!</h3>
                   </div>
                   <div className="Product-add">
-                    <Box sx={{ marginBottom: "100px" }} display="flex" gap={"10px"}>
-                      <Box sx={{ width: "100px" }} style={{ color: Theme[mode].textPrimary }}>
+                    <Box
+                      sx={{ marginBottom: "100px" }}
+                      display="flex"
+                      gap={"10px"}
+                    >
+                      <Box
+                        sx={{ width: "100px" }}
+                        style={{ color: Theme[mode].textPrimary }}
+                      >
                         <TextField
                           type="number"
-                          InputProps={{ inputProps: { min: 1, max: 10}, style: {color: Theme[mode].textPrimary}}}
+                          InputProps={{
+                            inputProps: { min: 1, max: 10 },
+                            style: { color: Theme[mode].textPrimary },
+                          }}
                           defaultValue={"1"}
                           onChange={(e) => {
                             setCantidad(e.target.value);
@@ -137,24 +153,34 @@ const ProductsDetails = () => {
                         variant="contained"
                         color="secondary"
                         onClick={(e) => {
-                          dispatch(
-                            setCart({
-                              quantity: cantidadProducto,
-                              productId: productDetail.id,
-                            })
-                          );
+                          if (
+                            cantidadProducto > 0 &&
+                            cantidadProducto < productDetail.stock
+                          ) {
+                            dispatch(
+                              setCart({
+                                quantity: cantidadProducto,
+                                productId: productDetail.id,
+                              })
+                            );
+                          } else {
+                            Toast.fire({
+                              icon: "error",
+                              title: "Error al elegir cantidad de producto!",
+                            });
+                          }
                         }}
                       >
                         Enviar al carrito
                       </LoadingButton>
                     </Box>
                   </div>
-                </div>                                
-                ) : 
+                </div>
+              ) : (
                 <div className="SinStock">
                   <h3>No hay unidades disponibles</h3>
                 </div>
-              } 
+              )}
             </div>
           </Box>
         </div>
@@ -207,7 +233,7 @@ const ProductsDetails = () => {
 
           {isLoading ? (
             <Loading />
-          ) : status !== "error" ? (           
+          ) : status !== "error" ? (
             currentProducts.slice(0, widthX).map((product) => (
               <div key={product.id}>
                 <ProductsCards
