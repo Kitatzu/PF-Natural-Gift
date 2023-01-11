@@ -24,12 +24,11 @@ import { searchProducts } from "../../Redux/Thunks/searchProducts";
 import FilterPrice from "../FilterPrice/FilterPrice";
 import "./Products.scss";
 
-
 const url = window.location.href.split("/")[3].toLowerCase();
 const urlRoute = window.location.href.split("/")[4];
 
 const Products = () => {
-  const { products = [] } = useSelector((state) => state.products);
+  const products = useSelector((state) => state.products.tempProducts);
   const { status, error } = useSelector((state) => state.products);
   const mode = useSelector((store) => store.theme.mode);
   const Theme = useSelector((store) => store.theme);
@@ -38,7 +37,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(3);
+  const [productsPerPage, setProductsPerPage] = useState(6);
   const indexLastProduct = currentPage * productsPerPage;
   const indexFirstProduct = indexLastProduct - productsPerPage;
   const currentProducts = products.slice(indexFirstProduct, indexLastProduct);
@@ -96,7 +95,7 @@ const Products = () => {
               </ListSubheader>
             }
           >
-            <Divider/>
+            <Divider />
             {categories !== null ? (
               categories.map((cat) => (
                 <>
@@ -108,16 +107,15 @@ const Products = () => {
                       sx={{ color: Theme[mode].textPrimary }}
                     />
                   </ListItemButton>
-                  
                 </>
-                
               ))
             ) : (
               <ListItemButton>
                 <Alert severity="warning">No hay categorias!</Alert>
               </ListItemButton>
             )}
-            <Divider/>
+            <Divider />
+            <FilterPrice />
           </List>
         </Box>
         <Box
@@ -158,11 +156,7 @@ const Products = () => {
           >
             <CategoriesMenu />
           </Box>
-          <Paginated 
-        productsPerPage={productsPerPage}
-        products = {products.length}
-        paginated = {paginated}
-      />
+
           {isLoading ? (
             <Loading />
           ) : status !== "error" ? (
@@ -192,12 +186,6 @@ const Products = () => {
           />
         </Box>
       </Box>
-      <Paginated 
-             productsPerPage={productsPerPage}
-             products = {products.length}
-             paginated = {paginated}
-            />
-            <FilterPrice />   
 
       <AppBar />
     </div>

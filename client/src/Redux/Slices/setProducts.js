@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
+  tempProducts: [],
   status: null,
   error: null,
   productDetail: [],
@@ -24,14 +25,32 @@ export const productSlice = createSlice({
       console.log(state.filters);
     },
     filterProduct: (state) => {
-      if (state.filters.prices.min !== 0)
-        state.products = state.products.filter(
-          (p) => p.price > state.filters.prices.min
+      if (parseInt(state.filters.prices.min) > 0)
+        state.tempProducts = state.products.filter(
+          (p) => parseFloat(p.price) > parseFloat(state.filters.prices.min)
         );
-      if (state.filters.prices.max !== 0)
-        state.products = state.products.filter(
-          (p) => p.price < state.filters.prices.max
+
+      if (parseInt(state.filters.prices.max) > 0)
+        state.tempProducts = state.products.filter(
+          (p) => parseFloat(p.price) < parseFloat(state.filters.prices.max)
         );
+
+      if (
+        parseInt(state.filters.prices.min) > 0 &&
+        parseInt(state.filters.prices.max) > 0
+      )
+        state.tempProducts = state.products.filter(
+          (p) =>
+            parseFloat(p.price) < parseFloat(state.filters.prices.max) &&
+            parseFloat(p.price) > parseFloat(state.filters.prices.min)
+        );
+      if (
+        (parseInt(state.filters.prices.min) === 0 ||
+          parseInt(state.filters.prices.min) === "") &&
+        (parseInt(state.filters.prices.max) === 0 ||
+          parseInt(state.filters.prices.max) === "")
+      )
+        state.tempProducts = state.products;
       console.log(state.products);
     },
     startLoadingProducts: (state) => {
@@ -41,6 +60,7 @@ export const productSlice = createSlice({
       state.isLoading = false;
       state.page = action.payload.page;
       state.products = action.payload.products;
+      state.tempProducts = action.payload.products;
       state.status = action.payload.status;
     },
     setDetails: (state, action) => {
