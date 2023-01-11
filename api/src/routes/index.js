@@ -9,6 +9,7 @@ const cart = require("../routes/cart");
 
 const search = require("./searchRoute");
 const filter = require("./filterRoute");
+
 const router = Router();
 
 router.use("/products", products);
@@ -21,4 +22,5 @@ router.use("/cart", cart);
 
 router.use("/search", search);
 router.use("/filter", filter);
+
 module.exports = router;

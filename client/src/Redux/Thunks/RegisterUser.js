@@ -7,6 +7,7 @@ export const RegisterUser = (form) => {
   return async (dispatch) => {
     dispatch(setIsLoading(true));
     return await axios
+
       .post(Global.ApiUrl + "/register", form)
       .then((data) => {
         //console.log(data);
