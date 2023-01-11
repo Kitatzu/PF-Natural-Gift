@@ -45,8 +45,6 @@ const {
   ProductInCart,
   Cart,
   Roles,
-  Payment,
-  Reviews,
 } = sequelize.models;
 
 Products.belongsToMany(Categories, { through: "Products_Categories" });
@@ -59,11 +57,6 @@ ProductInCart.belongsTo(Cart, { foreignKey: "cartId" });
 
 Products.hasMany(ProductInCart, { foreignKey: "productId" });
 ProductInCart.belongsTo(Products, { foreignKey: "productId" });
-
-Users.hasMany(Payment);
-Payment.belongsTo(Users);
-Payment.belongsToMany(Products, {through: "payment_product"})
-Products.belongsTo(Payment, {through: "payment_product"})
 
 // Reviews.belongsTo(Products);
 
