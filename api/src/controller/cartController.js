@@ -1,42 +1,53 @@
 const sequelize = require("../db");
 const { Cart, ProductInCart, Users, Products } = sequelize;
-
+const { Op } = require("sequelize");
 const getCart = async (req, res) => {
   const { userId } = req.params;
   console.log(userId);
-  if (userId) {
-    await Users.findByPk(userId)
-      .then(async (user) => {
-        console.log(user);
-        user
-          ? await Cart.findByPk(user.cartId).then(async (cart) => {
-              await ProductInCart.findAll({
-                where: { cartId: cart.id },
-                include: Products,
-              })
-                .then((products) => {
-                  return res.status(200).json({
-                    status: "success",
-                    cart: { ...cart.dataValues, products },
-                  });
+  try {
+    if (userId) {
+      await Users.findByPk(userId)
+        .then(async (user) => {
+          console.log(user);
+          user
+            ? await Cart.findByPk(user.cartId, {
+                where: { status: "pending" },
+              }).then(async (cart) => {
+                console.log(cart);
+                await ProductInCart.findAll({
+                  where: {
+                    cartId: cart.id,
+                  },
+                  include: Products,
                 })
-                .catch((e) => {
-                  console.log(e);
-                  return res
-                    .status(500)
-                    .json({ status: "error", msg: e.error });
-                });
-            })
-          : res.status(404).json({ status: "error", msg: "No user found!" });
-      })
-      .catch((e) => {
-        console.log(e);
-        return res.status(500).json({ status: "error", msg: e.error });
-      });
-  } else {
-    return res
-      .status(400)
-      .json({ status: "error", msg: "UserID igual a undefined!" });
+                  .then((products) => {
+                    console.log(products);
+                    return res.status(200).json({
+                      status: "success",
+                      cart: { ...cart.dataValues, products },
+                    });
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                    return res
+                      .status(500)
+                      .json({ status: "error", msg: e.error });
+                  });
+              })
+            : res.status(404).json({ status: "error", msg: "No user found!" });
+        })
+        .catch((e) => {
+          console.log(e);
+          return res.status(500).json({ status: "error", msg: e });
+        });
+    } else {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "UserID igual a undefined!" });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(404).json(e);
   }
 };
 

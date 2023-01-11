@@ -15,7 +15,7 @@ function FilterPrice() {
     console.log(e.target.name, e.target.value);
   }
   return (
-    <Box padding={"20px"}>
+    <Box padding={"20px"} width="100%">
       <Typography sx={{ color: theme[mode].textPrimary }}>
         Filtrar por precio.
       </Typography>

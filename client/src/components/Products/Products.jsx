@@ -126,7 +126,9 @@ const Products = () => {
               </ListItemButton>
             )}
             <Divider />
-            <FilterPrice />
+            <Box display={{ xs: "none", sm: "block" }}>
+              <FilterPrice />
+            </Box>
           </List>
         </Box>
         <Box
@@ -157,6 +159,9 @@ const Products = () => {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
+          </Box>
+          <Box display={{ xs: "flex", sm: "none" }} width="100%">
+            <FilterPrice />
           </Box>
           <Box
             sx={{
