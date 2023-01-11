@@ -196,7 +196,6 @@ const Products = () => {
           )}
         </Box>
       </Box>
-      <FilterPrice />   
       <AppBar />
     </div>
   );
