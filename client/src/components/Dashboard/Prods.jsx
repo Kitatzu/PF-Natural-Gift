@@ -72,7 +72,7 @@ function Prods() {
           setData(data.concat(response.data))
           console.log(response.data)
           abrirCerrarModalInsertar()
-          dispatch(getProducts)
+          dispatch(getProducts())
         })
         
       }
@@ -90,17 +90,10 @@ function Prods() {
             }
           })
           setData(dataNueva)
+          dispatch(getProducts())
           abrirCerrarModalEditar()
-        })
+        }).catch(err => {console.log(err)})
       }
-
-      const prodsDelete = async() => {
-        await axios.delete(Global.ApiUrl + "/products/" + prodsSeleccionanda.id, prodsSeleccionanda)
-        .then(response =>{
-          setData(data.filter(prods => prods.id !== prodsSeleccionanda.id))
-        })
-      }
-
       
 
       const abrirCerrarModalInsertar = () => {
@@ -110,7 +103,14 @@ function Prods() {
       const abrirCerrarModalEditar = () => {
         setModalEditar(!modalEditar)
       }
-      
+      const prodsDelete = async() => {
+        await axios.delete(Global.ApiUrl + "/products/" + prodsSeleccionanda.id, prodsSeleccionanda)
+        .then(response =>{
+          setData(data.filter(prods => prods.id !== prodsSeleccionanda.id))
+          dispatch(getProducts())
+          abrirCerrarModalEliminar()
+        })
+      }
       const abrirCerrarModalEliminar = () => {
         setModalEliminar(!modalEliminar)
       }

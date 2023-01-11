@@ -31,10 +31,9 @@ function Firebase() {
     
     return (
         <div>
-    <div>
-      <h2>Naza The Boss</h2>
+    
       <ToastContainer />
-    </div>;
+   
     </div>
     )
 }
