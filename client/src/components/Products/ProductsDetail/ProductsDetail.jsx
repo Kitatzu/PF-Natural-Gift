@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { getDetails } from "../../../Redux/Thunks/index";
 import defaultImage from "../../Assets/img/imgDefault.png";
@@ -52,6 +52,13 @@ const ProductsDetails = () => {
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  if(window.innerWidth > 1500) {
+    var widthX = 6;
+  } else {
+    var widthX = 4;
+  }
+
   return (
     <div style={{ background: Theme[mode].primary }}>
       <NavBar /> 
@@ -200,8 +207,8 @@ const ProductsDetails = () => {
 
           {isLoading ? (
             <Loading />
-          ) : status !== "error" ? (
-            currentProducts.map((product) => (
+          ) : status !== "error" ? (           
+            currentProducts.slice(0, widthX).map((product) => (
               <div key={product.id}>
                 <ProductsCards
                   id={product.id}
