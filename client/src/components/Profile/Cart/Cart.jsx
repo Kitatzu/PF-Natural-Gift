@@ -6,7 +6,22 @@ import { getCart } from "../../../Redux/Thunks/getCart";
 import AppBar from "../../AppBar/AppBar";
 import NavBar from "../../NavBar/NavBar";
 import Cards from "./Cards/Cards";
-
+import ReactDOM from "react-dom";
+import React from "react";
+import Swal from "sweetalert2";
+import { stockProucts } from "../../../Redux/Thunks/factura";
+const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 const Cart = () => {
   const dispatch = useDispatch();
   const Theme = useSelector((store) => store.theme);
@@ -17,15 +32,46 @@ const Cart = () => {
   const { totalPrice, productsCart = false } = useSelector(
     (store) => store.cart
   );
+  const sendProducts =
+    productsCart.length > 0
+      ? productsCart.map((p) => {
+          return {
+            productId: p.product.id,
+            stock:
+              p.product.stock - p.quantity >= 0
+                ? p.product.stock - p.quantity
+                : 0,
+          };
+        })
+      : null;
+  console.log(sendProducts);
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: totalPrice,
+          },
+        },
+      ],
+    });
+  };
+
+  const onApprove = async (data, actions) => {
+    console.log(data, actions);
+    console.log(actions.order.capture());
+    await dispatch(stockProucts(sendProducts));
+    Toast.fire({ icon: "success", title: "Pago exitoso!" });
+    return actions.order.capture();
+  };
   return (
-    <Box sx={{ background: Theme[mode].primary }}>
+    <Box sx={{ background: Theme[mode].primary, minHeight: "100vh" }}>
       <NavBar />
       <Box
         display={"flex"}
         flexWrap="wrap"
         justifyContent="space-around"
         padding={"20px"}
-        marginBottom="90px"
       >
         <Box>
           {productsCart
@@ -38,7 +84,11 @@ const Cart = () => {
               ))
             : null}
         </Box>
-        <Box width={{ xs: "100%", sm: "340px" }} padding="20px">
+        <Box
+          width={{ xs: "100%", sm: "340px" }}
+          padding="20px"
+          sx={{ marginBottom: "100px !important" }}
+        >
           <Card>
             <CardContent>
               <Box>
@@ -49,13 +99,14 @@ const Cart = () => {
                   {totalPrice + "$"}
                 </Typography>
                 <Box padding={"10px"}>
-                  <Button
-                    color="secondary"
-                    variant="contained"
-                    sx={{ width: "100%" }}
-                  >
-                    PAGAR
-                  </Button>
+                  <Box sx={{ padding: "20px" }}>
+                    <PayPalButton
+                      createOrder={(data, actions) =>
+                        createOrder(data, actions)
+                      }
+                      onApprove={(data, actions) => onApprove(data, actions)}
+                    />
+                  </Box>
                 </Box>
               </Box>
             </CardContent>

@@ -6,7 +6,7 @@ const login = require("../routes/loginRoutes");
 const password = require("../routes/passwordRoutes");
 const users = require("../routes/usersRoutes");
 const cart = require("../routes/cart");
-const transaction = require("../routes/Transaction");
+
 const search = require("./searchRoute");
 const filter = require("./filterRoute");
 
@@ -19,7 +19,7 @@ router.use("/login", login);
 router.use("/users", users);
 router.use("/pass", password);
 router.use("/cart", cart);
-router.use("/transaction", transaction);
+
 router.use("/search", search);
 router.use("/filter", filter);
 

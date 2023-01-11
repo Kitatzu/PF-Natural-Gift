@@ -4,10 +4,14 @@ const jwt = require("jsonwebtoken");
 async function loginUser(req, res) {
   let { email, password } = req.body;
 
-  const validEmail = await Users.findOne(
-    { where: { email } },
-    { include: Roles }
-  );
+  const validEmail = await Users.findOne({
+    where: { email: email },
+    include: {
+      model: Roles,
+      attributes: ["roleName"],
+      through: { attributes: [] },
+    },
+  });
   if (!validEmail)
     return res.status(400).json({ error: "email is not registered" });
 
@@ -25,6 +29,7 @@ async function loginUser(req, res) {
       expiresIn: 86400,
     }
   );
+  console.log({ validEmail });
   res.status(200).json({ newToken, ...validEmail.dataValues });
 }
 

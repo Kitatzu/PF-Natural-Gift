@@ -17,8 +17,8 @@
   padding: 20px;
 
   .Product-img {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    
     object-fit: cover;
     border-radius: 1rem;
   }
@@ -79,12 +79,29 @@
     background-color: rgb(68, 150, 86);
   }
 }
+
+.ConStock {
+  background-color: rgb(34, 160, 34);
+  width: max-content;
+  padding: .5rem 1rem;
+  margin: 1rem 0;
+  border-radius: 1rem;
+}
+
+.SinStock {
+  background-color: rgb(243, 69, 69);
+  width: max-content;
+  padding: .5rem 1rem;
+  margin: 1rem 0;
+  border-radius: 1rem;
+}
+
 @media screen and (max-width: 600px) {
   .Product{
     padding: 0px !important;
   }
   .Product-img{
-    width: 100% !important;
+    width: 80% !important;
   }
   
 }
@@ -97,3 +114,4 @@
     font-size: 10px !important;
   }
 }
+

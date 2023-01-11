@@ -72,7 +72,7 @@ function Prods() {
           setData(data.concat(response.data))
           console.log(response.data)
           abrirCerrarModalInsertar()
-          dispatch(getProducts)
+          dispatch(getProducts())
         })
         
       }
@@ -90,17 +90,10 @@ function Prods() {
             }
           })
           setData(dataNueva)
+          dispatch(getProducts())
           abrirCerrarModalEditar()
-        })
+        }).catch(err => {console.log(err)})
       }
-
-      const prodsDelete = async() => {
-        await axios.delete(Global.ApiUrl + "/products/" + prodsSeleccionanda.id, prodsSeleccionanda)
-        .then(response =>{
-          setData(data.filter(prods => prods.id !== prodsSeleccionanda.id))
-        })
-      }
-
       
 
       const abrirCerrarModalInsertar = () => {
@@ -110,7 +103,14 @@ function Prods() {
       const abrirCerrarModalEditar = () => {
         setModalEditar(!modalEditar)
       }
-      
+      const prodsDelete = async() => {
+        await axios.delete(Global.ApiUrl + "/products/" + prodsSeleccionanda.id, prodsSeleccionanda)
+        .then(response =>{
+          setData(data.filter(prods => prods.id !== prodsSeleccionanda.id))
+          dispatch(getProducts())
+          abrirCerrarModalEliminar()
+        })
+      }
       const abrirCerrarModalEliminar = () => {
         setModalEliminar(!modalEliminar)
       }
@@ -170,7 +170,7 @@ function Prods() {
   return (
     <div className='Prods'>
       <br />
-      <Button onClick={() => abrirCerrarModalInsertar()} align="center" >Insertar</Button>
+      <Button className='ButtonInsertar' onClick={() => abrirCerrarModalInsertar()} align="center" >Insertar</Button>
       <br /><br />
      <TableContainer sx={{width:{xs:"100%"}}} >
       <Table>
@@ -192,9 +192,9 @@ function Prods() {
               <TableCell>{prods.stock}</TableCell>
               <TableCell>{prods.rating}</TableCell>
               <TableCell>
-                <Edit className={styles.iconos} onClick={() => seleccionarProds(prods, "Editar")}/>
+                <Edit className="ButtonEdit" onClick={() => seleccionarProds(prods, "Editar")}/>
                 &nbsp;&nbsp;&nbsp;
-                <Delete className={styles.iconos} onClick={() => seleccionarProds(prods, "Eliminar")} />
+                <Delete className="ButtonDelete" onClick={() => seleccionarProds(prods, "Eliminar")} />
               </TableCell>
             </TableRow>
           ))}
@@ -207,14 +207,14 @@ function Prods() {
       {bodyInsertar}
 
      </Modal>
-     <Modal
+     <Modal classes="Modales"
      open={modalEditar}
      onClose={abrirCerrarModalEditar}
      >
     {bodyEditar}
 
      </Modal>
-     <Modal
+     <Modal classes="Modal"
      open={modalEliminar}
      onClose={abrirCerrarModalEliminar}>
       {bodyEliminar}

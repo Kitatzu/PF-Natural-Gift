@@ -9,13 +9,13 @@ export const GetUser = (email, origin) => {
     return await axios
       .get(Global.ApiUrl + "/users?email=" + email)
       .then((response) => {
-        const { firstName, lastName, email, userName } = response.data[0];
         console.log(response.data);
-        dispatch(setIsLoading(false));
+        const { firstName, lastName, email, userName } = response.data;
         dispatch(setData({ firstName, lastName, email, userName }));
+        dispatch(setIsLoading(false));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         dispatch(setIsLoading(false));
         Swal.fire({
           icon: "error",

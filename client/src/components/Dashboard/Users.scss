@@ -1,8 +1,14 @@
 .Modal{
-    position: absolute;
     width: 400px;
-    background-color: #fff;
-    position: absolute;
-    height: 200px;
+    background-color: rgb(255, 249, 244);
+    position: center;
+    height: 100px;
    align-items: center;
+   margin: 200px;
+   text-align: center;
+   border:solid 3px;
+}
+.ButtonDelete{
+    cursor:pointer;
+    color: rgb(207, 18, 18);
 }

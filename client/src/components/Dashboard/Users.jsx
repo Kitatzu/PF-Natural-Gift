@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import {Table, TableContainer,TableBody, TableRow, TableHead, TableCell, Modal, Button, TextField} from '@mui/material'
 import { Delete} from '@mui/icons-material'
-
+import {Link} from "react"
 import { useDispatch, useEffect, useState } from 'react';
 import axios from 'axios';
 import './Users.scss'
@@ -25,28 +25,34 @@ function Users() {
       setData(response.data)
     ))
   }
+  
+  
+  const seleccionarUsers=(users, caso) => {
+    setUsersSelector(users);
+    (caso==="Eliminar")&&setModalEliminar(true)
+  }
+  
+  const abrirCerrarModalEliminar = () => {
+    setModalEliminar(!modalEliminar)
+  }
   const usersDelete = async() => {
     await axios.delete(Global.ApiUrl + "/users/" + usersSelector.id, usersSelector)
     .then(response =>{
       setData(data.filter(users => users.id !== usersSelector.id))
+      abrirCerrarModalEliminar()
     })
   }
-  const abrirCerrarModalEliminar = () => {
-    setModalEliminar(!modalEliminar)
-  }
 
-  const seleccionarUsers=(users, caso) => {
-    setUsersSelector(users);
-    (caso==="Eliminar")&&abrirCerrarModalEliminar()
-  }
+  
   useEffect(async() => {
     await usersGet()
   }, [])
+  
   const bodyEliminar =(
     <div className="Modal">
-     <p>Estas seguro que deseas eliminar el producto <b>{usersSelector && usersSelector.firstName}</b> ? </p>
+     <p>Estas seguro que deseas eliminar el Usuario <b>{usersSelector && usersSelector.firstName}</b> ? </p>
       <div align="right">
-        <Button color="secondary" onClick={()=>usersDelete()}>Si</Button>
+        <Button color="secondary" onClick={() => usersDelete()}>Si</Button>
         <Button onClick={() => abrirCerrarModalEliminar()}>No</Button>
       </div>
     </div>
@@ -54,14 +60,15 @@ function Users() {
  
   return (
     <div>
+      <Button Link to="/Dashboard">volver</Button>
        <TableContainer sx={{width:{xs:"100%"}}} >
       <Table>
         <TableHead>
-          <TableCell>User Name</TableCell>
-          <TableCell>Name</TableCell>
-          <TableCell>Last Name</TableCell>
-          <TableCell>Email</TableCell>
-          <TableCell>Acciones</TableCell>
+          <TableCell className='TableC'>User Name</TableCell>
+          <TableCell className='TableC'>Name</TableCell>
+          <TableCell className='TableC'>Last Name</TableCell>
+          <TableCell className='TableC'>Email</TableCell>
+          <TableCell className='TableC'>Acciones</TableCell>
           
 
         </TableHead>
@@ -74,7 +81,7 @@ function Users() {
               <TableCell>{Users.lastName}</TableCell>
               <TableCell>{Users.email}</TableCell>
               <TableCell>
-                <Delete onClick={() => seleccionarUsers(Users, "Eliminar")}/>
+                <Delete className='ButtonDelete' onClick={() => seleccionarUsers(Users, "Eliminar")}/>
               </TableCell>
             </TableRow>
           ))}
