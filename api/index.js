@@ -8,7 +8,7 @@ server.listen(PORT, () => {
   console.log(`%s listening at ${PORT}`); // eslint-disable-line no-console
   try {
     conn
-      .sync({force: true})
+      .sync()
       .then((response) => {
         createRoles();
       })
