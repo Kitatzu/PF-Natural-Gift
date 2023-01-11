@@ -6,6 +6,10 @@ import { getCart } from "../../../Redux/Thunks/getCart";
 import AppBar from "../../AppBar/AppBar";
 import NavBar from "../../NavBar/NavBar";
 import Cards from "./Cards/Cards";
+import ReactDOM from "react-dom";
+import React from "react";
+
+const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -17,6 +21,21 @@ const Cart = () => {
   const { totalPrice, productsCart = false } = useSelector(
     (store) => store.cart
   );
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: totalPrice,
+          },
+        },
+      ],
+    });
+  };
+
+  const onApprove = (data, actions) => {
+    return actions.order.capture();
+  };
   return (
     <Box sx={{ background: Theme[mode].primary, minHeight: "100vh" }}>
       <NavBar />
@@ -59,6 +78,14 @@ const Cart = () => {
                   >
                     PAGAR
                   </Button>
+                  <Box sx={{ padding: "20px" }}>
+                    <PayPalButton
+                      createOrder={(data, actions) =>
+                        createOrder(data, actions)
+                      }
+                      onApprove={(data, actions) => onApprove(data, actions)}
+                    />
+                  </Box>
                 </Box>
               </Box>
             </CardContent>
