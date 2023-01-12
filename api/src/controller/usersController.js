@@ -40,12 +40,36 @@ async function allUsers(req, res) {
   }
 }
 
+async function allUSersDeleted(req, res) {
+  try {
+    let allUsers = await Users.findAll({
+      paranoid: false,
+      include: {
+        model: Roles,
+        attributes: ["roleName"],
+        through: { attributes: [] },
+      },
+    });
+
+    res.status(200).json(allUsers);
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+}
 async function deleteUser(req, res) {
   let { id } = req.params;
 
-  await Users.destroy({ where: { id: id } });
+  const user = await Users.destroy({ where: { id: id } });
 
   res.send("User is deleted");
+}
+
+async function restoreUser(req, res) {
+  let { id } = req.params;
+
+  const user = await Users.restore({ where: { id: id } });
+
+  res.status(200).json(`the user ${user} is restored`);
 }
 
 async function updateUser(req, res) {
@@ -152,6 +176,8 @@ async function updateUser(req, res) {
 
 module.exports = {
   allUsers,
+  allUSersDeleted,
   deleteUser,
+  restoreUser,
   updateUser,
 };

@@ -44,6 +44,23 @@ async function allProducts(req, res) {
   }
 }
 
+async function allProductsDeleted(req, res) {
+  try {
+    let productsInDb = await Products.findAll({
+      paranoid: false,
+      include: {
+        model: Categories,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    });
+
+    res.status(201).json(productsInDb);
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+}
+
 async function createProduct(req, res) {
   let { name, categories, description, stock, price, rating } = req.body;
 
@@ -72,7 +89,7 @@ async function createProduct(req, res) {
 
       return res.status(201).send(newProduct);
     } catch (e) {
-      res.status(500).json({ status: "error", msg: e });
+      res.status(500).json({ status: "error", message: e });
     }
   } else {
     try {
@@ -92,7 +109,7 @@ async function createProduct(req, res) {
 
       return res.status(201).send(newProduct);
     } catch (e) {
-      return res.status(500).json({ status: "error", msg: e });
+      return res.status(500).json({ status: "error", message: e });
     }
   }
 }
@@ -119,11 +136,20 @@ async function findProduct(req, res) {
 async function deleteProduct(req, res) {
   let { id } = req.params;
 
-  await Products.destroy({
+  const product = await Products.destroy({
     where: { id: id },
   });
 
   res.send("Product deleted");
+}
+
+async function restoreProduct(req, res) {
+  let { id } = req.params;
+  const product = await Products.restore({
+    where: { id: id },
+  });
+
+  res.status(200).json(`the product ${product} is restored`);
 }
 
 async function updateProduct(req, res) {
@@ -192,8 +218,10 @@ async function updateProduct(req, res) {
 
 module.exports = {
   allProducts,
+  allProductsDeleted,
   createProduct,
   findProduct,
   deleteProduct,
+  restoreProduct,
   updateProduct,
 };

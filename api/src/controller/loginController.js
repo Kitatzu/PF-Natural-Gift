@@ -5,7 +5,7 @@ async function loginUser(req, res) {
   let { email, password } = req.body;
 
   const validEmail = await Users.findOne({
-    where: { email },
+    where: { email: email },
     include: {
       model: Roles,
       attributes: ["roleName"],
