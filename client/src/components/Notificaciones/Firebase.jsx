@@ -3,6 +3,7 @@ import { messaging } from "../firebase"
 import { getToken, onMessage } from "firebase/messaging"
 import { getAuth, signInAnonymously } from "firebase/auth"
 import {ToastContainer, toast} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 function Firebase() {
 
@@ -31,8 +32,22 @@ function Firebase() {
     
     return (
         <div>
-            <ToastContainer />   
-        </div>
+    
+      <ToastContainer 
+position="top-left"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
+   
+    </div>
+
     )
 }
 
