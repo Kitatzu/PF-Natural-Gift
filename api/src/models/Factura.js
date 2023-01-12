@@ -3,18 +3,19 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define("facturas", {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true,
     },
     factura: {
-      type: DataTypes.STRING,
-      unique: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
     },
     pagoId: {
       type: DataTypes.STRING,
-      unique: true,
+
       allowNull: false,
     },
     total: {

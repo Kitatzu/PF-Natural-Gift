@@ -1,30 +1,34 @@
 const sequelize = require("../db");
-const Factura = require("../models/Factura");
-const { Cart, ProductInCart, Users, Products, Facturas } = sequelize;
 
+const { Cart, ProductInCart, Users, Products, Facturas } = sequelize;
+const { Op } = require("sequelize");
 const createFactura = async (req, res) => {
-  const { factura, pagoId, userId, total } = req.body;
+  const { pagoId, userId } = req.body;
   try {
     if (userId) {
       await Users.findByPk(userId)
         .then(async (user) => {
           console.log(user);
           user
-            ? await Cart.findByPk(user.cartId, {
-                where: { status: "pending" },
+            ? await Cart.findOne({
+                where: {
+                  [Op.and]: [
+                    { id: user.cartId },
+                    { status: { [Op.eq]: "pending" } },
+                  ],
+                },
               }).then(async (cart) => {
                 console.log(cart);
                 await ProductInCart.findAll({
                   where: {
-                    cartId: cart.id,
+                    cartId: { [Op.eq]: cart.id },
                   },
-                  include: Products,
+                  // include: { model: Products },
                 })
                   .then(async (products) => {
                     console.log(products);
                     try {
                       const newFactura = await Facturas.create({
-                        factura,
                         pagoId,
                         cartId: cart.id,
                         total: cart.totalPrice,
@@ -47,9 +51,10 @@ const createFactura = async (req, res) => {
 
                       return res.status(200).json({
                         status: "success",
-                        cart: {
+                        data: {
                           factura: { ...newFactura.dataValues },
                           cart: { ...cart.dataValues },
+                          products: { ...products.dataValues },
                           user: { ...userUpdate.dataValues },
                         },
                       });
@@ -59,9 +64,7 @@ const createFactura = async (req, res) => {
                   })
                   .catch((e) => {
                     console.log(e);
-                    return res
-                      .status(500)
-                      .json({ status: "error", msg: e.error });
+                    return res.status(500).json({ status: "error", msg: e });
                   });
               })
             : res.status(404).json({ status: "error", msg: "No user found!" });

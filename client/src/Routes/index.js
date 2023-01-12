@@ -12,6 +12,7 @@ import Prods from "../components/Dashboard/Prods";
 import Cart from "../components/Profile/Cart/Cart";
 import FilterPrice from "../components/FilterPrice/FilterPrice";
 import Notificaciones from "../components/Notificaciones/Firebase";
+import Factura from "../components/Facturas/Factura/Factura";
 
 const Routes = () => {
   return (
@@ -35,6 +36,7 @@ const Routes = () => {
         <Route exact path="/FilterPrice" component={FilterPrice} />
         <Route exact path="/Sobre Nosotros" component={SobreNosotros} />
         <Route exact path="/Firebase" component={Notificaciones} />
+        <Route exact path={"/factura"} component={Factura} />
         <Route component={DefaultRoute} />
       </Switch>
     </>

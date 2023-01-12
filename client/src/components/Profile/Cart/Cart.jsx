@@ -9,7 +9,8 @@ import Cards from "./Cards/Cards";
 import ReactDOM from "react-dom";
 import React from "react";
 import Swal from "sweetalert2";
-import { stockProucts } from "../../../Redux/Thunks/factura";
+import { createFactura, stockProucts } from "../../../Redux/Thunks/factura";
+import { Redirect } from "react-router-dom";
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 const Toast = Swal.mixin({
   toast: true,
@@ -26,9 +27,13 @@ const Cart = () => {
   const dispatch = useDispatch();
   const Theme = useSelector((store) => store.theme);
   const mode = useSelector((store) => store.theme.mode);
+  const { redir } = useSelector((store) => store.factura);
+  let userId = JSON.parse(localStorage.getItem("token"))
+    ? JSON.parse(localStorage.getItem("token")).userId
+    : null;
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [dispatch]);
   const { totalPrice, productsCart = false } = useSelector(
     (store) => store.cart
   );
@@ -60,12 +65,15 @@ const Cart = () => {
   const onApprove = async (data, actions) => {
     console.log(data, actions);
     console.log(actions.order.capture());
+    await dispatch(
+      createFactura(data.orderID, data.payerID, userId, productsCart)
+    );
     await dispatch(stockProucts(sendProducts));
-    Toast.fire({ icon: "success", title: "Pago exitoso!" });
     return actions.order.capture();
   };
   return (
     <Box sx={{ background: Theme[mode].primary, minHeight: "100vh" }}>
+      {redir ? <Redirect to={"/factura"} /> : null}
       <NavBar />
       <Box
         display={"flex"}
@@ -99,7 +107,7 @@ const Cart = () => {
                   {totalPrice + "$"}
                 </Typography>
                 <Box padding={"10px"}>
-                  <Box sx={{ padding: "20px" }}>
+                  <Box>
                     <PayPalButton
                       createOrder={(data, actions) =>
                         createOrder(data, actions)
