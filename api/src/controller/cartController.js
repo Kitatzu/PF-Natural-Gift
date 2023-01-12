@@ -123,18 +123,40 @@ const updateCart = async (req, res) => {
               { productId: { [Op.eq]: productId } },
             ],
           },
+          include: Products,
         });
+        const sumatotal =
+          cart.totalPrice -
+          updateProduct.product.price * updateProduct.quantity;
         await updateProduct
           .update({ quantity })
-          .then((response) => {
+          .then(async (response) => {
             console.log("Se edito correctamente");
+            await cart
+              .update({
+                totalPrice: sumatotal + updateProduct.product.price * quantity,
+              })
+              .then((response) => {
+                console.log(
+                  "new Price:",
+                  sumatotal + updateProduct.product.price * quantity
+                );
+              })
+              .catch((response) => {
+                console.log("CUELGATE!", response);
+              });
           })
           .catch((e) => {
             console.log("Error", e);
           });
-        return res
-          .status(200)
-          .json({ status: "success", user, cart, products, updateProduct });
+        return res.status(200).json({
+          status: "success",
+          user,
+          cart,
+          products,
+          updateProduct,
+          price: sumatotal,
+        });
       } else {
         return res
           .status(400)
@@ -150,9 +172,48 @@ const updateCart = async (req, res) => {
       .json({ status: "error", msg: "UserID igual a undefined!" });
   }
 };
+const deleteProduct = async (req, res) => {
+  const { productId, cartId } = req.params;
+  console.log(productId, cartId, req.params);
+  try {
+    const cart = await Cart.findByPk(cartId);
+    const product = await ProductInCart.findOne({
+      where: {
+        [Op.and]: [
+          { cartId: { [Op.eq]: cart.id } },
+          { productId: { [Op.eq]: productId } },
+        ],
+      },
+      include: Products,
+    });
+    console.log(product);
+    await ProductInCart.destroy({
+      where: { [Op.and]: [{ cartId }, { productId }] },
+    })
+      .then((response) => {
+        console.log(response);
+        const totalPrice =
+          cart.totalPrice - product.product.price * product.quantity;
+        console.log(totalPrice);
+        cart.update({ totalPrice });
+        return res.status(200).json({
+          status: "success",
+          msg: "Producto eliminado correctamente!",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        return res.status(400).json({ status: "error", msg: e });
+      });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
+};
 
 module.exports = {
   getCart,
   createProductInCart,
   updateCart,
+  deleteProduct,
 };

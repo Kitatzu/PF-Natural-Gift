@@ -88,6 +88,10 @@ const Cart = () => {
                   price={product.product.price}
                   quantity={product.quantity}
                   name={product.product.name}
+                  image={product.product.imageProduct}
+                  stock={product.product.stock}
+                  productId={product.product.id}
+                  cartId={product.cartId}
                 />
               ))
             : null}

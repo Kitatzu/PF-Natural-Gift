@@ -6,13 +6,20 @@ import {
   Chip,
   IconButton,
   Input,
+  TextField,
 } from "@mui/material";
 import bgDefault from "../../../Assets/img/imgDefault.png";
 import { Icon } from "@iconify/react";
-import { useSelector } from "react-redux";
-const Cards = ({ price, name, quantity }) => {
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProductInCart,
+  editCart,
+} from "../../../../Redux/Thunks/getCart";
+const Cards = ({ price, name, quantity, stock, image, productId, cartId }) => {
+  image = image ? image : bgDefault;
   const Theme = useSelector((store) => store.theme);
   const mode = useSelector((store) => store.theme.mode);
+  const dispatch = useDispatch();
   return (
     <Card
       sx={{
@@ -25,7 +32,7 @@ const Cards = ({ price, name, quantity }) => {
     >
       <CardContent sx={{ display: "flex", justifyContent: "space-around" }}>
         <Box width={"30%"}>
-          <img style={{ width: "100%" }} src={bgDefault} alt="Product" />
+          <img style={{ width: "100%" }} src={image} alt="Product" />
         </Box>
         <Box width={"70%"} padding="10px">
           <Box>
@@ -52,7 +59,9 @@ const Cards = ({ price, name, quantity }) => {
             justifyContent={"space-between"}
           >
             <Chip label={price + "$"} color="secondary" />
-            <IconButton>
+            <IconButton
+              onClick={(e) => dispatch(deleteProductInCart(productId, cartId))}
+            >
               <Icon icon="mdi:trash-can" color="#D3232F" />
             </IconButton>
           </Box>
@@ -60,10 +69,19 @@ const Cards = ({ price, name, quantity }) => {
           <Box display={"flex"} gap="20px" padding="5px 0">
             <Chip label="Cantidad" sx={{ color: Theme[mode].textPrimary }} />
             <Box width={"40px"}>
-              <Input
+              <input
                 type="number"
-                defaultValue={quantity}
-                sx={{ color: Theme[mode].textPrimary }}
+                min="1"
+                max={stock}
+                style={{ display: "inline-block", width: "100%" }}
+                // InputProps={{
+                //   inputProps: { min: 1, max: stock },
+                //   style: { color: Theme[mode].textPrimary },
+                // }}
+                onChange={(e) => {
+                  dispatch(editCart(productId, e.target.value));
+                }}
+                value={quantity}
               />
             </Box>
           </Box>

@@ -144,7 +144,7 @@ const ProductsDetails = () => {
                         <TextField
                           type="number"
                           InputProps={{
-                            inputProps: { min: 1, max: 10 },
+                            inputProps: { min: 1, max: productDetail.stock },
                             style: { color: Theme[mode].textPrimary },
                           }}
                           defaultValue={"1"}
