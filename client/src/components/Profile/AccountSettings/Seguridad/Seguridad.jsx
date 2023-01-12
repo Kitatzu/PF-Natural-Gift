@@ -12,10 +12,11 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { Box } from "@mui/system";
-import Password from "./Inputs/Password";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
-import { changePassword } from "../../../../Redux/Thunks/changePassword";
+import Global from "../../../../Global";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Seguridad = () => {
   const mode = useSelector((store) => store.theme.mode);
@@ -45,13 +46,88 @@ const Seguridad = () => {
     });
   }
 
-  // const dispatch = useDispatch();
+  let infoPass = {
+    email : email,
+    password : input.currentPassword,
+    newPassword : input.newPassword,
+    confirmPassword : input.confirmPassword
+  }
 
-  // const handleSubmitNewPassword = (e) => {
-  //   e.preventDefault();
-  //  dispatch(changePassword())
-  // }
+  // Validador de contraseña nueva
+  const submitNewPassword = async () => {
+    let isValid = true;
+    if (infoPass.newPassword !== infoPass.confirmPassword) {
+      isValid = false;
+      Swal.fire({
+        icon: "error",
+        title: "No coinciden",
+        text: "Las contraseñas no coinciden",
+      });
+    } else {
+        let regexPass = /(?=.*[0-9])/;
+        let regexPass1 = /(?=.*[!@#$%^&*])/;
+        let regexPass2 = /(?=.{8,})/;
+        let regexPass3 = /(?=.*[A-Z])/;
 
+        if(!regexPass.test(infoPass.newPassword.trim())) {
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Clave inválida",
+                text: "Este campo requiere al menos 1 caracter numérico",
+            });
+        }
+
+        if(!regexPass1.test(infoPass.newPassword.trim())) {
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Clave inválida",
+                text: "Debe contener un caracter especial",
+            });
+        }
+
+        if(!regexPass2.test(infoPass.newPassword.trim())) {
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Clave inválida",
+                text: "Debe contener al menos 8 caracteres",
+            });
+        }
+
+        if(!regexPass3.test(infoPass.newPassword.trim())) {
+            isValid = false;
+            Swal.fire({
+                icon: "error",
+                title: "Clave inválida",
+                text: "Debe tener al menos 1 mayúscula",
+            });
+        }
+    }
+
+    if (isValid) {
+        await axios.post(Global.ApiUrl + "/pass", infoPass)
+        .then(response => {
+            console.log(response);
+            Swal.fire({
+                icon: "success",
+                title: "Contraseña Cambiada!",
+                text: "La contraseña ha sido cambiada exitosamente!",
+                confirmButtonText: "Continuar!",
+            });
+        })
+        .catch((response) => {
+          console.log(response);
+          Swal.fire({
+            icon: "error",
+            title: "Error de Contraseña",
+            text: "Algo falló con el cambio de contraseña",
+        });
+      });
+    }
+  }
+  
   return (
     <Card
       variant="outlined"
@@ -212,7 +288,7 @@ const Seguridad = () => {
           color="primary"
           variant="contained"
           sx={{ background: Theme[mode].buttonPrimary }}
-          //onClick={handleSubmitNewPassword}
+          onClick={submitNewPassword}
         >
           Guardar
         </Button>

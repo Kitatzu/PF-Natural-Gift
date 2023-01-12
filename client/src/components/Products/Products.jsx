@@ -160,7 +160,11 @@ const Products = () => {
               />
             </Search>
           </Box>
-          <Box display={{ xs: "flex", sm: "none" }} width="100%">
+          
+          <Box display={{ xs: "flex", sm: "none"}}>
+            <button className="Refresh-btn" onClick={(e) => handleResetPaginated(e)}>Quitar Filtros</button>   
+          </Box>
+          <Box display={{ xs: "flex", sm: "none", marginRight: "2rem"}} width="100%">
             <FilterPrice />
           </Box>
           <Box

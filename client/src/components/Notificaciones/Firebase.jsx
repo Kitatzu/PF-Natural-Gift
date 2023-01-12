@@ -31,10 +31,8 @@ function Firebase() {
     
     return (
         <div>
-    
-      <ToastContainer />
-   
-    </div>
+            <ToastContainer />   
+        </div>
     )
 }
 
