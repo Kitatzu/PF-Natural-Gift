@@ -5,6 +5,7 @@ const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, TOKEN_SECRET, DB_PORT } =
   process.env;
 const bcrypt = require("bcrypt");
+const Factura = require("./models/Factura");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -39,19 +40,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const {
-  Products,
-  Categories,
-  Users,
-  ProductInCart,
-  Cart,
-  Transaction,
-  Roles,
-  Reviews,
-} = sequelize.models;
+const { Products, Categories, Users, ProductInCart, Cart, Roles, Facturas } =
+  sequelize.models;
 
 Products.belongsToMany(Categories, { through: "Products_Categories" });
 Categories.belongsToMany(Products, { through: "Products_Categories" });
+
 Users.belongsToMany(Roles, { through: "User_Role" });
 Roles.belongsToMany(Users, { through: "User_Role" });
 
@@ -61,6 +55,11 @@ ProductInCart.belongsTo(Cart, { foreignKey: "cartId" });
 Products.hasMany(ProductInCart, { foreignKey: "productId" });
 ProductInCart.belongsTo(Products, { foreignKey: "productId" });
 
+Users.hasMany(Facturas, { foreignKey: "userId" });
+Facturas.belongsTo(Users, { foreignKey: "userId" });
+
+Facturas.hasMany(ProductInCart, { foreignKey: "facturaId" });
+ProductInCart.belongsTo(Facturas, { foreignKey: "facturaId" });
 // Reviews.belongsTo(Products);
 
 module.exports = {

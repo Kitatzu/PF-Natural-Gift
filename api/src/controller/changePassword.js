@@ -14,15 +14,15 @@ async function changePassword(req, res) {
         .json({ message: "the password does not match the old one" });
     } else if (newPassword) {
       if (password === newPassword) {
-        return res.json("Son iguales pa");
+        return res.status(400).json("the new and old password are the same");
       }
     }
     if (confirmPassword !== newPassword) {
-      return res.json("No son iguales");
+      return res.status(400).json("the passwords are not the same");
     } else {
       const salt = await bcrypt.genSalt(10);
 
-      let passwordUpdate = validEmail.update({
+      let passwordUpdate = await validEmail.update({
         password: await bcrypt.hash(newPassword, salt),
       });
 

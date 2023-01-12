@@ -192,10 +192,7 @@ const ProductsDetails = () => {
           </Box>
         </div>
       )}
-      {/* Un problema para alguien del futuro que vea esto: al darle click a alguna card no se mostrara en pantalla debido a que solo se rendizar con useEffect */}
-      {/* <div className="Products-more">
-        <ProductsHome/>
-      </div> */}
+
       <Box>
         <Typography
           component={"h2"}
@@ -206,7 +203,7 @@ const ProductsDetails = () => {
             textAlign: "center",
           }}
         >
-          Mas productos
+          Dale un vistazo a más productos
         </Typography>
         <Box
           display={"flex"}

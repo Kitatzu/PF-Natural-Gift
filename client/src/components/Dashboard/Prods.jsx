@@ -57,7 +57,6 @@ function Prods() {
   console.log(prodsSeleccionanda)
  }
 
-
  const { categories = null } = useSelector((store) => store.categories);
  
   const { products = [] } = useSelector((state) => state.products);
@@ -157,7 +156,7 @@ function Prods() {
           <br />
           <TextField name="stock" className={styles.inputMaterial} label="Stock" onChange={handleChange} value={prodsSeleccionanda && prodsSeleccionanda.stock}></TextField>
           <br />
-          <TextField name="ranking" className={styles.inputMaterial} label="Ranking" onChange={handleChange} value={prodsSeleccionanda && prodsSeleccionanda.rating}></TextField>
+          <TextField name="rating" className={styles.inputMaterial} label="Rating" onChange={handleChange} value={prodsSeleccionanda && prodsSeleccionanda.rating}></TextField>
           <br /><br />
           <div align="right">
             <Button color="primary" onClick={() => prodsPut()}>Editar</Button>
@@ -236,7 +235,7 @@ function Prods() {
      <Modal sx={{
       marginBottom:"450px",
       marginLeft:"550px",
-      marginTop:"350px"
+      marginTop:"500"
      }} classes="Modal"
      open={modalEliminar}
      onClose={abrirCerrarModalEliminar}>

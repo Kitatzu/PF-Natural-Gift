@@ -37,7 +37,7 @@ const validationsForm = (name, value) => {
   //name-----------------------------------------------------
 
   if (name === "name" && !value.trim()) {
-    console.log("TU PERA MADRE");
+    //console.log("TU PERA MADRE");
     errors.name = "The name field is require";
   } else if (name === "name" && value.trim()) errors.name = undefined;
   if (name === "name" && value && !regexName.test(value.trim())) {
