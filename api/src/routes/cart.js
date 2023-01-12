@@ -7,6 +7,7 @@ const {
   createProductInCart,
   getCart,
   updateCart,
+  deleteProduct,
 } = require("../controller/cartController");
 
 router.post("/:productId", async (req, res) => {
@@ -35,4 +36,5 @@ router.post("/:productId", async (req, res) => {
 });
 router.get("/:userId", getCart);
 router.put("/", updateCart);
+router.delete("/:productId/:cartId", deleteProduct);
 module.exports = router;

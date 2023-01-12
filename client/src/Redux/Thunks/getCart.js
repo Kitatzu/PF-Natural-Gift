@@ -84,3 +84,46 @@ export const setCart = (form) => {
       });
   };
 };
+export const editCart = (productId, quantity) => {
+  const userId = JSON.parse(localStorage.getItem("token"))
+    ? JSON.parse(localStorage.getItem("token")).userId
+    : null;
+  console.log(userId);
+  return async (dispatch) => {
+    return await axios
+      .put(Global.ApiUrl + "/cart", { productId, quantity, userId })
+      .then((response) => {
+        console.log(response);
+        dispatch(getCart());
+      })
+      .catch((e) => {
+        console.log(e);
+        Toast.fire({
+          icon: "error",
+          title: "Error no encontro producto con el id especifico!",
+        });
+      });
+  };
+};
+export const deleteProductInCart = (productId, cartId) => {
+  console.log(productId, cartId);
+  return async (dispatch) => {
+    return await axios
+      .delete(Global.ApiUrl + `/cart/${productId}/${cartId}`, {
+        productId,
+        cartId,
+      })
+      .then((response) => {
+        console.log(response);
+        dispatch(getCart());
+      })
+      .catch((e) => {
+        console.log(e);
+        Toast.fire({
+          icon: "error",
+          title:
+            "Internal error: No se encuentra producto con id especificado!",
+        });
+      });
+  };
+};
