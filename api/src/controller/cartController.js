@@ -10,8 +10,13 @@ const getCart = async (req, res) => {
         .then(async (user) => {
           console.log(user);
           user
-            ? await Cart.findByPk(user.cartId, {
-                where: { status: "pending" },
+            ? await Cart.findOne({
+                where: {
+                  [Op.and]: [
+                    { id: user.cartId },
+                    { status: { [Op.eq]: "pending" } },
+                  ],
+                },
               }).then(async (cart) => {
                 console.log(cart);
                 await ProductInCart.findAll({
