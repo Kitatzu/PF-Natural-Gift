@@ -60,7 +60,6 @@ function Users() {
  
   return (
     <div>
-      <Button Link to="/Dashboard">volver</Button>
        <TableContainer sx={{width:{xs:"100%"}}} >
       <Table>
         <TableHead>
@@ -88,7 +87,10 @@ function Users() {
         </TableBody>
       </Table>
      </TableContainer>
-     <Modal
+     <Modal sx={{
+      marginBottom:"450px",
+      marginLeft:"400px",
+      marginTop:"150px"}}
      open={modalEliminar}
      onClose={abrirCerrarModalEliminar}>
       {bodyEliminar}

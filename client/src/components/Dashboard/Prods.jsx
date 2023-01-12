@@ -5,10 +5,11 @@ import {Edit, Delete} from '@mui/icons-material'
 import {makeStyles} from '@material-ui/core/styles'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../Redux/Thunks/index";
 import { getCategories } from "../../Redux/Thunks/Categories"
+import { getProducts } from '../../Redux/Thunks/index'
 import axios from 'axios'
 import Global from "../../Global"
+
 
 
 
@@ -48,6 +49,7 @@ function Prods() {
 
  const handleChange = e => {
   const{name, value} = e.target;
+  console.log(e.target)
   setProdsSeleccionada(prevState=>({
     ...prevState,
     [name]:value
@@ -57,14 +59,17 @@ function Prods() {
 
 
  const { categories = null } = useSelector((store) => store.categories);
+ 
   const { products = [] } = useSelector((state) => state.products);
+  console.log(products)
    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getProducts());
-        dispatch(getCategories())
-      }, []);
 
-      
+   
+ useEffect(() => {
+  dispatch(getProducts())
+    dispatch(getCategories())
+  }, []);
+   
 
       const prodsPost = async() => {
         await axios.post(Global.ApiUrl + "/products", prodsSeleccionanda)
@@ -73,9 +78,11 @@ function Prods() {
           console.log(response.data)
           abrirCerrarModalInsertar()
           dispatch(getProducts())
+          
         })
         
       }
+     
 
       const prodsPut = async() => {
         await axios.put(Global.ApiUrl + "/products/"+ prodsSeleccionanda.id, prodsSeleccionanda)
@@ -94,7 +101,6 @@ function Prods() {
           abrirCerrarModalEditar()
         }).catch(err => {console.log(err)})
       }
-      
 
       const abrirCerrarModalInsertar = () => {
         setModalInsertar(!ModalInsertar)
@@ -130,6 +136,10 @@ function Prods() {
           <TextField name="stock" className={styles.inputMaterial} label="Stock" onChange={handleChange}></TextField>
           <br />
           <TextField name="rating" className={styles.inputMaterial} label="Rating" onChange={handleChange}></TextField>
+          <br />
+          <select className='SelectedDash' name="categories" onChange={handleChange}>{categories.map(cat =>
+          <option name="categories" value={cat.name} >{cat.name} </option>)}
+          </select>
           <br /><br />
           <div align="right">
             <Button color="primary" onClick={() => prodsPost()}>Agregar</Button>
@@ -170,7 +180,7 @@ function Prods() {
   return (
     <div className='Prods'>
       <br />
-      <Button className='ButtonInsertar' onClick={() => abrirCerrarModalInsertar()} align="center" >Insertar</Button>
+      <Button className='ButtonInsertar' onClick={() => abrirCerrarModalInsertar()} align="center" >Add Product</Button>
       <br /><br />
      <TableContainer sx={{width:{xs:"100%"}}} >
       <Table>
@@ -179,6 +189,7 @@ function Prods() {
           <TableCell>Price</TableCell>
           <TableCell>Stock</TableCell>
           <TableCell>Rating</TableCell>
+          <TableCell>Categories</TableCell>
           <TableCell>Acciones</TableCell>
           
 
@@ -191,6 +202,7 @@ function Prods() {
               <TableCell>{prods.price}</TableCell>
               <TableCell>{prods.stock}</TableCell>
               <TableCell>{prods.rating}</TableCell>
+              <TableCell>{prods.categories[0] !== undefined ? prods.categories[0].name : null}</TableCell>
               <TableCell>
                 <Edit className="ButtonEdit" onClick={() => seleccionarProds(prods, "Editar")}/>
                 &nbsp;&nbsp;&nbsp;
@@ -201,20 +213,31 @@ function Prods() {
         </TableBody>
       </Table>
      </TableContainer>
-     <Modal
+     <Modal sx={{ alignItems:"center",
+     position:"flex",
+    marginBottom:"450px",
+  marginLeft:"550px"}}  
      open={ModalInsertar}
      onClose={abrirCerrarModalInsertar}>
       {bodyInsertar}
 
      </Modal>
-     <Modal classes="Modales"
+     <Modal sx={{ alignItems:"center",
+     position:"flex",
+    marginBottom:"450px",
+  marginLeft:"550px"}}  
+     classes="Modales"
      open={modalEditar}
      onClose={abrirCerrarModalEditar}
      >
     {bodyEditar}
 
      </Modal>
-     <Modal classes="Modal"
+     <Modal sx={{
+      marginBottom:"450px",
+      marginLeft:"550px",
+      marginTop:"350px"
+     }} classes="Modal"
      open={modalEliminar}
      onClose={abrirCerrarModalEliminar}>
       {bodyEliminar}
