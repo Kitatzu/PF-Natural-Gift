@@ -26,8 +26,7 @@ const InfoSection = () => {
         <div className="CardInfo-text">
           <h2 style={{ color: Theme[mode].textPrimary }}>Formas de Pago</h2>
           <Typography style={{ color: Theme[mode].textPrimary }}>
-            Puedes pagar con tu tarjeta de débito/crédito en Mercadopago o
-            mediante transferencia a nuestra cuenta RUT.
+            Puedes pagar con tu tarjeta de débito/crédito en Paypal
           </Typography>
         </div>
       </div>

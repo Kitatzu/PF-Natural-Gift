@@ -6,6 +6,7 @@ const { Users, Products, ProductInCart, Cart } = sequelize;
 const {
   createProductInCart,
   getCart,
+  updateCart,
 } = require("../controller/cartController");
 
 router.post("/:productId", async (req, res) => {
@@ -33,5 +34,5 @@ router.post("/:productId", async (req, res) => {
   }
 });
 router.get("/:userId", getCart);
-
+router.put("/", updateCart);
 module.exports = router;
