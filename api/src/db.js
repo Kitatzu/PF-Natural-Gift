@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, TOKEN_SECRET } = process.env;
 const bcrypt = require("bcrypt");
-const Factura = require("./models/Factura");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/naturalgift`,
