@@ -16,24 +16,17 @@ const AgeInput = ({ handleChange, handleBlur, form, error }) => {
       variant="outlined"
       className="Login-form-control register-age"
     >
-      <InputLabel
-        htmlFor="outlined-adornment-age"
-        style={{ color: Theme[mode].textPrimary }}
-      >
-        Age
-      </InputLabel>
       <OutlinedInput
         id="outlined-adornment-lastname"
         name="age"
-        inputProps={{min: 0}}
-        type={"number"}
+        inputProps={{ min: 0 }}
+        type={"date"}
         onChange={handleChange}
         onBlur={handleBlur}
         value={form.age}
         className="Login-input"
         style={{ color: Theme[mode].textPrimary }}
         required
-        label="Age"
         error={error}
         endAdornment={
           <InputAdornment position="end">
